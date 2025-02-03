@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Text } from "react-native-paper";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
@@ -62,16 +62,19 @@ const StyledTransactionCard = styled(Card.Content)({
 });
 
 const MyCards = () => {
+  const reroute = useRouter();
   return (
     <ParallaxScrollView>
       <ParentView>
         <HeaderView>
           <Text variant="titleMedium">My Cards</Text>
-          <Link href={{ pathname: "/addNewCard" }}>
-            <StyledAddButton buttonColor="#0265A1" textColor="white">
-              Add New Card
-            </StyledAddButton>
-          </Link>
+          <StyledAddButton
+            buttonColor="#0265A1"
+            textColor="white"
+            onPress={() => reroute.navigate("/addNewCard")}
+          >
+            Add New Card
+          </StyledAddButton>
         </HeaderView>
         <PointView>
           <StyledPointTitle variant="titleMedium">
