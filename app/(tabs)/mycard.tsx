@@ -1,9 +1,14 @@
-import React from "react";
-import { Button, Card, Text } from "react-native-paper";
-import { Link, useRouter } from "expo-router";
+import { Card, Text, Button } from "react-native-paper";
+import { useRouter } from "expo-router";
 import { View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
+import CreditCard from "@/components/credit-carousel/CreditCard";
+
+interface LabelValue {
+  label: string;
+  value: string | number;
+}
 
 const ParentView = styled(View)({
   paddingLeft: 15,
@@ -58,11 +63,44 @@ const StyledAccountText = styled(Text)({
 });
 //
 const StyledTransactionCard = styled(Card.Content)({
-  gap: 10,
+  gap: 20,
 });
 
 const MyCards = () => {
   const reroute = useRouter();
+
+  const accountDetailsArray: LabelValue[] = [
+    {
+      label: "Outstanding Balance",
+      value: "PHP 80,450.00",
+    },
+    {
+      label: "Available Credit",
+      value: "PHP 60,530.00",
+    },
+  ];
+  const transactionsArray: LabelValue[] = [
+    {
+      label: "YOUTUBE",
+      value: "-$5.00",
+    },
+    {
+      label: "SPOTIFY",
+      value: "-$12.00",
+    },
+    {
+      label: "MOBILE LEGENDS",
+      value: "$12.00",
+    },
+  ];
+  // const creditCardArray = [
+  //   {
+  //     cardNumber: "**** **** **** 1234",
+  //     cardHolder: "JAMES CHARLES",
+  //     expiryDate: "**/**",
+  //     cvv: "***",
+  //   },
+  // ];
   return (
     <ParallaxScrollView>
       <ParentView>
@@ -76,6 +114,7 @@ const MyCards = () => {
             Add New Card
           </StyledAddButton>
         </HeaderView>
+        <CreditCard />
         <PointView>
           <StyledPointTitle variant="titleMedium">
             Point Balance
@@ -86,38 +125,37 @@ const MyCards = () => {
         </PointView>
 
         <CategoryView>
-          <Text variant="titleMedium">Account Details</Text>
+          <Text variant="titleLarge">Account Details</Text>
           <StyledAccountView>
-            <HeaderView>
-              <StyledAccountText variant="titleSmall">
-                Outstanding Balance
-              </StyledAccountText>
-              <StyledAccountText variant="titleSmall">
-                PHP 80,450.00
-              </StyledAccountText>
-            </HeaderView>
-            <HeaderView>
-              <StyledAccountText variant="titleSmall">
-                Available Credit
-              </StyledAccountText>
-              <StyledAccountText variant="titleSmall">
-                PHP 60,530.00
-              </StyledAccountText>
-            </HeaderView>
+            {accountDetailsArray.map(({ label, value }, index) => (
+              <HeaderView key={index}>
+                <StyledAccountText variant="titleMedium">
+                  {label}
+                </StyledAccountText>
+                <StyledAccountText variant="titleMedium">
+                  {value}
+                </StyledAccountText>
+              </HeaderView>
+            ))}
           </StyledAccountView>
         </CategoryView>
         <CategoryView>
-          <Text variant="titleMedium">Recent Transactions</Text>
+          <Text variant="titleLarge">Recent Transactions</Text>
           <Card>
             <StyledTransactionCard>
-              <HeaderView>
-                <Text variant="titleSmall">YOUTUBE</Text>
-                <Text variant="titleSmall">- %5.00</Text>
-              </HeaderView>
-              <HeaderView>
-                <Text variant="titleSmall">SPOTIFY</Text>
-                <Text variant="titleSmall">- $12.99</Text>
-              </HeaderView>
+              {transactionsArray.map(({ label, value }, index) => (
+                <HeaderView key={index}>
+                  <Text variant="titleMedium">{label}</Text>
+                  <Text
+                    variant="titleMedium"
+                    style={{
+                      color: value.toString().includes("-") ? "red" : "black",
+                    }}
+                  >
+                    {value}
+                  </Text>
+                </HeaderView>
+              ))}
             </StyledTransactionCard>
           </Card>
         </CategoryView>

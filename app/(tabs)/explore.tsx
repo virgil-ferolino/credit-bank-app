@@ -12,11 +12,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 export default function SettingsScreen() {
   const [isBiometricEnabled, setBiometricEnabled] = useState(false);
 
-  const handleLogout = () => {
-    // Implement logout logic
-    console.log("Logging out...");
-  };
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
