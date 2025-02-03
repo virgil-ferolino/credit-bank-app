@@ -4,19 +4,13 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
+import theme from "@/theme";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const customTheme = {
-    ...DefaultTheme, // Customize roundness if needed
-    colors: {
-      ...DefaultTheme.colors,
-      primary: "#0265A1", // Modify primary color
-    },
-  };
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -32,7 +26,7 @@ export default function RootLayout() {
   }
 
   return (
-    <PaperProvider theme={customTheme}>
+    <PaperProvider theme={theme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(mycard)" options={{ headerShown: false }} />
