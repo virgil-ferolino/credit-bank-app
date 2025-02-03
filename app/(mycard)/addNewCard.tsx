@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import ParallaxScrollView from "@/components/ParralaxView";
+import { useState } from "react";
 import { View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Text, TextInput, Button } from "react-native-paper";
 import styled from "styled-components/native";
 
 // Define styled components outside the component
@@ -41,14 +42,15 @@ type CardInfoArrayProps = {
   value: string;
 };
 
+const initialValues = {
+  cardType: "Credit Card",
+  cardHolderName: "",
+  cardNumber: "",
+  expiry: "",
+  cvv: "",
+};
 const AddNewCard = () => {
-  const [formValue, setFormValue] = useState({
-    cardType: "",
-    cardHolderName: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-  });
+  const [formValue, setFormValue] = useState(initialValues);
 
   const cardInfoArray: CardInfoArrayProps[] = [
     {
@@ -66,70 +68,76 @@ const AddNewCard = () => {
   ];
 
   return (
-    <StyledView>
-      <StyledContainer>
-        <Text variant="bodyLarge">Card Type</Text>
-        <TextInput
-          mode="outlined"
-          value="Credit Card"
-          outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="black"
-          editable={false}
-          onChangeText={(e) => setFormValue({ ...formValue, cardType: e })}
-        />
-      </StyledContainer>
-      <StyledContainer>
-        <Text variant="bodyLarge">Card Holder Name</Text>
-        <TextInput
-          mode="outlined"
-          value={formValue.cardHolderName}
-          outlineStyle={{ borderRadius: 10 }}
-          placeholder="John Doe"
-          placeholderTextColor="#9A9A9A"
-          activeOutlineColor="black"
-          onChangeText={(e) =>
-            setFormValue({ ...formValue, cardHolderName: e })
-          }
-        />
-      </StyledContainer>
-      <StyledContainer>
-        <Text variant="bodyLarge">Card Number</Text>
-        <TextInput
-          mode="outlined"
-          value={formValue.cardNumber}
-          outlineStyle={{ borderRadius: 10 }}
-          placeholder="XXXX XXXX XXXX XXXX"
-          placeholderTextColor="#9A9A9A"
-          activeOutlineColor="black"
-          onChangeText={(e) => setFormValue({ ...formValue, cardNumber: e })}
-        />
-      </StyledContainer>
-      <StyledCardInfoContainer>
-        {cardInfoArray.map(
-          ({ title, placeHolder, onChangeText, value }, index) => (
-            <StyledCardInfo key={index}>
-              <Text variant="bodyLarge">{title}</Text>
-              <TextInput
-                mode="outlined"
-                value={value}
-                placeholder={placeHolder}
-                outlineStyle={{ borderRadius: 10 }}
-                placeholderTextColor="#9A9A9A"
-                activeOutlineColor="black"
-                onChangeText={onChangeText}
-              />
-            </StyledCardInfo>
-          )
-        )}
-      </StyledCardInfoContainer>
-      <StyledButton
-        buttonColor="#0265A1"
-        textColor="white"
-        labelStyle={{ fontSize: 17 }}
-      >
-        Add Card
-      </StyledButton>
-    </StyledView>
+    <ParallaxScrollView>
+      <StyledView>
+        <StyledContainer>
+          <Text variant="bodyLarge">Card Type</Text>
+          <TextInput
+            mode="outlined"
+            value={formValue.cardType}
+            outlineStyle={{ borderRadius: 10 }}
+            activeOutlineColor="black"
+            editable={false}
+            onChangeText={(e) => setFormValue({ ...formValue, cardType: e })}
+          />
+        </StyledContainer>
+        <StyledContainer>
+          <Text variant="bodyLarge">Card Holder Name</Text>
+          <TextInput
+            mode="outlined"
+            value={formValue.cardHolderName}
+            outlineStyle={{ borderRadius: 10 }}
+            placeholder="John Doe"
+            placeholderTextColor="#9A9A9A"
+            activeOutlineColor="black"
+            onChangeText={(e) =>
+              setFormValue({ ...formValue, cardHolderName: e })
+            }
+          />
+        </StyledContainer>
+        <StyledContainer>
+          <Text variant="bodyLarge">Card Number</Text>
+          <TextInput
+            mode="outlined"
+            value={formValue.cardNumber}
+            outlineStyle={{ borderRadius: 10 }}
+            placeholder="XXXX XXXX XXXX XXXX"
+            placeholderTextColor="#9A9A9A"
+            activeOutlineColor="black"
+            onChangeText={(e) => setFormValue({ ...formValue, cardNumber: e })}
+          />
+        </StyledContainer>
+        <StyledCardInfoContainer>
+          {cardInfoArray.map(
+            ({ title, placeHolder, onChangeText, value }, index) => (
+              <StyledCardInfo key={index}>
+                <Text variant="bodyLarge">{title}</Text>
+                <TextInput
+                  mode="outlined"
+                  value={value}
+                  placeholder={placeHolder}
+                  outlineStyle={{ borderRadius: 10 }}
+                  placeholderTextColor="#9A9A9A"
+                  activeOutlineColor="black"
+                  onChangeText={onChangeText}
+                />
+              </StyledCardInfo>
+            )
+          )}
+        </StyledCardInfoContainer>
+        <StyledButton
+          buttonColor="#0265A1"
+          textColor="white"
+          labelStyle={{ fontSize: 17 }}
+          onPress={() => {
+            console.log(formValue);
+            setFormValue(initialValues);
+          }}
+        >
+          Add Card
+        </StyledButton>
+      </StyledView>
+    </ParallaxScrollView>
   );
 };
 
