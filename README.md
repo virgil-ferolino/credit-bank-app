@@ -9,7 +9,7 @@
 
 # How to manipulate Teminal
 
-1. always use "pnpm" in the terminal not "npm"
+1. always use npm
 
 # Techstacks
 
