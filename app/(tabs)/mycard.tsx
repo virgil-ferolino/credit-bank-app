@@ -1,10 +1,16 @@
 import { View, Text } from "react-native";
 import React from "react";
 
+import styled from "styled-components/native";
+
+const StyledText = styled(Text)({
+  fontSize: 50,
+});
+
 const mycard = () => {
   return (
     <View>
-      <Text>mycard</Text>
+      <StyledText>mycard</StyledText>
     </View>
   );
 };
