@@ -19,17 +19,17 @@ const HeaderView = styled(View)({
 });
 const HeaderName = styled(Text)({
   color: "#fff",
-  fontSize: 18,
+  fontSize: 12,
   fontWeight: "600",
 });
 const HeaderType = styled(Text)({
   color: "#fff",
-  fontSize: 14,
+  fontSize: 11,
 });
 // Card Number
 const CardNumber = styled(Text)({
   color: "#fff",
-  fontSize: 22,
+  fontSize: 17,
   letterSpacing: 2,
   marginBottom: 12,
 });
@@ -39,12 +39,12 @@ const CardDetailsView = styled(View)({
 });
 const CardDetailsLabel = styled(Text)({
   color: "#ffffff90",
-  fontSize: 12,
+  fontSize: 10,
   marginBottom: 4,
 });
 const CardDetailsValue = styled(Text)({
   color: "#fff",
-  fontSize: 16,
+  fontSize: 12,
   fontWeight: "500",
 });
 const CardDetailSection = styled(View)({
