@@ -1,13 +1,21 @@
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { Image, View } from "react-native";
+import { Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { CreditCardProps } from "./types";
+import { LinearGradient } from "expo-linear-gradient";
+import { useAppTheme } from "@/hooks/useTheme";
 // Standard credit card ratio
 
-const ParentView = styled(View)({
-  backgroundColor: "#0265A1",
+const ParentView = styled(Card)({
+  baxShadow: "none",
+  position: "relative",
+  overflow: "hidden",
+});
+const ParentImage = styled(Image)({
+  position: "absolute",
+});
+const StyledContent = styled(Card.Content)({
   padding: 20,
-  borderRadius: 20,
 });
 
 // Card Header
@@ -88,39 +96,53 @@ const CreditCard = ({
   expiryDate = "**/**",
   cvv = "***",
 }: CreditCardProps) => {
+  const {
+    colors: { primary, secondary },
+  } = useAppTheme();
   return (
     <ParentView>
-      <HeaderView>
-        <HeaderName>ADRBank</HeaderName>
-        <HeaderType>Credit Card</HeaderType>
-        <WhiteCircle />
-      </HeaderView>
+      <LinearGradient
+        colors={[primary, secondary]}
+        style={{ flex: 1, borderRadius: 10 }}
+      >
+        <ParentImage
+          source={require("@/assets/images/cardBackground.png")}
+          resizeMode="cover"
+        />
+        <StyledContent>
+          <HeaderView>
+            <HeaderName>ADRBank</HeaderName>
+            <HeaderType>Credit Card</HeaderType>
+            <WhiteCircle />
+          </HeaderView>
 
-      <CardNumber>{cardNumber}</CardNumber>
+          <CardNumber>{cardNumber}</CardNumber>
 
-      <CardDetailsView>
-        <CardDetailSection>
-          <CardDetailsLabel>Card Holder Name</CardDetailsLabel>
-          <CardDetailsValue>{cardHolder}</CardDetailsValue>
-        </CardDetailSection>
+          <CardDetailsView>
+            <CardDetailSection>
+              <CardDetailsLabel>Card Holder Name</CardDetailsLabel>
+              <CardDetailsValue>{cardHolder}</CardDetailsValue>
+            </CardDetailSection>
 
-        <CardDetailRow>
-          <CardDetailSection>
-            <CardDetailsLabel>Expired Date</CardDetailsLabel>
-            <CardDetailsValue>{expiryDate}</CardDetailsValue>
-          </CardDetailSection>
+            <CardDetailRow>
+              <CardDetailSection>
+                <CardDetailsLabel>Expired Date</CardDetailsLabel>
+                <CardDetailsValue>{expiryDate}</CardDetailsValue>
+              </CardDetailSection>
 
-          <CardDetailSection>
-            <CardDetailsLabel>CVV</CardDetailsLabel>
-            <CardDetailsValue>{cvv}</CardDetailsValue>
-          </CardDetailSection>
+              <CardDetailSection>
+                <CardDetailsLabel>CVV</CardDetailsLabel>
+                <CardDetailsValue>{cvv}</CardDetailsValue>
+              </CardDetailSection>
 
-          <CardLogo>
-            <RedCircle />
-            <OrangeCircle />
-          </CardLogo>
-        </CardDetailRow>
-      </CardDetailsView>
+              <CardLogo>
+                <RedCircle />
+                <OrangeCircle />
+              </CardLogo>
+            </CardDetailRow>
+          </CardDetailsView>
+        </StyledContent>
+      </LinearGradient>
     </ParentView>
   );
 };
