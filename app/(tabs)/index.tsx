@@ -1,159 +1,161 @@
-import ParallaxScrollView from "@/components/ParralaxView";
-import { useAppTheme } from "@/hooks/useTheme";
+import React from "react";
+import { Image, TouchableOpacity, View } from "react-native";
+import { Avatar, Card, Text } from "react-native-paper";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image, ImageBackground, View } from "react-native";
 
-import { Avatar, Card, Text } from "react-native-paper";
-import styled from "styled-components/native";
+import CreditCard from "@/components/credit-carousel/CreditCard";
+import ParallaxScrollView from "@/components/ParralaxView";
+import { menuList, transaction } from "@/data/home";
+import styled from "styled-components";
 
-const WhiteCircle = styled(View)({
-  width: 30,
-  height: 30,
-  borderRadius: 15,
-  marginHorizontal: 5,
-  backgroundColor: "#ffffff",
+interface TransactionItem {
+  title: string;
+  category: string;
+  price: string;
+}
+
+const BlueBackground = styled(View)({
+  width: "100%",
+  height: 250,
+  backgroundColor: "#004068",
+  position: "absolute",
+  borderBottomLeftRadius: 35,
+  borderBottomRightRadius: 35,
 });
 
-const RedCircle = styled(View)({
-  width: 30,
-  height: 30,
-  borderRadius: 15,
-  marginHorizontal: -8,
-  backgroundColor: "#EB001B",
-});
-const OrangeCircle = styled(View)({
-  width: 30,
-  height: 30,
-  borderRadius: 15,
-  backgroundColor: "#F79E1B",
-});
-
-const CardLogo = styled(View)({
+const TransactionContainer = styled(View)({
   flexDirection: "row",
+  justifyContent: "space-between",
   alignItems: "center",
+});
+
+const TransactionAvatar = styled(View)({
+  flexDirection: "row",
+  gap: 5,
+  alignItems: "center",
+});
+
+const StyledWhiteCard = styled(Card)({
+  backgroundColor: "#FFFFFF",
 });
 
 const WhiteText = styled(Text)({
   color: "#FFFFFF",
 });
 
-export default function HomeScreen() {
-  const {
-    colors: { primary, secondary },
-  } = useAppTheme();
+const TextBold = styled(Text)({
+  fontWeight: 700,
+});
 
+const RenderTransactionItem = (props: TransactionItem) => {
   return (
-    <LinearGradient colors={[primary, secondary]} style={{ flex: 1 }}>
-      <ParallaxScrollView>
-        <View style={{ padding: 15, rowGap: 15 }}>
+    <TransactionContainer>
+      <TransactionAvatar>
+        <Avatar.Text size={30} label="AP" />
+        <View>
+          <TextBold variant="bodyLarge">{props.title}</TextBold>
+          <Text variant="labelSmall">{props.category}</Text>
+        </View>
+      </TransactionAvatar>
+
+      <Text>{props.price}</Text>
+    </TransactionContainer>
+  );
+};
+
+export default function HomeScreen() {
+  return (
+    <ParallaxScrollView>
+      <BlueBackground />
+
+      <View style={{ padding: 15, rowGap: 15 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
+              gap: 10,
               alignItems: "center",
-              justifyContent: "space-between",
             }}
           >
-            <View
-              style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
-            >
-              <Avatar.Image
-                size={40}
-                source={{
-                  uri: "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
-                }}
-              />
-              <View>
-                <Text variant="labelSmall" style={{ color: "#FFFFFF" }}>
-                  Welcum back,
-                </Text>
-                <Text variant="labelLarge" style={{ color: "#FFFFFF" }}>
-                  Charles James
-                </Text>
-              </View>
+            <Avatar.Image
+              size={40}
+              source={{
+                uri: "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
+              }}
+            />
+            <View>
+              <WhiteText variant="labelSmall">Well cum back,</WhiteText>
+              <WhiteText variant="labelLarge">Charles James</WhiteText>
             </View>
-
-            <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
           </View>
 
-          <Card style={{ boxShadow: "none" }}>
-            <ImageBackground
-              source={require("@/assets/images/card-design.png")}
-              imageStyle={{ borderRadius: 10 }}
-            >
-              <Card.Content style={{ paddingVertical: 15, rowGap: 15 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text
-                    variant="labelLarge"
-                    style={{ color: "#FFFFFF", fontWeight: 700 }}
-                  >
-                    ADRBank
-                  </Text>
-                  <WhiteText variant="labelLarge">Credit Card</WhiteText>
-                  <WhiteCircle />
-                </View>
-
-                <Text
-                  variant="headlineSmall"
-                  style={{ color: "#FFFFFF", fontWeight: 700 }}
-                >
-                  **** **** **** 1234
-                </Text>
-
-                <View>
-                  <WhiteText variant="labelLarge">Card Holder Name</WhiteText>
-                  <WhiteText variant="labelLarge">James Charles</WhiteText>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View>
-                    <WhiteText variant="labelLarge">Expired Date</WhiteText>
-                    <WhiteText variant="labelLarge">**/**</WhiteText>
-                  </View>
-                  <View>
-                    <WhiteText variant="labelLarge">CVV</WhiteText>
-                    <WhiteText variant="labelLarge">***</WhiteText>
-                  </View>
-
-                  <CardLogo>
-                    <RedCircle />
-                    <OrangeCircle />
-                  </CardLogo>
-                </View>
-              </Card.Content>
-            </ImageBackground>
-          </Card>
-
-          <Card>
-            <Card.Content>
-              <Image source={require("@/assets/images/deposit-check.png")} />
-            </Card.Content>
-          </Card>
-          <Card>
-            <Card.Content>
-              <Image source={require("@/assets/images/card-check.png")} />
-            </Card.Content>
-          </Card>
-          <Card>
-            <Card.Content>
-              <Image source={require("@/assets/images/branch.png")} />
-            </Card.Content>
-          </Card>
+          <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
         </View>
-      </ParallaxScrollView>
-    </LinearGradient>
+
+        <CreditCard />
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignContent: "center",
+          }}
+        >
+          {menuList.map((item, ids) => (
+            <StyledWhiteCard key={ids}>
+              <TouchableOpacity>
+                <Card.Content
+                  style={{ alignItems: "center", width: 100, height: 125 }}
+                >
+                  <Image source={item.image} />
+                  <Text
+                    variant="labelMedium"
+                    style={{ textAlign: "center", fontWeight: 700 }}
+                  >
+                    {item.label}
+                  </Text>
+                </Card.Content>
+              </TouchableOpacity>
+            </StyledWhiteCard>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <TextBold variant="labelLarge">Recent Transaction</TextBold>
+          <TouchableOpacity hitSlop={20}>
+            <Text>View more</Text>
+          </TouchableOpacity>
+        </View>
+
+        <StyledWhiteCard>
+          <Card.Content style={{ rowGap: 15 }}>
+            {transaction.length > 0 ? (
+              transaction.map((item, ids) => (
+                <RenderTransactionItem
+                  key={ids}
+                  title={item.title}
+                  price={item.price}
+                  category={item.category}
+                />
+              ))
+            ) : (
+              <Text
+                variant="bodyMedium"
+                style={{ textAlign: "center", color: "gray" }}
+              >
+                No transactions available
+              </Text>
+            )}
+          </Card.Content>
+        </StyledWhiteCard>
+      </View>
+    </ParallaxScrollView>
   );
 }
