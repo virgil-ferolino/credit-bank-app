@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { FlatList as WebFlatList } from "react-native-web";
 import CreditCard from "./CreditCard";
+import styled from "styled-components/native";
 
 export default function CreditCardList() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -19,6 +20,13 @@ export default function CreditCardList() {
     const newIndex = Math.floor(contentOffsetX / 438);
     setWebActiveIndex(newIndex);
   };
+
+  const CarouselPagination = styled(View)({
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  });
 
   const { width } = Dimensions.get("window");
   const CARD_WIDTH = width - 30;
@@ -86,11 +94,11 @@ export default function CreditCardList() {
         onScroll={handleScroll} // Track scroll for web
         scrollEventThrottle={16} // Update scroll events more frequently
       />
-      <View style={styles.pagination}>
+      <CarouselPagination>
         {creditCardArray.map((_, index) => (
           <PaginationDot key={index} active={index === webActiveIndex} />
         ))}
-      </View>
+      </CarouselPagination>
     </View>
   ) : (
     <View style={{ flex: 1, padding: 15 }}>
@@ -119,22 +127,16 @@ export default function CreditCardList() {
           itemVisiblePercentThreshold: 50,
         }}
       />
-      <View style={styles.pagination}>
+      <CarouselPagination>
         {creditCardArray.map((_, index) => (
           <PaginationDot key={index} active={index === activeIndex} />
         ))}
-      </View>
+      </CarouselPagination>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  pagination: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  },
   dot: {
     width: 8,
     height: 8,
