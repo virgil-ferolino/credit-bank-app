@@ -8,6 +8,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { menuList, transaction } from "@/data/home";
+import { Pressable } from "react-native-gesture-handler";
+import { useRouter } from "expo-router";
 
 interface TransactionItem {
   title: string;
@@ -65,6 +67,12 @@ const RenderTransactionItem = (props: TransactionItem) => {
 };
 
 export default function HomeScreen() {
+  const router = useRouter();
+
+  const handleNotification = () => {
+    router.push("/notification");
+  };
+
   return (
     <ParallaxScrollView>
       <BlueBackground />
@@ -96,7 +104,9 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
+          <Pressable onPress={handleNotification} hitSlop={20}>
+            <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
+          </Pressable>
         </View>
 
         <CreditCard />
