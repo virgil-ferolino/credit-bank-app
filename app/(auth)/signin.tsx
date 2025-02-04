@@ -41,7 +41,7 @@ export default function LoginScreen() {
 
         <StyledTextInput
           mode="outlined"
-          label="*******"
+          label="Password"
           value={formValue.password}
           onChangeText={handleInputChange("password")}
           secureTextEntry
