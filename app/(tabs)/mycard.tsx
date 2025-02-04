@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import { View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import CreditCard from "@/components/credit-carousel/CreditCard";
+import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
 
 interface LabelValue {
   label: string;
@@ -49,6 +49,7 @@ const StyledAddButton = styled(Button)({
   paddingLeft: 20,
   paddingRight: 20,
   borderRadius: 15,
+  boxShadow: "none",
 });
 //
 const StyledAccountView = styled(View)({
@@ -100,6 +101,10 @@ const MyCards = () => {
   //     cvv: "***",
   //   },
   // ];
+
+  // const carouselWidth = Dimensions.get("window").width;
+  // const ref = useRef<ICarouselInstance>(null);
+
   return (
     <ParallaxScrollView>
       <ParentView>
@@ -113,7 +118,9 @@ const MyCards = () => {
             Add New Card
           </StyledAddButton>
         </HeaderView>
-        <CreditCard />
+      </ParentView>
+      <CreditCarousel />
+      <ParentView>
         <PointView>
           <StyledPointTitle variant="titleMedium">
             Point Balance
@@ -122,7 +129,6 @@ const MyCards = () => {
             17,532
           </StyledPointContent>
         </PointView>
-
         <CategoryView>
           <Text variant="titleLarge">Account Details</Text>
           <StyledAccountView>
@@ -140,7 +146,7 @@ const MyCards = () => {
         </CategoryView>
         <CategoryView>
           <Text variant="titleLarge">Recent Transactions</Text>
-          <Card>
+          <Card style={{ boxShadow: "none" }}>
             <StyledTransactionCard>
               {transactionsArray.map(({ label, value }, index) => (
                 <HeaderView key={index}>
