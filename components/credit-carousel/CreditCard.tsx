@@ -23,7 +23,7 @@ const HeaderView = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  marginBottom: 20,
+  marginBottom: 24,
 });
 const HeaderName = styled(Text)({
   color: "#fff",
@@ -39,7 +39,7 @@ const CardNumber = styled(Text)({
   color: "#fff",
   fontSize: 17,
   letterSpacing: 2,
-  marginBottom: 12,
+  marginBottom: 24,
 });
 // Card Details
 const CardDetailsView = styled(View)({
