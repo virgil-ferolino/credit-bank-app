@@ -1,16 +1,38 @@
 import React, { useState } from "react";
-import { Image } from "react-native";
-import { TextInput, Button, Text, Surface, useTheme } from "react-native-paper";
+import { TextInput as RNTextInput } from "react-native";
+import { Button, Text, Surface, useTheme } from "react-native-paper";
 import styled from "styled-components/native";
 
+interface FormValues {
+  otp: string[];
+}
+
 export default function VerifyPhoneScreen() {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const initialValues: FormValues = {
+    otp: Array(5).fill(""),
+  };
+
+  const [formValue, setFormValue] = useState<FormValues>(initialValues);
   const theme = useTheme();
+
+  const handleOtpChange = (index: number) => (text: string) => {
+    const newOtp = [...formValue.otp];
+    newOtp[index] = text;
+    setFormValue({ ...formValue, otp: newOtp });
+
+    if (text.length === 1 && index < 4) {
+      (inputRefs[index + 1].current as RNTextInput)?.focus();
+    }
+  };
+
+  const inputRefs = Array(5)
+    .fill(0)
+    .map(() => React.createRef<RNTextInput>());
 
   return (
     <Container>
       <BackgroundImage
-        source={require("../../assets/images/bgworld.png")}
+        source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
       <Card>
@@ -21,12 +43,15 @@ export default function VerifyPhoneScreen() {
         </Subtitle>
 
         <PhoneInputContainer>
-          {[...Array(5)].map((_, index) => (
+          {formValue.otp.map((digit, index) => (
             <OtpInput
               key={index}
+              ref={inputRefs[index]}
               keyboardType="number-pad"
               maxLength={1}
               selectTextOnFocus
+              value={digit}
+              onChangeText={handleOtpChange(index)}
             />
           ))}
         </PhoneInputContainer>
@@ -91,7 +116,7 @@ const PhoneInputContainer = styled.View`
   margin-bottom: 30px;
 `;
 
-const OtpInput = styled(TextInput)`
+const OtpInput = styled(RNTextInput)`
   background-color: #ffffff;
   width: 50px;
   height: 50px;

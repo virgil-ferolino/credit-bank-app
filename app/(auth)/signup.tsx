@@ -1,19 +1,39 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image } from "react-native";
 
+interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  termsAccepted: boolean;
+}
+
 export default function SignUpScreen() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const initialValues: FormValues = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    termsAccepted: false,
+  };
+
+  const [formValue, setFormValue] = useState<FormValues>(initialValues);
+
+  const handleInputChange = (field: keyof FormValues) => (text: string) => {
+    setFormValue({ ...formValue, [field]: text });
+  };
+
+  const handleTermsAcceptedChange = () => {
+    setFormValue({ ...formValue, termsAccepted: !formValue.termsAccepted });
+  };
 
   return (
     <Container>
       <BackgroundImage
-        source={require("../../assets/images/bgworld.png")}
+        source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
       <Card>
@@ -22,8 +42,8 @@ export default function SignUpScreen() {
         <StyledTextInput
           mode="outlined"
           label="Name"
-          value={name}
-          onChangeText={setName}
+          value={formValue.name}
+          onChangeText={handleInputChange("name")}
           placeholder="ex: jon smith"
           autoCapitalize="words"
         />
@@ -31,8 +51,8 @@ export default function SignUpScreen() {
         <StyledTextInput
           mode="outlined"
           label="Email"
-          value={email}
-          onChangeText={setEmail}
+          value={formValue.email}
+          onChangeText={handleInputChange("email")}
           placeholder="ex: jon.smith@email.com"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -41,23 +61,23 @@ export default function SignUpScreen() {
         <StyledTextInput
           mode="outlined"
           label="Password"
-          value={password}
-          onChangeText={setPassword}
+          value={formValue.password}
+          onChangeText={handleInputChange("password")}
           secureTextEntry
         />
 
         <StyledTextInput
           mode="outlined"
           label="Confirm password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          value={formValue.confirmPassword}
+          onChangeText={handleInputChange("confirmPassword")}
           secureTextEntry
         />
 
         <TermsContainer>
           <Checkbox.Android
-            status={termsAccepted ? "checked" : "unchecked"}
-            onPress={() => setTermsAccepted(!termsAccepted)}
+            status={formValue.termsAccepted ? "checked" : "unchecked"}
+            onPress={handleTermsAcceptedChange}
             color="#006d77"
           />
           <TermsText>
@@ -74,19 +94,19 @@ export default function SignUpScreen() {
         <SocialButtons>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/google.svg")}
+              source={require("@/assets/images/google.svg")}
               resizeMode="contain"
             />
           </SocialButton>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/fb.svg")}
+              source={require("@/assets/images/fb.svg")}
               resizeMode="contain"
             />
           </SocialButton>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/twitter.svg")}
+              source={require("@/assets/images/twitter.svg")}
               resizeMode="contain"
             />
           </SocialButton>

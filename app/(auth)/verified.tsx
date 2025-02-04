@@ -5,7 +5,7 @@ import { Button, Text } from "react-native-paper";
 export default function VerificationScreen() {
   return (
     <Background
-      source={require("../../assets/images/bgworld.png")}
+      source={require("@/assets/images/bgworld.png")}
       resizeMode="cover"
     >
       <Content>

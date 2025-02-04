@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
 import { Image } from "react-native";
 
+interface FormValues {
+  email: string;
+  password: string;
+}
+
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const initialValues: FormValues = {
+    email: "",
+    password: "",
+  };
+
+  const [formValue, setFormValue] = useState<FormValues>(initialValues);
+
+  const handleInputChange = (field: keyof FormValues) => (text: string) => {
+    setFormValue({ ...formValue, [field]: text });
+  };
 
   return (
     <Container>
       <BackgroundImage
-        source={require("../../assets/images/bgworld.png")}
+        source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
       <StyledSurface>
@@ -19,8 +32,8 @@ export default function LoginScreen() {
         <StyledTextInput
           mode="outlined"
           label="ex: john@email.com"
-          value={email}
-          onChangeText={setEmail}
+          value={formValue.email}
+          onChangeText={handleInputChange("email")}
           placeholder="ex: john@email.com"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -29,8 +42,8 @@ export default function LoginScreen() {
         <StyledTextInput
           mode="outlined"
           label="*******"
-          value={password}
-          onChangeText={setPassword}
+          value={formValue.password}
+          onChangeText={handleInputChange("password")}
           secureTextEntry
         />
 
@@ -43,19 +56,19 @@ export default function LoginScreen() {
         <SocialButtons>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/google.svg")}
+              source={require("@/assets/images/google.svg")}
               resizeMode="contain"
             />
           </SocialButton>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/fb.svg")}
+              source={require("@/assets/images/fb.svg")}
               resizeMode="contain"
             />
           </SocialButton>
           <SocialButton onPress={() => {}}>
             <SocialIcon
-              source={require("../../assets/images/twitter.svg")}
+              source={require("@/assets/images/twitter.svg")}
               resizeMode="contain"
             />
           </SocialButton>

@@ -8,7 +8,7 @@ export default function VerifyPhoneScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/images/bgworld.png")}
+        source={require("@/assets/images/bgworld.png")}
         style={styles.backgroundImage}
       />
       <Surface style={styles.card}>
