@@ -19,14 +19,14 @@ const StyledContainer = styled(View)({
 const StyledCardInfoContainer = styled(View)({
   display: "flex",
   flexDirection: "row",
+  flexWrap: "wrap",
   gap: 15,
-  width: "100%",
-  justifyContent: "space-evenly",
 });
 
 const StyledCardInfo = styled(View)({
-  gap: 15,
   flexGrow: 1,
+  gap: 10,
+  flexBasis: "calc(50% - 15px)",
 });
 
 const StyledButton = styled(Button)({
