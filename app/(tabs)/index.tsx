@@ -1,13 +1,13 @@
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
+import styled from "styled-components/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { menuList, transaction } from "@/data/home";
-import styled from "styled-components";
 
 interface TransactionItem {
   title: string;
