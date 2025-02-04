@@ -46,7 +46,7 @@ const CardDetailsView = styled(View)({
   marginRight: 24,
 });
 const CardDetailsLabel = styled(Text)({
-  color: "#ffffff90",
+  color: "#ffffff",
   fontSize: 10,
   marginBottom: 4,
 });
