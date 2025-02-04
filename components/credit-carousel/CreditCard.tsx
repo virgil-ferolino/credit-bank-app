@@ -97,13 +97,15 @@ const CreditCard = ({
   cvv = "***",
 }: CreditCardProps) => {
   const {
-    colors: { primary, secondary },
+    colors: { gradientStart, gradientEnd },
   } = useAppTheme();
   return (
     <ParentView>
       <LinearGradient
-        colors={[primary, secondary]}
+        colors={[gradientStart, gradientEnd]}
         style={{ flex: 1, borderRadius: 10 }}
+        start={{ x: 0.5, y: 1 }}
+        end={{ x: 0, y: 0 }}
       >
         <ParentImage
           source={require("@/assets/images/cardBackground.png")}
