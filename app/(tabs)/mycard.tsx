@@ -11,8 +11,7 @@ interface LabelValue {
 }
 
 const ParentView = styled(View)({
-  paddingLeft: 15,
-  paddingRight: 15,
+  padding: 15,
   gap: 20,
 });
 const CategoryView = styled(View)({
