@@ -93,18 +93,6 @@ const MyCards = () => {
       value: "$12.00",
     },
   ];
-  // const creditCardArray = [
-  //   {
-  //     cardNumber: "**** **** **** 1234",
-  //     cardHolder: "JAMES CHARLES",
-  //     expiryDate: "**/**",
-  //     cvv: "***",
-  //   },
-  // ];
-
-  // const carouselWidth = Dimensions.get("window").width;
-  // const ref = useRef<ICarouselInstance>(null);
-
   return (
     <ParallaxScrollView>
       <ParentView>

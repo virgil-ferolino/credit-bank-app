@@ -29,7 +29,7 @@ export default function CreditCardList() {
   });
 
   const { width } = Dimensions.get("window");
-  const CARD_WIDTH = width - 30;
+  const CARD_WIDTH = width;
   const creditCardArray = [
     {
       cardNumber: "**** **** **** 1234",
@@ -71,13 +71,14 @@ export default function CreditCardList() {
   );
 
   return Platform.OS === "web" ? (
-    <View style={{ flex: 1, padding: 15 }}>
+    <View style={{ flex: 1 }}>
       <WebFlatList
         data={creditCardArray}
         renderItem={({ item }) => (
           <View
             style={{
-              width: 438,
+              width: 468,
+              padding: 15,
             }}
           >
             <CreditCard
@@ -91,8 +92,10 @@ export default function CreditCardList() {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll} // Track scroll for web
-        scrollEventThrottle={16} // Update scroll events more frequently
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        centerContent
+        contentContainerStyle={{ gap: 15 }}
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
@@ -101,13 +104,14 @@ export default function CreditCardList() {
       </CarouselPagination>
     </View>
   ) : (
-    <View style={{ flex: 1, padding: 15 }}>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={creditCardArray}
         renderItem={({ item }) => (
           <View
             style={{
               width: CARD_WIDTH,
+              paddingHorizontal: 15,
             }}
           >
             <CreditCard
