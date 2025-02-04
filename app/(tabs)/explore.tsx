@@ -1,143 +1,131 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Switch,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Text, Switch } from "react-native";
+import { View } from "react-native";
+import ParallaxScrollView from "@/components/ParralaxView";
+import styled from "styled-components/native";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+
+const StyledView = styled(View)({
+  paddingTop: 15,
+  gap: 15,
+  paddingLeft: 20,
+  paddingRight: 20,
+});
+
+const Section = styled(View)({
+  padding: 14,
+  alignItems: "center",
+});
+
+const SectionTitle = styled(Text)({
+  fontSize: 17,
+  fontWeight: "bold",
+  padding: 16,
+  marginBottom: 8,
+});
+
+const Description = styled(Text)({
+  fontSize: 14,
+  color: "#525252",
+  padding: 14,
+  paddingBottom: 8,
+});
+
+const MenuItem = styled.TouchableOpacity({
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: 16,
+  borderBottomWidth: 1,
+  borderBottomColor: "white",
+});
+
+const MenuText = styled(Text)({
+  fontSize: 14,
+  color: "#000000",
+});
+
+const RightContent = styled(View)({
+  flexDirection: "row",
+  alignItems: "center",
+  color: "#525252",
+});
+
+const SecondaryText = styled(Text)({
+  fontSize: 12,
+  color: "#525252",
+});
+
+const LogoutItem = styled(MenuItem)({
+  padding: 16,
+  borderBottomWidth: 1,
+  borderBottomColor: "white",
+});
+
+const LogoutText = styled(Text)({
+  color: "#FF0000",
+  fontSize: 14,
+});
 
 export default function SettingsScreen() {
   const [isBiometricEnabled, setBiometricEnabled] = useState(false);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Settings</Text>
-      </View>
-      <Text style={styles.description}>General</Text>
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuText}>Language</Text>
-        <View style={styles.rightContent}>
-          <Text style={styles.secondaryText}>English</Text>
-          <MaterialIcons name="chevron-right" size={24} color="#C7C7CC" />
-        </View>
-      </TouchableOpacity>
+    <ParallaxScrollView>
+      <StyledView>
+        <Section>
+          <SectionTitle>Settings</SectionTitle>
+        </Section>
+        <Description>General</Description>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuText}>My Profile</Text>
-        <MaterialIcons name="chevron-right" size={24} color="#C7C7CC" />
-      </TouchableOpacity>
+        <MenuItem>
+          <MenuText>Language</MenuText>
+          <RightContent>
+            <SecondaryText>English</SecondaryText>
+            <IconSymbol name="chevron.right" size={24} color="#7E848D" />
+          </RightContent>
+        </MenuItem>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuText}>Contact Us</Text>
-        <MaterialIcons name="chevron-right" size={24} color="#C7C7CC" />
-      </TouchableOpacity>
+        <MenuItem>
+          <MenuText>My Profile</MenuText>
+          <IconSymbol name="chevron.right" size={24} color="#7E848D" />
+        </MenuItem>
 
-      <Text style={styles.description}>Security</Text>
+        <MenuItem>
+          <MenuText>Contact Us</MenuText>
+          <IconSymbol name="chevron.right" size={24} color="#7E848D" />
+        </MenuItem>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuText}>Change Password</Text>
-        <MaterialIcons name="chevron-right" size={24} color="#C7C7CC" />
-      </TouchableOpacity>
+        <Description>Security</Description>
 
-      <TouchableOpacity style={styles.menuItem}>
-        <Text style={styles.menuText}>Privacy Policy</Text>
-        <MaterialIcons name="chevron-right" size={24} color="#C7C7CC" />
-      </TouchableOpacity>
+        <MenuItem>
+          <MenuText>Change Password</MenuText>
+          <IconSymbol name="chevron.right" size={24} color="#7E848D" />
+        </MenuItem>
 
-      <Text style={styles.description}>Choose what data you share with us</Text>
+        <MenuItem>
+          <MenuText>Privacy Policy</MenuText>
+          <IconSymbol name="chevron.right" size={24} color="#7E848D" />
+        </MenuItem>
 
-      <View style={styles.menuItem}>
-        <Text style={styles.menuText}>Biometric</Text>
-        <Switch
-          value={isBiometricEnabled}
-          onValueChange={setBiometricEnabled}
-          trackColor={{ false: "#D1D1D6", true: "#34C759" }}
-          ios_backgroundColor="#D1D1D6"
-        />
-      </View>
-      <TouchableOpacity style={styles.LogoutItem}>
-        <Text style={styles.logoutText}>Log out</Text>
-        <MaterialIcons name="chevron-right" size={24} color="#FF0000" />
-      </TouchableOpacity>
-    </ScrollView>
+        <Description>Choose what data you share with us</Description>
+
+        <MenuItem>
+          <MenuText>Biometric</MenuText>
+          <Switch
+            value={isBiometricEnabled}
+            onValueChange={setBiometricEnabled}
+            trackColor={{ false: "#525252", true: "#7E848D" }}
+            ios_backgroundColor="#D1D1D6"
+            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+          />
+        </MenuItem>
+
+        <LogoutItem>
+          <LogoutText>Log out</LogoutText>
+          <IconSymbol name="chevron.right" size={24} color="#FF0000" />
+        </LogoutItem>
+      </StyledView>
+    </ParallaxScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F2F2F7",
-  },
-  section: {
-    padding: 16,
-    alignItems: "center",
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    padding: 16,
-    marginBottom: 8,
-  },
-  generalTitle: {
-    fontSize: 15,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    backgroundColor: "white",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#C7C7CC",
-  },
-
-  LogoutItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    backgroundColor: "white",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#C7C7CC",
-  },
-  menuText: {
-    fontSize: 16,
-    color: "#000000",
-  },
-  rightContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  secondaryText: {
-    fontSize: 16,
-    color: "#8E8E93",
-  },
-  divider: {
-    height: 32,
-    backgroundColor: "#F2F2F7",
-  },
-  description: {
-    fontSize: 14,
-    color: "#8E8E93",
-    padding: 16,
-    paddingBottom: 8,
-  },
-  logoutButton: {
-    margin: 16,
-    padding: 16,
-    backgroundColor: "white",
-    color: "#FF3B30",
-    fontSize: 16,
-  },
-  logoutText: {
-    color: "#FF0000",
-    fontSize: 16,
-  },
-});
