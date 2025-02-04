@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { Text, TextInput, Button } from "react-native-paper";
 import styled from "styled-components/native";
 
 // Define styled components outside the component
+const isWeb = Platform.OS === "web";
 const StyledView = styled(View)({
   paddingTop: 15,
   gap: 15,
   paddingLeft: 15,
   paddingRight: 15,
-  width: "468px",
-  marginLeft: "auto",
-  marginRight: "auto",
+  width: isWeb ? "468px" : "100%",
+  marginLeft: isWeb ? "auto" : 0,
+  marginRight: isWeb ? "auto" : 0,
   scrollbarWidth: "none", // For Firefox
   msOverflowStyle: "none", // For IE/Edge
   WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
