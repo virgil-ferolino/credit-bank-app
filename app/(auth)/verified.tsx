@@ -1,82 +1,66 @@
 import React from "react";
-import { View, StyleSheet, ImageBackground } from "react-native";
+import styled from "styled-components/native";
 import { Button, Text } from "react-native-paper";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function VerificationScreen() {
   return (
-    <ImageBackground
+    <Background
       source={require("../../assets/images/bgworld.png")}
-      style={styles.background}
       resizeMode="cover"
     >
-      <View style={styles.content}>
-        <View style={styles.iconContainer}>
-          {/* <Icon name="check-circle" size={50} color="#fff" /> */}
-        </View>
-
-        <Text style={styles.title}>Verified!</Text>
-        <Text style={styles.subtitle}>
-          Your account has been created successfully.
-        </Text>
-
-        <Button
-          mode="contained"
-          onPress={() => {}}
-          style={styles.button}
-          labelStyle={styles.buttonLabel}
-        >
-          SIGN IN
-        </Button>
-      </View>
-    </ImageBackground>
+      <Content>
+        <IconContainer />
+        <Title>Verified!</Title>
+        <Subtitle>Your account has been created successfully.</Subtitle>
+        <StyledButton onPress={() => {}}>SIGN IN</StyledButton>
+      </Content>
+    </Background>
   );
 }
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  iconContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderRadius: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#fff",
-    textAlign: "center",
-    marginBottom: 40,
-    opacity: 0.8,
-  },
-  button: {
-    width: "100%",
-    marginTop: 20,
-    backgroundColor: "#fff",
-    borderRadius: 25,
-    paddingVertical: 8,
-  },
-  buttonLabel: {
-    fontSize: 16,
-    color: "#20B2AA", // Matching the teal color from the background
-    fontWeight: "bold",
-  },
-});
+const Background = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`;
+
+const Content = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const IconContainer = styled.View`
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Title = styled(Text)`
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+`;
+
+const Subtitle = styled(Text)`
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0.8;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 25px;
+  padding-vertical: 8px;
+`;

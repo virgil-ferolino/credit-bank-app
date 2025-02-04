@@ -1,181 +1,159 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
+import { Image } from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <View style={styles.container}>
-      <Image
+    <Container>
+      <BackgroundImage
         source={require("../../assets/images/bgworld.png")}
-        style={styles.background}
         resizeMode="cover"
       />
+      <StyledSurface>
+        <Title>Sign in your account</Title>
 
-      <Surface style={styles.card}>
-        <Text style={styles.title}>Sign in your account</Text>
-
-        <TextInput
+        <StyledTextInput
           mode="outlined"
           label="ex: john@email.com"
           value={email}
           onChangeText={setEmail}
-          style={styles.input}
           placeholder="ex: john@email.com"
           keyboardType="email-address"
           autoCapitalize="none"
         />
 
-        <TextInput
+        <StyledTextInput
           mode="outlined"
           label="*******"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
-          style={styles.input}
         />
 
-        <Button
-          mode="contained"
-          onPress={() => {}}
-          style={styles.signInButton}
-          contentStyle={styles.buttonContent}
-        >
+        <SignInButton mode="contained" onPress={() => {}}>
           SIGN IN
-        </Button>
+        </SignInButton>
 
-        <Text style={styles.orText}>or sign in with</Text>
+        <OrText>or sign in with</OrText>
 
-        <View style={styles.socialButtons}>
-          <Button onPress={() => {}} style={styles.socialButton}>
-            <Image
+        <SocialButtons>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
               source={require("../../assets/images/google.svg")}
-              style={styles.socialIcon}
               resizeMode="contain"
             />
-          </Button>
-          <Button onPress={() => {}} style={styles.socialButton}>
-            <Image
+          </SocialButton>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
               source={require("../../assets/images/fb.svg")}
-              style={styles.socialIcon}
               resizeMode="contain"
             />
-          </Button>
-          <Button onPress={() => {}} style={styles.socialButton}>
-            <Image
+          </SocialButton>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
               source={require("../../assets/images/twitter.svg")}
-              style={styles.socialIcon}
               resizeMode="contain"
             />
-          </Button>
-        </View>
+          </SocialButton>
+        </SocialButtons>
 
-        <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>Don't have an account? </Text>
-          <Button
-            mode="text"
-            onPress={() => {}}
-            style={styles.signUpButton}
-            labelStyle={styles.signUpButtonText}
-          >
+        <SignUpContainer>
+          <SignUpText>Don't have an account? </SignUpText>
+          <SignUpButton mode="text" onPress={() => {}}>
             SIGN UP
-          </Button>
-        </View>
-      </Surface>
-    </View>
+          </SignUpButton>
+        </SignUpContainer>
+      </StyledSurface>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
+const Container = styled.View`
+  flex: 1;
+  background-color: #006d77;
+`;
 
-  container: {
-    flex: 1,
-    backgroundColor: "#006d77",
-  },
-  backgroundImage: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    opacity: 0.1,
-  },
-  card: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingLeft: 60,
-    paddingRight: 60,
-    paddingTop: 50,
-    paddingBottom: 50,
-    elevation: 4,
-  },
-  title: {
-    fontSize: 27,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#333",
-  },
-  input: {
-    marginBottom: 12,
-    backgroundColor: "white",
-  },
-  signInButton: {
-    marginTop: 10,
-    backgroundColor: "#006d77",
-    paddingVertical: 6,
-    fontWeight: "bold",
-  },
-  buttonContent: {
-    fontWeight: "bold",
-    height: 45,
-  },
-  orText: {
-    textAlign: "center",
-    marginVertical: 15,
-    color: "#666",
-  },
-  socialButtons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 15,
-    marginBottom: 20,
-  },
-  socialButton: {
-    width: 50,
-    height: 50, // Set height and width to create a square button
-    borderRadius: 25, // Keep the rounded button shape
-    justifyContent: "center", // Center the image inside the button
-    alignItems: "center", // Align items horizontally and vertically
-    padding: 0, // Remove padding to avoid extra space
-  },
-  socialIcon: {
-    width: 30, // Adjust width as per your preference
-    height: 30, // Adjust height as per your preference
-  },
-  signUpContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  signUpText: {
-    color: "#666",
-  },
-  signUpButton: {
-    margin: 0,
-    padding: 0,
-  },
-  signUpButtonText: {
-    color: "#006d77",
-    fontWeight: "bold",
-  },
-});
+const BackgroundImage = styled.Image`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+const StyledSurface = styled(Surface)`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 50px 60px;
+  elevation: 4;
+`;
+
+const Title = styled(Text)`
+  font-size: 27px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+`;
+
+const StyledTextInput = styled(TextInput)`
+  margin-bottom: 12px;
+  background-color: white;
+`;
+
+const SignInButton = styled(Button)`
+  margin-top: 10px;
+  background-color: #006d77;
+  padding-vertical: 6px;
+  font-weight: bold;
+  height: 45px;
+`;
+
+const OrText = styled(Text)`
+  text-align: center;
+  margin-vertical: 15px;
+  color: #666;
+`;
+
+const SocialButtons = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+`;
+
+const SocialButton = styled(Button)`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+`;
+
+const SocialIcon = styled(Image)`
+  width: 30px;
+  height: 30px;
+`;
+
+const SignUpContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SignUpText = styled(Text)`
+  color: #666;
+`;
+
+const SignUpButton = styled(Button)`
+  color: #006d77;
+  font-weight: bold;
+`;
