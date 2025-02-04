@@ -49,6 +49,7 @@ const StyledAddButton = styled(Button)({
   paddingLeft: 20,
   paddingRight: 20,
   borderRadius: 15,
+  boxShadow: "none",
 });
 //
 const StyledAccountView = styled(View)({
@@ -140,7 +141,7 @@ const MyCards = () => {
         </CategoryView>
         <CategoryView>
           <Text variant="titleLarge">Recent Transactions</Text>
-          <Card>
+          <Card style={{ boxShadow: "none" }}>
             <StyledTransactionCard>
               {transactionsArray.map(({ label, value }, index) => (
                 <HeaderView key={index}>
