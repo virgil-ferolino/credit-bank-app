@@ -26,6 +26,14 @@ const HomeLayout = () => {
           headerTitleAlign: "center",
         }}
       />
+      <Stack.Screen
+        name="activate-card"
+        options={{
+          title: "Select Card",
+          headerBackVisible: true,
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack>
   );
 };
