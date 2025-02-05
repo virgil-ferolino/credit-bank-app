@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image } from "react-native";
 import { useRouter } from "expo-router";
+import ParallaxScrollView from "@/components/ParralaxView";
 
 interface FormValues {
   name: string;
@@ -33,115 +34,118 @@ export default function SignUpScreen() {
   };
 
   return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
-      <Card>
-        <Title>Create your account</Title>
-
-        <StyledTextInput
-          mode="outlined"
-          label="Name"
-          value={formValue.name}
-          onChangeText={handleInputChange("name")}
-          placeholder="ex: jon smith"
-          autoCapitalize="words"
+    <ParallaxScrollView>
+      <Container>
+        <BackgroundImage
+          source={require("@/assets/images/bgworld.png")}
+          resizeMode="cover"
         />
+        <Card>
+          <Title>Create your account</Title>
 
-        <StyledTextInput
-          mode="outlined"
-          label="Email"
-          value={formValue.email}
-          onChangeText={handleInputChange("email")}
-          placeholder="ex: jon.smith@email.com"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <StyledTextInput
-          mode="outlined"
-          label="Password"
-          value={formValue.password}
-          onChangeText={handleInputChange("password")}
-          secureTextEntry
-        />
-
-        <StyledTextInput
-          mode="outlined"
-          label="Confirm password"
-          value={formValue.confirmPassword}
-          onChangeText={handleInputChange("confirmPassword")}
-          secureTextEntry
-        />
-
-        <TermsContainer>
-          <Checkbox.Android
-            status={formValue.termsAccepted ? "checked" : "unchecked"}
-            onPress={handleTermsAcceptedChange}
-            color="#006d77"
+          <StyledTextInput
+            mode="outlined"
+            label="Name"
+            value={formValue.name}
+            onChangeText={handleInputChange("name")}
+            placeholder="ex: jon smith"
+            autoCapitalize="words"
           />
-          <TermsText>
-            I understood the <TermsLink>terms & policy</TermsLink>
-          </TermsText>
-        </TermsContainer>
 
-        <Button
-          mode="contained"
-          onPress={() => router.push("/(auth)/verifyphone")}
-        >
-          SIGN UP
-        </Button>
+          <StyledTextInput
+            mode="outlined"
+            label="Email"
+            value={formValue.email}
+            onChangeText={handleInputChange("email")}
+            placeholder="ex: jon.smith@email.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
 
-        <OrText>or sign up with</OrText>
+          <StyledTextInput
+            mode="outlined"
+            label="Password"
+            value={formValue.password}
+            onChangeText={handleInputChange("password")}
+            secureTextEntry
+          />
 
-        <SocialButtons>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/google.svg")}
-              resizeMode="contain"
+          <StyledTextInput
+            mode="outlined"
+            label="Confirm password"
+            value={formValue.confirmPassword}
+            onChangeText={handleInputChange("confirmPassword")}
+            secureTextEntry
+          />
+
+          <TermsContainer>
+            <Checkbox.Android
+              status={formValue.termsAccepted ? "checked" : "unchecked"}
+              onPress={handleTermsAcceptedChange}
+              color="#006d77"
             />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/fb.svg")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/twitter.svg")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-        </SocialButtons>
+            <TermsText>
+              I understood the <TermsLink>terms & policy</TermsLink>
+            </TermsText>
+          </TermsContainer>
 
-        <SignInContainer>
-          <SignInText>Have an account? </SignInText>
-          <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
-            SIGN IN
-          </SignInButton>
-        </SignInContainer>
-      </Card>
-    </Container>
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/verifyphone")}
+          >
+            SIGN UP
+          </Button>
+
+          <OrText>or sign up with</OrText>
+
+          <SocialButtons>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/google.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/fb.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/twitter.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+          </SocialButtons>
+
+          <SignInContainer>
+            <SignInText>Have an account? </SignInText>
+            <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
+              SIGN IN
+            </SignInButton>
+          </SignInContainer>
+        </Card>
+      </Container>
+    </ParallaxScrollView>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #006d77;
-`;
+const Container = styled.View({
+  backgroundColor: "#006d77",
+  height: "100svh",
+  justifyContent: "flex-end",
+  width: "100%",
+});
 
 const BackgroundImage = styled.Image`
   flex: 1;
   width: 100%;
   height: 100%;
+  position: absolute;
 `;
 
 const Card = styled(Surface)`
-  position: absolute;
-  bottom: 0;
   width: 100%;
   background-color: white;
   border-top-left-radius: 20px;
