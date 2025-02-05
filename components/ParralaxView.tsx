@@ -1,8 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { Platform, ScrollView, View } from "react-native";
-import Animated, { useAnimatedRef, withDecay } from "react-native-reanimated";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { useBottomTabOverflow } from "@/components/ui/TabBarBackground";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
