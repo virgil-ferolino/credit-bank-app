@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 interface FormValues {
   name: string;
@@ -12,6 +13,7 @@ interface FormValues {
 }
 
 export default function SignUpScreen() {
+  const router = useRouter();
   const initialValues: FormValues = {
     name: "",
     email: "",
@@ -85,9 +87,12 @@ export default function SignUpScreen() {
           </TermsText>
         </TermsContainer>
 
-        <SignUpButton mode="contained" onPress={() => {}}>
+        <Button
+          mode="contained"
+          onPress={() => router.push("/(auth)/verifyphone")}
+        >
           SIGN UP
-        </SignUpButton>
+        </Button>
 
         <OrText>or sign up with</OrText>
 
@@ -114,7 +119,7 @@ export default function SignUpScreen() {
 
         <SignInContainer>
           <SignInText>Have an account? </SignInText>
-          <SignInButton mode="text" onPress={() => {}}>
+          <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
             SIGN IN
           </SignInButton>
         </SignInContainer>
@@ -171,12 +176,6 @@ const TermsText = styled(Text)`
 const TermsLink = styled(Text)`
   color: #006d77;
   text-decoration: underline;
-`;
-
-const SignUpButton = styled(Button)`
-  margin-top: 5px;
-  background-color: #006d77;
-  padding-vertical: 6px;
 `;
 
 const OrText = styled(Text)`

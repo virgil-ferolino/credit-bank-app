@@ -10,6 +10,7 @@ import {
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ParallaxScrollView from "@/components/ParralaxView";
 import styled from "styled-components/native";
+import { useRouter } from "expo-router";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
@@ -109,6 +110,7 @@ const ButtonsContainer = styled(View)(() => ({
 }));
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const [isBiometricEnabled, setBiometricEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -123,6 +125,7 @@ export default function SettingsScreen() {
   const handleConfirmLogout = () => {
     console.log("Logging out...");
     setModalVisible(false);
+    router.push("/(auth)/"); // Navigate to the auth route
   };
 
   return (
