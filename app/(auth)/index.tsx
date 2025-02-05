@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
 import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 interface FormValues {
   email: string;
@@ -9,6 +10,7 @@ interface FormValues {
 }
 
 export default function LoginScreen() {
+  const router = useRouter();
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -47,9 +49,13 @@ export default function LoginScreen() {
           secureTextEntry
         />
 
-        <SignInButton mode="contained" onPress={() => {}}>
+        {/* <SignInButton mode="contained" onPress={() => {}}>
           SIGN IN
-        </SignInButton>
+        </SignInButton> */}
+
+        <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
+          SIGN IN
+        </Button>
 
         <OrText>or sign in with</OrText>
 
@@ -76,7 +82,10 @@ export default function LoginScreen() {
 
         <SignUpContainer>
           <SignUpText>Don't have an account? </SignUpText>
-          <SignUpButton mode="text" onPress={() => {}}>
+          <SignUpButton
+            mode="text"
+            onPress={() => router.push("/(auth)/signup")}
+          >
             SIGN UP
           </SignUpButton>
         </SignUpContainer>
