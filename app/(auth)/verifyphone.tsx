@@ -90,13 +90,13 @@ export default function VerifyPhoneScreen({
           />
         </PhoneInputContainer>
 
-        <SendButton
+        <Button
           mode="contained"
           onPress={() => router.push("/(auth)/verified")}
           disabled={phoneNumber.length < 10}
         >
           SEND CODE
-        </SendButton>
+        </Button>
       </Card>
     </Container>
   );

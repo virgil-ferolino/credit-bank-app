@@ -87,12 +87,12 @@ export default function SignUpScreen() {
           </TermsText>
         </TermsContainer>
 
-        <SignUpButton
+        <Button
           mode="contained"
           onPress={() => router.push("/(auth)/verifyphone")}
         >
           SIGN UP
-        </SignUpButton>
+        </Button>
 
         <OrText>or sign up with</OrText>
 
@@ -119,7 +119,7 @@ export default function SignUpScreen() {
 
         <SignInContainer>
           <SignInText>Have an account? </SignInText>
-          <SignInButton mode="text" onPress={() => {}}>
+          <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
             SIGN IN
           </SignInButton>
         </SignInContainer>
@@ -176,12 +176,6 @@ const TermsText = styled(Text)`
 const TermsLink = styled(Text)`
   color: #006d77;
   text-decoration: underline;
-`;
-
-const SignUpButton = styled(Button)`
-  margin-top: 5px;
-  background-color: #006d77;
-  padding-vertical: 6px;
 `;
 
 const OrText = styled(Text)`

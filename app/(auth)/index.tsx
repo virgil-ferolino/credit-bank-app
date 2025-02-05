@@ -53,12 +53,9 @@ export default function LoginScreen() {
           SIGN IN
         </SignInButton> */}
 
-        <SignInButton
-          title="Go to Profile"
-          onPress={() => router.push("/(tabs)/mycard")}
-        >
+        <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
           SIGN IN
-        </SignInButton>
+        </Button>
 
         <OrText>or sign in with</OrText>
 
