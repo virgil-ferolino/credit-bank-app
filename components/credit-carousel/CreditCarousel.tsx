@@ -122,7 +122,7 @@ export default function CreditCardList() {
           <View
             style={{
               padding: 15,
-              width: CARD_WIDTH,
+              width: MOBILE_CARD_WIDTH,
               paddingHorizontal: 15,
             }}
           >

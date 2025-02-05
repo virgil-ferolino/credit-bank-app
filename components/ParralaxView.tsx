@@ -21,12 +21,10 @@ const StyledScrollView = styled(ScrollView)({
   overflow: "hidden", // Hide the scrollbars
 });
 const AnimatedView = styled(Animated.ScrollView)({
-  flex: 1,
 });
 
 export default function ParallaxScrollView({ children }: PropsWithChildren) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const bottom = useBottomTabOverflow();
   const isWeb = Platform.OS === "web";
   return (
     <GestureHandlerRootView>
@@ -39,8 +37,6 @@ export default function ParallaxScrollView({ children }: PropsWithChildren) {
           <Animated.ScrollView
             ref={scrollRef}
             scrollEventThrottle={16}
-            scrollIndicatorInsets={{ bottom }}
-            contentContainerStyle={{ paddingBottom: bottom }}
           >
             <SafeAreaView>{children}</SafeAreaView>
           </Animated.ScrollView>
