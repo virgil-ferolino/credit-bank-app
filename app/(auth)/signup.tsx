@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 interface FormValues {
   name: string;
@@ -12,6 +13,7 @@ interface FormValues {
 }
 
 export default function SignUpScreen() {
+  const router = useRouter();
   const initialValues: FormValues = {
     name: "",
     email: "",
@@ -85,7 +87,10 @@ export default function SignUpScreen() {
           </TermsText>
         </TermsContainer>
 
-        <SignUpButton mode="contained" onPress={() => {}}>
+        <SignUpButton
+          mode="contained"
+          onPress={() => router.push("/(auth)/verifyphone")}
+        >
           SIGN UP
         </SignUpButton>
 

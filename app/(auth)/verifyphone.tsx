@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View, Image } from "react-native";
 import { TextInput, Button, Text, Menu } from "react-native-paper";
@@ -30,6 +31,8 @@ export default function VerifyPhoneScreen({
   const handleSendCode = () => {
     onSendCode(countryCode.value, phoneNumber);
   };
+
+  const router = useRouter();
 
   return (
     <Container>
@@ -89,7 +92,7 @@ export default function VerifyPhoneScreen({
 
         <SendButton
           mode="contained"
-          // onPress={handleSendCode}
+          onPress={() => router.push("/(auth)/verified")}
           disabled={phoneNumber.length < 10}
         >
           SEND CODE
