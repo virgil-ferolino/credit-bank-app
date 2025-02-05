@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { Platform, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 import { Avatar, Text } from "react-native-paper";
-import { TouchableOpacity, View } from "react-native";
-import { initialNotifications } from "@/data/home";
+
 import { useRouter } from "expo-router";
+
+import { initialNotifications } from "@/data/home";
+
 import {
   NotificationItem,
   useNotificationStore,
 } from "@/store/home/useNotification";
+
 import ParallaxScrollView from "@/components/ParralaxView";
 
 const ReadAll = styled(Text)({
@@ -86,7 +90,7 @@ const Notification = () => {
 
   return (
     <ParallaxScrollView>
-      <Animated.View style={{ marginTop: -30 }}>
+      <Animated.View style={{ marginTop: Platform.OS === "web" ? 0 : -30 }}>
         <TouchableOpacity hitSlop={20}>
           <ReadAll variant="labelMedium">Read All</ReadAll>
         </TouchableOpacity>

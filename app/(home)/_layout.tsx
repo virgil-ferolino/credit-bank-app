@@ -18,6 +18,14 @@ const HomeLayout = () => {
           headerTitleAlign: "left",
         }}
       />
+      <Stack.Screen
+        name="transaction"
+        options={{
+          title: "Recent Transaction",
+          headerBackVisible: true,
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack>
   );
 };

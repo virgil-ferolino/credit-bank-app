@@ -72,6 +72,10 @@ export default function HomeScreen() {
     router.push("/notification");
   };
 
+  const handleViewRecent = () => {
+    router.push("/transaction");
+  };
+
   return (
     <ParallaxScrollView>
       <BlueBackground />
@@ -138,8 +142,8 @@ export default function HomeScreen() {
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TextBold variant="labelLarge">Recent Transaction</TextBold>
-          <TouchableOpacity hitSlop={20}>
-            <Text >View more</Text>
+          <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
+            <Text>View more</Text>
           </TouchableOpacity>
         </View>
 
