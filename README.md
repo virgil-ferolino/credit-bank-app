@@ -34,3 +34,10 @@
 - Comments: Comment your code where necessary but avoid obvious comments.
 - Variable Naming: Use camel case for variable naming while upper case for constants
 - Responsibility: All who break the repository will spend the night fixing it "ALONE".
+
+# Deployment
+
+always before:
+npx expo export --platform web
+then run:
+eas deploy
