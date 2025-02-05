@@ -65,6 +65,9 @@ const StyledAccountText = styled(Text)({
 const StyledTransactionCard = styled(Card.Content)({
   gap: 20,
 });
+const TextBold = styled(Text)({
+  fontWeight: "bold",
+});
 
 const MyCards = () => {
   const reroute = useRouter();
@@ -118,7 +121,7 @@ const MyCards = () => {
           </StyledPointContent>
         </PointView>
         <CategoryView>
-          <Text variant="titleLarge">Account Details</Text>
+          <TextBold variant="titleMedium">Account Details</TextBold>
           <StyledAccountView>
             {accountDetailsArray.map(({ label, value }, index) => (
               <HeaderView key={index}>
@@ -133,7 +136,7 @@ const MyCards = () => {
           </StyledAccountView>
         </CategoryView>
         <CategoryView>
-          <Text variant="titleLarge">Recent Transactions</Text>
+          <TextBold variant="titleMedium">Recent Transactions</TextBold>
           <Card style={{ boxShadow: "none" }}>
             <StyledTransactionCard>
               {transactionsArray.map(({ label, value }, index) => (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   ViewToken,
+  type ScaledSize,
 } from "react-native";
 import { FlatList as WebFlatList } from "react-native-web";
 import CreditCard from "./CreditCard";
@@ -15,9 +16,21 @@ export default function CreditCardList() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [webActiveIndex, setWebActiveIndex] = useState(0);
 
+  const [dimension, setDimension] = useState(Dimensions.get("window"));
+  useEffect(() => {
+    const windowDimension = Dimensions.addEventListener(
+      "change",
+      ({ window }: { window: ScaledSize }) => {
+        setDimension(window);
+      }
+    );
+    return () => windowDimension?.remove();
+  }, []);
+  const CARD_WIDTH = dimension.width > 480 ? 480 : dimension.width;
+  const MOBILE_CARD_WIDTH = Dimensions.get("window").width;
   const handleScroll = (event: any) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.floor(contentOffsetX / 438);
+    const newIndex = Math.floor(contentOffsetX / (CARD_WIDTH - 20));
     setWebActiveIndex(newIndex);
   };
 
@@ -28,8 +41,6 @@ export default function CreditCardList() {
     marginTop: 20,
   });
 
-  const { width } = Dimensions.get("window");
-  const CARD_WIDTH = width;
   const creditCardArray = [
     {
       cardNumber: "**** **** **** 1234",
@@ -77,7 +88,7 @@ export default function CreditCardList() {
         renderItem={({ item }) => (
           <View
             style={{
-              width: 468,
+              width: CARD_WIDTH,
               padding: 15,
             }}
           >
@@ -110,6 +121,7 @@ export default function CreditCardList() {
         renderItem={({ item }) => (
           <View
             style={{
+              padding: 15,
               width: CARD_WIDTH,
               paddingHorizontal: 15,
             }}
@@ -124,7 +136,6 @@ export default function CreditCardList() {
         )}
         horizontal
         pagingEnabled
-        scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{
