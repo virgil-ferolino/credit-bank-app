@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "expo-router";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
@@ -8,8 +9,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { menuList, transaction } from "@/data/home";
-import { Pressable } from "react-native-gesture-handler";
-import { useRouter } from "expo-router";
 
 interface TransactionItem {
   title: string;
@@ -73,6 +72,10 @@ export default function HomeScreen() {
     router.push("/notification");
   };
 
+  const handleViewRecent = () => {
+    router.push("/transaction");
+  };
+
   return (
     <ParallaxScrollView>
       <BlueBackground />
@@ -104,9 +107,9 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <Pressable onPress={handleNotification} hitSlop={20}>
+          <TouchableOpacity onPress={handleNotification} hitSlop={20}>
             <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <CreditCard />
@@ -139,7 +142,7 @@ export default function HomeScreen() {
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TextBold variant="labelLarge">Recent Transaction</TextBold>
-          <TouchableOpacity hitSlop={20}>
+          <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
             <Text>View more</Text>
           </TouchableOpacity>
         </View>
@@ -147,14 +150,16 @@ export default function HomeScreen() {
         <StyledWhiteCard>
           <Card.Content style={{ rowGap: 15 }}>
             {transaction.length > 0 ? (
-              transaction.map((item, ids) => (
-                <RenderTransactionItem
-                  key={ids}
-                  title={item.title}
-                  price={item.price}
-                  category={item.category}
-                />
-              ))
+              transaction
+                .slice(0, 4)
+                .map((item, ids) => (
+                  <RenderTransactionItem
+                    key={ids}
+                    title={item.title}
+                    price={item.price}
+                    category={item.category}
+                  />
+                ))
             ) : (
               <Text
                 variant="bodyMedium"

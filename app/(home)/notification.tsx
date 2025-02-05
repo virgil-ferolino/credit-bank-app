@@ -1,10 +1,19 @@
 import React, { useState } from "react";
+import { Platform, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 import { Avatar, Text } from "react-native-paper";
-import { TouchableOpacity, View } from "react-native";
-import { initialNotifications } from "@/data/home";
+
 import { useRouter } from "expo-router";
+
+import { initialNotifications } from "@/data/home";
+
+import {
+  NotificationItem,
+  useNotificationStore,
+} from "@/store/home/useNotification";
+
+import ParallaxScrollView from "@/components/ParralaxView";
 
 const ReadAll = styled(Text)({
   color: "#656565",
@@ -12,13 +21,6 @@ const ReadAll = styled(Text)({
   paddingVertical: 8,
   textAlign: "right",
 });
-
-export interface NotificationItem {
-  title: string;
-  description: string;
-  timespan: string;
-  read: boolean;
-}
 
 interface NotificationItemProps extends NotificationItem {
   handlePress: () => void;
@@ -44,7 +46,7 @@ const RenderNotificationItem = (props: NotificationItemProps) => {
               {props.title}
             </Text>
             <Text variant="labelSmall" style={{ flexWrap: "wrap" }}>
-              {props.description}
+              {`${props.description.slice(0, 40)}...`}
             </Text>
           </View>
         </View>
@@ -71,18 +73,28 @@ const Notification = () => {
     );
   };
 
-  const handleNavigate = (index: number, title: string) => {
-    router.navigate({
+  const setSelectedNotification = useNotificationStore(
+    (state) => state.setSelectedNotification
+  );
+
+  const handleNavigate = (index: number, data: NotificationItem) => {
+    setSelectedNotification(data);
+
+    router.push({
       pathname: "/[id]",
-      params: { id: index, title: title },
+      params: { id: index },
     });
+
     markAsRead(index);
   };
 
   return (
-    <Animated.View>
-      <ReadAll variant="labelMedium">Read All</ReadAll>
-      <Animated.ScrollView>
+    <ParallaxScrollView>
+      <Animated.View style={{ marginTop: Platform.OS === "web" ? 0 : -30 }}>
+        <TouchableOpacity hitSlop={20}>
+          <ReadAll variant="labelMedium">Read All</ReadAll>
+        </TouchableOpacity>
+
         <Animated.View style={{ rowGap: 3 }}>
           {notifications.map((item, ids) => (
             <RenderNotificationItem
@@ -91,12 +103,12 @@ const Notification = () => {
               description={item.description}
               timespan={item.timespan}
               read={item.read}
-              handlePress={() => handleNavigate(ids, item.title)}
+              handlePress={() => handleNavigate(ids, item)}
             />
           ))}
         </Animated.View>
-      </Animated.ScrollView>
-    </Animated.View>
+      </Animated.View>
+    </ParallaxScrollView>
   );
 };
 
