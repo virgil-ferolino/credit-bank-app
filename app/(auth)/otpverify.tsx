@@ -1,19 +1,22 @@
+import ParallaxScrollView from "@/components/ParralaxView";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { TextInput as RNTextInput } from "react-native";
-import { Button, Text, Surface, useTheme } from "react-native-paper";
+import { Dimensions, TextInput as RNTextInput } from "react-native";
+import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
 
 interface FormValues {
   otp: string[];
 }
+const { height } = Dimensions.get("window");
 
 export default function VerifyPhoneScreen() {
+  const router = useRouter();
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
   };
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
-  const theme = useTheme();
 
   const handleOtpChange = (index: number) => (text: string) => {
     const newOtp = [...formValue.otp];
@@ -30,49 +33,53 @@ export default function VerifyPhoneScreen() {
     .map(() => React.createRef<RNTextInput>());
 
   return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
-      <Card>
-        <Title>Verify your phone number</Title>
+    <ParallaxScrollView>
+      <Container>
+        <BackgroundImage
+          source={require("@/assets/images/bgworld.png")}
+          resizeMode="cover"
+        />
+        <Card>
+          <Title>Verify your phone number</Title>
 
-        <Subtitle>
-          We will send you a One-Time-Password (OTP){"\n"}on this mobile number.
-        </Subtitle>
+          <Subtitle>
+            We will send you a One-Time-Password (OTP){"\n"}on this mobile
+            number.
+          </Subtitle>
 
-        <PhoneInputContainer>
-          {formValue.otp.map((digit, index) => (
-            <OtpInput
-              key={index}
-              ref={inputRefs[index]}
-              keyboardType="number-pad"
-              maxLength={1}
-              selectTextOnFocus
-              value={digit}
-              onChangeText={handleOtpChange(index)}
-            />
-          ))}
-        </PhoneInputContainer>
+          <PhoneInputContainer>
+            {formValue.otp.map((digit, index) => (
+              <OtpInput
+                key={index}
+                ref={inputRefs[index]}
+                keyboardType="number-pad"
+                maxLength={1}
+                selectTextOnFocus
+                value={digit}
+                onChangeText={handleOtpChange(index)}
+              />
+            ))}
+          </PhoneInputContainer>
 
-        <Button
-          mode="contained"
-          onPress={() => {}}
-          contentStyle={{ height: 45 }}
-        >
-          SEND CODE
-        </Button>
-      </Card>
-    </Container>
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/verified")}
+            contentStyle={{ height: 45 }}
+          >
+            SEND CODE
+          </Button>
+        </Card>
+      </Container>
+    </ParallaxScrollView>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #006d77;
-  height: 100%;
-`;
+const Container = styled.View({
+  backgroundColor: "#006d77",
+  width: "100%",
+  justifyContent: "flex-end",
+  height: height,
+});
 
 const BackgroundImage = styled.Image`
   flex: 1;
