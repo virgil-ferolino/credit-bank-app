@@ -94,12 +94,7 @@ const Promos = () => {
                 {promos.map((promo, index) => (
                     <View key={index}>
                         <StyledCard>
-                            <StyledImage
-                                source={promo.promoImage}
-                                style={{
-                                    borderBottomLeftRadius: 0,
-                                    borderBottomRightRadius: 0,
-                                }} />
+                            <StyledImage source={promo.promoImage} />
                             <Card.Content>
                                 <StyledText>
                                     {promo.promoHeader}
