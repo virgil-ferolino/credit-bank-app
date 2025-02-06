@@ -8,10 +8,10 @@ import styled from "styled-components/native";
 interface FormValues {
   otp: string[];
 }
-const router = useRouter();
 const { height } = Dimensions.get("window");
 
 export default function VerifyPhoneScreen() {
+  const router = useRouter();
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
   };
@@ -77,9 +77,9 @@ export default function VerifyPhoneScreen() {
 
 const Container = styled.View({
   backgroundColor: "#006d77",
-  height: "100svh",
-  justifyContent: "flex-end",
   width: "100%",
+  justifyContent: "flex-end",
+  height: height,
 });
 
 const BackgroundImage = styled.Image`

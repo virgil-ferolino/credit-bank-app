@@ -17,7 +17,9 @@ export default function VerificationScreen() {
           resizeMode="cover"
         >
           <Content>
-            <IconContainer />
+            <IconContainer
+              source={require("@/assets/images/verifiedlogo.png")}
+            />
             <Title>Verified!</Title>
             <Subtitle>Your account has been created successfully.</Subtitle>
             <StyledButton onPress={() => router.push("/(auth)/")}>
@@ -50,13 +52,9 @@ const Container = styled.View({
   height: height,
 });
 
-const IconContainer = styled.View`
+const IconContainer = styled.Image`
   width: 80px;
   height: 80px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 40px;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 20px;
 `;
 
