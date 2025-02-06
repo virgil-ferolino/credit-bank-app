@@ -20,6 +20,15 @@ const SettingsLayout = () => {
           headerBackVisible: true,
         }}
       />
+      <Stack.Screen
+        name="profile"
+        options={{
+          headerShown: true,
+          headerTitle: "My Profile",
+          headerTitleAlign: "center",
+          headerBackVisible: true,
+        }}
+      />
     </Stack>
   );
 };
