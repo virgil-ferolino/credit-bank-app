@@ -2,7 +2,7 @@ import ParallaxScrollView from "@/components/ParralaxView";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Dimensions, TextInput as RNTextInput } from "react-native";
-import { Button, Text, Surface, useTheme } from "react-native-paper";
+import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
 
 interface FormValues {
@@ -17,7 +17,6 @@ export default function VerifyPhoneScreen() {
   };
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
-  const theme = useTheme();
 
   const handleOtpChange = (index: number) => (text: string) => {
     const newOtp = [...formValue.otp];
