@@ -7,7 +7,7 @@ import { useAppTheme } from "@/hooks/useTheme";
 // Standard credit card ratio
 
 const ParentView = styled(Card)({
-  baxShadow: "none",
+  boxShadow: "none",
   position: "relative",
   overflow: "hidden",
 });
@@ -103,7 +103,7 @@ const CreditCard = ({
     <ParentView>
       <LinearGradient
         colors={[gradientStart, gradientEnd]}
-        style={{ flex: 1, borderRadius: 10 }}
+        style={{ borderRadius: 10 }}
         start={{ x: 0.5, y: 1 }}
         end={{ x: 0, y: 0 }}
       >
