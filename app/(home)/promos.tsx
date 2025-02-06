@@ -91,8 +91,8 @@ const Promos = () => {
     return (
         <ParallaxScrollView>
             <HeaderView>
-                {promos.map((promo, index) => (
-                    <View key={index}>
+                {promos.map((promo) => (
+                    <View key={promo.promoId}>
                         <StyledCard>
                             <StyledImage source={promo.promoImage} />
                             <Card.Content>
