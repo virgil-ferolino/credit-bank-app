@@ -45,7 +45,6 @@ const CloseButton = styled(TouchableOpacity)({
 });
 
 const ModalContent = styled(View)({
-  flex: 1,
 });
 
 export default function ActivateCard() {
