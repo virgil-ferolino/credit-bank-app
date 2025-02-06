@@ -14,7 +14,7 @@ export const menuList = [
   {
     label: "Promos & Discounts",
     image: require("@/assets/images/ticket.png"),
-    route: "/(home)/transaction",
+    route: "/(home)/promos",
   },
 ];
 
@@ -258,3 +258,23 @@ export const initialNotifications: NotificationItem[] = [
     read: false,
   },
 ];
+
+export const promos = [
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  
+]
