@@ -1,37 +1,34 @@
+import React from "react";
 import styled from "styled-components/native";
 import { Button, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
+import ParallaxScrollView from "@/components/ParralaxView";
+import { Dimensions } from "react-native";
+
+const { height } = Dimensions.get("window");
 
 export default function VerificationScreen() {
   const router = useRouter();
   return (
-    <Background
-      source={require("@/assets/images/bgworld.png")}
-      resizeMode="cover"
-      style={{ backgroundColor: "#0A8599" }} // Add teal background color
-    >
-      <Content>
-        <TextContainer>
-          <IconContainer>
-            {/* <Check size={40} color="#fff" /> */}
-          </IconContainer>
-          <Title variant="headlineMedium">Verified!</Title>
-          <Subtitle>Your account has been created successfully.</Subtitle>
-        </TextContainer>
-        <StyledButton
-          mode="contained"
-          onPress={() => router.push("/(auth)/")}
-          labelStyle={{
-            fontSize: 16,
-            fontWeight: "600",
-            color: "#0A8599",
-            letterSpacing: 1,
-          }}
+    <ParallaxScrollView>
+      <Container>
+        <Background
+          source={require("@/assets/images/bgworld.png")}
+          resizeMode="cover"
         >
-          SIGN IN
-        </StyledButton>
-      </Content>
-    </Background>
+          <Content>
+            <IconContainer
+              source={require("@/assets/images/verifiedlogo.png")}
+            />
+            <Title>Verified!</Title>
+            <Subtitle>Your account has been created successfully.</Subtitle>
+            <StyledButton onPress={() => router.push("/(auth)/")}>
+              SIGN IN
+            </StyledButton>
+          </Content>
+        </Background>
+      </Container>
+    </ParallaxScrollView>
   );
 }
 
@@ -45,48 +42,42 @@ const Content = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 20px;
 `;
 
-const TextContainer = styled.View`
-  align-items: center;
-  flex: 1;
-  justify-content: center;
-`;
+const Container = styled.View({
+  backgroundColor: "#006d77",
+  width: "100%",
+  justifyContent: "flex-end",
+  height: height,
+});
 
-const IconContainer = styled.View`
-  width: 72px;
-  height: 72px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 36px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 24px;
+const IconContainer = styled.Image`
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
 `;
 
 const Title = styled(Text)`
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: bold;
   color: #fff;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 `;
 
 const Subtitle = styled(Text)`
   font-size: 16px;
   color: #fff;
   text-align: center;
-  margin-bottom: 48px;
-  opacity: 0.9;
-  letter-spacing: 0.3px;
+  margin-bottom: 40px;
+  opacity: 0.8;
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
+
+  margin-top: 20px;
   background-color: #fff;
-  border-radius: 28px;
-  padding-vertical: 6px;
-  elevation: 0;
-  margin-top: auto;
-  margin-bottom: 32px;
+  border-radius: 25px;
+  padding-vertical: 8px;
 `;
