@@ -1,8 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { Platform, ScrollView, View } from "react-native";
-import Animated, { useAnimatedRef, withDecay } from "react-native-reanimated";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 
-import { useBottomTabOverflow } from "@/components/ui/TabBarBackground";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
@@ -20,8 +19,6 @@ const StyledScrollView = styled(ScrollView)({
   WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
   overflow: "hidden", // Hide the scrollbars
 });
-const AnimatedView = styled(Animated.ScrollView)({
-});
 
 export default function ParallaxScrollView({ children }: PropsWithChildren) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -30,17 +27,16 @@ export default function ParallaxScrollView({ children }: PropsWithChildren) {
     <GestureHandlerRootView>
       {isWeb ? (
         <WebView>
-          <StyledScrollView>{children}</StyledScrollView>
+          <StyledScrollView>
+            <SafeAreaView>{children}</SafeAreaView>
+          </StyledScrollView>
         </WebView>
       ) : (
-        <AnimatedView>
-          <Animated.ScrollView
-            ref={scrollRef}
-            scrollEventThrottle={16}
-          >
+        <Animated.View>
+          <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
             <SafeAreaView>{children}</SafeAreaView>
           </Animated.ScrollView>
-        </AnimatedView>
+        </Animated.View>
       )}
     </GestureHandlerRootView>
   );
