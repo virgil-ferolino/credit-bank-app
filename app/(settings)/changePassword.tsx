@@ -17,7 +17,7 @@ const StyledTextInput = styled(TextInput)({
   marginBottom: 12,
   backgroundColor: "white",
   borderRadius: 10,
-  height: 50,
+  height: 45,
 });
 
 const StyledButton = styled(Button)({
