@@ -14,7 +14,7 @@ export const menuList = [
   {
     label: "Promos & Discounts",
     image: require("@/assets/images/ticket.png"),
-    route: "/(home)/transaction",
+    route: "/(home)/promos",
   },
 ];
 
