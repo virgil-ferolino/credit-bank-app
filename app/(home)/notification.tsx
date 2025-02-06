@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, TouchableOpacity, View } from "react-native";
+import { FlatList, Platform, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 import { Avatar, Text } from "react-native-paper";
@@ -12,8 +12,7 @@ import {
   NotificationItem,
   useNotificationStore,
 } from "@/store/home/useNotification";
-
-import ParallaxScrollView from "@/components/ParralaxView";
+import Container from "@/components/Container";
 
 const ReadAll = styled(Text)({
   color: "#656565",
@@ -89,26 +88,28 @@ const Notification = () => {
   };
 
   return (
-    <ParallaxScrollView>
+    <Container>
       <Animated.View style={{ marginTop: Platform.OS === "web" ? 0 : -30 }}>
         <TouchableOpacity hitSlop={20}>
           <ReadAll variant="labelMedium">Read All</ReadAll>
         </TouchableOpacity>
 
-        <Animated.View style={{ rowGap: 3 }}>
-          {notifications.map((item, ids) => (
+        <FlatList
+          data={notifications}
+          nestedScrollEnabled={true}
+          renderItem={({ item, index }) => (
             <RenderNotificationItem
-              key={ids}
+              key={index}
               title={item.title}
               description={item.description}
               timespan={item.timespan}
               read={item.read}
-              handlePress={() => handleNavigate(ids, item)}
+              handlePress={() => handleNavigate(index, item)}
             />
-          ))}
-        </Animated.View>
+          )}
+        />
       </Animated.View>
-    </ParallaxScrollView>
+    </Container>
   );
 };
 

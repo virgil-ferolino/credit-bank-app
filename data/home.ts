@@ -4,17 +4,17 @@ export const menuList = [
   {
     label: "Add Card",
     image: require("@/assets/images/deposit-check.png"),
-    routePath: "/addNewCard"
+    route: "/(home)/activate-card",
   },
   {
     label: "Activate Card",
     image: require("@/assets/images/card-check.png"),
-    routePath: "/"
+    route: "/(home)/activate-card",
   },
   {
     label: "Promos & Discounts",
     image: require("@/assets/images/ticket.png"),
-    routePath: "/promos"
+    route: "/(home)/transaction",
   },
 ];
 
@@ -117,6 +117,76 @@ export const transaction = [
 ];
 
 export const initialNotifications: NotificationItem[] = [
+  {
+    title: "Transaction Successful",
+    description:
+      "You spent $49.99 at Amazon. Your updated balance is $1,250.75.",
+    timespan: "5 minutes ago",
+    read: false,
+  },
+  {
+    title: "Payment Due Reminder",
+    description:
+      "Your credit card payment of $150 is due in 3 days. Avoid late fees!",
+    timespan: "1 hour ago",
+    read: false,
+  },
+  {
+    title: "Unusual Spending Alert",
+    description:
+      "We noticed an unusual transaction of $900 at Electronics Hub. Was this you?",
+    timespan: "3 hours ago",
+    read: false,
+  },
+  {
+    title: "Cashback Earned",
+    description:
+      "You earned $5.25 cashback on your latest purchase at Walmart!",
+    timespan: "6 hours ago",
+    read: true,
+  },
+  {
+    title: "Credit Limit Increase",
+    description:
+      "Congratulations! Your credit limit has been increased to $5,000.",
+    timespan: "1 day ago",
+    read: true,
+  },
+  {
+    title: "Card Declined",
+    description:
+      "Your card was declined for a $200 purchase at Gas Station. Check your balance.",
+    timespan: "2 days ago",
+    read: true,
+  },
+  {
+    title: "New Statement Available",
+    description:
+      "Your monthly credit card statement for January is ready to view.",
+    timespan: "3 days ago",
+    read: true,
+  },
+  {
+    title: "Fraud Alert",
+    description:
+      "A suspicious $500 charge was detected in a different city. Review your transactions.",
+    timespan: "4 days ago",
+    read: false,
+  },
+  {
+    title: "Annual Fee Charged",
+    description:
+      "Your annual membership fee of $99 has been charged to your credit card.",
+    timespan: "6 days ago",
+    read: true,
+  },
+  {
+    title: "Reward Points Expiring",
+    description:
+      "You have 2,500 reward points expiring soon. Redeem them before they expire!",
+    timespan: "1 week ago",
+    read: false,
+  },
   {
     title: "Transaction Successful",
     description:

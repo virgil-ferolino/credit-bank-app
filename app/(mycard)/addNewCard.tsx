@@ -1,16 +1,15 @@
 import ParallaxScrollView from "@/components/ParralaxView";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Platform, View } from "react-native";
 import { Text, TextInput, Button } from "react-native-paper";
 import styled from "styled-components/native";
 
 // Define styled components outside the component
-const StyledView = styled(ScrollView)({
+const StyledView = styled(View)({
   paddingLeft: 15,
   paddingRight: 15,
-  marginTop: -30,
-  rowGap: 15,
-  flexDirection: "column",
+  marginTop: Platform.OS === "web" ? 15 : -30,
+  gap: 15,
 });
 
 const StyledContainer = styled(View)({

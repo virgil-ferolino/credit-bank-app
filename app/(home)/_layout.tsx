@@ -27,6 +27,14 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="activate-card"
+        options={{
+          title: "Select Card",
+          headerBackVisible: true,
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
         name="promos"
         options={{
           title: "Promos & Discounts",
