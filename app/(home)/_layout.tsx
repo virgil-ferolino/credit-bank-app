@@ -1,8 +1,14 @@
+import IosBackButton from "@/components/IosBackButton";
+
 import { Stack } from "expo-router";
 
 const HomeLayout = () => {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerRight: () => <IosBackButton />,
+      }}
+    >
       <Stack.Screen
         name="notification"
         options={{
