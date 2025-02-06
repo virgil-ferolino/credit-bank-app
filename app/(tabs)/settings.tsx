@@ -111,7 +111,8 @@ const ButtonsContainer = styled(View)(() => ({
 
 export default function SettingsScreen() {
   const router = useRouter();
-  const [isBiometricEnabled, setBiometricEnabled] = useState(false);
+  const reroute = useRouter();
+  // const [isBiometricEnabled, setBiometricEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogout = () => {
@@ -147,20 +148,19 @@ export default function SettingsScreen() {
         </MenuItem>
 
         <Description>Security</Description>
-
-        <MenuItem>
+        <MenuItem onPress={() => reroute.push("/changePassword")}>
           <MenuText>Change Password</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
-        <MenuItem>
+        {/* <MenuItem>
           <MenuText>Privacy Policy</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
-        </MenuItem>
+        </MenuItem> */}
+        {/* 
+        <Description>Choose what data you share with us</Description> */}
 
-        <Description>Choose what data you share with us</Description>
-
-        <MenuItem>
+        {/* <MenuItem>
           <MenuText>Biometric</MenuText>
           <Switch
             value={isBiometricEnabled}
@@ -169,7 +169,7 @@ export default function SettingsScreen() {
             ios_backgroundColor="#D1D1D6"
             style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
           />
-        </MenuItem>
+        </MenuItem> */}
 
         <LogoutItem onPress={handleLogout}>
           <LogoutText>Log out</LogoutText>
