@@ -2,47 +2,36 @@ import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
 import { useState } from "react";
 import { Dimensions, Image, Modal, TouchableOpacity, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 const { height } = Dimensions.get("screen")
 
-const StyledCard = styled(View)({
+const StyledCard = styled(Card)({
     width: 350,
     height: 300,
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "white",
-    elevation: 4,
-    shadowColor: "black",
-    shadowOffset: {
-        width: 0,
-        height: 2
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     marginTop: 10,
     marginBottom: 10,
 });
 
 const StyledImage = styled(Image)({
     width: "100%",
-    height: "70%"
-});
-
-const StyledContent = styled(View)({
-    padding: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1
-});
+    height: 180,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius: 0
+})
 
 const StyledText = styled(Text)({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333",
-    fontSize: 15
+    fontSize: 15,
+    marginTop: 20,
+    marginBottom: 10
 });
 
 const StyledButton = styled(Button)({
@@ -105,15 +94,20 @@ const Promos = () => {
                 {promos.map((promo, index) => (
                     <View key={index}>
                         <StyledCard>
-                            <StyledImage source={promo.promoImage} />
-                            <StyledContent>
+                            <StyledImage
+                                source={promo.promoImage}
+                                style={{
+                                    borderBottomLeftRadius: 0,
+                                    borderBottomRightRadius: 0,
+                                }} />
+                            <Card.Content>
                                 <StyledText>
                                     {promo.promoHeader}
                                 </StyledText>
                                 <StyledButton onPress={() => setVisible(true)}>
                                     <ButtonText>Read more</ButtonText>
                                 </StyledButton>
-                            </StyledContent>
+                            </Card.Content>
                         </StyledCard>
                         <Modal
                             animationType="slide"
@@ -125,13 +119,25 @@ const Promos = () => {
                                 <ModalContainer>
                                     <ModalContent>
                                         <PromoImageHeader source={promo.promoContent?.promoImageFull} />
-                                        <StyledText>
+                                        <StyledText
+                                            style={{
+                                                marginTop: 15,
+                                        }}>
                                             {promo.promoContent?.promoTitle}
                                         </StyledText>
-                                        <Text>
+                                        <Text
+                                            style={{
+                                                marginTop: 15,
+                                                marginLeft: 10,
+                                                marginRight: 10
+                                        }}>
                                             {promo.promoContent?.promoDesc}
                                         </Text>
-                                        <StyledText>
+                                        <StyledText
+                                            style={{
+                                                marginTop: 15,
+                                                marginBottom: 15
+                                        }}>
                                             {promo.promoContent?.promoDetail}
                                         </StyledText>
                                         <PromoImageDetail source={promo.promoContent?.promoDetailImage} />
