@@ -3,6 +3,9 @@ import styled from "styled-components/native";
 import { Button, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import ParallaxScrollView from "@/components/ParralaxView";
+import { Dimensions } from "react-native";
+
+const { height } = Dimensions.get("window");
 
 export default function VerificationScreen() {
   const router = useRouter();
@@ -42,9 +45,9 @@ const Content = styled.View`
 
 const Container = styled.View({
   backgroundColor: "#006d77",
-  height: "100svh",
-  justifyContent: "flex-end",
   width: "100%",
+  justifyContent: "flex-end",
+  height: height,
 });
 
 const IconContainer = styled.View`

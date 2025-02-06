@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import { Image } from "react-native";
+import { Dimensions, Image } from "react-native";
 import { useRouter } from "expo-router";
 import ParallaxScrollView from "@/components/ParralaxView";
 
@@ -12,6 +12,8 @@ interface FormValues {
   confirmPassword: string;
   termsAccepted: boolean;
 }
+
+const { height } = Dimensions.get("window");
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -133,9 +135,9 @@ export default function SignUpScreen() {
 
 const Container = styled.View({
   backgroundColor: "#006d77",
-  height: "100svh",
-  justifyContent: "flex-end",
   width: "100%",
+  justifyContent: "flex-end",
+  height: height,
 });
 
 const BackgroundImage = styled.Image`

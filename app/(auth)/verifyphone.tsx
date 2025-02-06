@@ -1,7 +1,7 @@
 import ParallaxScrollView from "@/components/ParralaxView";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Dimensions } from "react-native";
 import { TextInput, Button, Text, Menu } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -17,6 +17,8 @@ interface CountryCode {
   label: string;
   value: string;
 }
+
+const { height } = Dimensions.get("window");
 
 interface VerifyPhoneScreenProps {
   onSendCode: (countryCode: string, phoneNumber: string) => void;
@@ -94,7 +96,7 @@ export default function VerifyPhoneScreen({
 
           <Button
             mode="contained"
-            onPress={() => router.push("/(auth)/verified")}
+            onPress={() => router.push("/(auth)/otpverify")}
             disabled={phoneNumber.length < 10}
           >
             SEND CODE
@@ -107,9 +109,10 @@ export default function VerifyPhoneScreen({
 
 const Container = styled.View({
   backgroundColor: "#006d77",
-  height: "100svh",
-  justifyContent: "flex-end",
+
   width: "100%",
+  justifyContent: "flex-end",
+  height: height,
 });
 
 const BackgroundImage = styled.Image`

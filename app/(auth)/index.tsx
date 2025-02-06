@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
-import { Image } from "react-native";
+import { Dimensions, Image } from "react-native";
 import { useRouter } from "expo-router";
 import ParallaxScrollView from "@/components/ParralaxView";
 
@@ -9,6 +9,8 @@ interface FormValues {
   email: string;
   password: string;
 }
+
+const { height } = Dimensions.get("window");
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -50,10 +52,6 @@ export default function LoginScreen() {
             onChangeText={handleInputChange("password")}
             secureTextEntry
           />
-
-          {/* <SignInButton mode="contained" onPress={() => {}}>
-          SIGN IN
-        </SignInButton> */}
 
           <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
             SIGN IN
@@ -99,9 +97,9 @@ export default function LoginScreen() {
 
 const Container = styled.View({
   backgroundColor: "#006d77",
-  height: "100svh",
-  justifyContent: "flex-end",
   width: "100%",
+  justifyContent: "flex-end",
+  height: height,
 });
 
 const BackgroundImage = styled.Image`
@@ -131,14 +129,6 @@ const Title = styled(Text)`
 const StyledTextInput = styled(TextInput)`
   margin-bottom: 12px;
   background-color: white;
-`;
-
-const SignInButton = styled(Button)`
-  margin-top: 10px;
-  background-color: #006d77;
-  padding-vertical: 6px;
-  font-weight: bold;
-  height: 45px;
 `;
 
 const OrText = styled(Text)`

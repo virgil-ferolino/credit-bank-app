@@ -20,8 +20,7 @@ const StyledScrollView = styled(ScrollView)({
   WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
   overflow: "hidden", // Hide the scrollbars
 });
-const AnimatedView = styled(Animated.ScrollView)({
-});
+const AnimatedView = styled(Animated.ScrollView)({});
 
 export default function ParallaxScrollView({ children }: PropsWithChildren) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -34,10 +33,7 @@ export default function ParallaxScrollView({ children }: PropsWithChildren) {
         </WebView>
       ) : (
         <AnimatedView>
-          <Animated.ScrollView
-            ref={scrollRef}
-            scrollEventThrottle={16}
-          >
+          <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
             <SafeAreaView>{children}</SafeAreaView>
           </Animated.ScrollView>
         </AnimatedView>
