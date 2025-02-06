@@ -261,6 +261,7 @@ export const initialNotifications: NotificationItem[] = [
 
 export const promos = [
   {
+    promoId: 1,
     promoImage: require("@/assets/images/promo-pic.png"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
@@ -272,6 +273,7 @@ export const promos = [
     }
   },
   {
+    promoId: 2,
     promoImage: require("@/assets/images/promo-pic.png"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
@@ -283,6 +285,7 @@ export const promos = [
     }
   },
   {
+    promoId: 3,
     promoImage: require("@/assets/images/promo-pic.png"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
@@ -294,6 +297,7 @@ export const promos = [
     }
   },
   {
+    promoId: 4,
     promoImage: require("@/assets/images/promo-pic.png"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
@@ -306,3 +310,40 @@ export const promos = [
   },
   
 ]
+
+export const promoDetails: Record<number, {
+   fullImg: string,
+   promoTitle: string;
+   promoDesc: string;
+   promoDetail: string;
+   promoDetailImg: string;
+}> = {
+  1: {
+    fullImg: require("@/assets/images/promo-fullpic.png"),
+    promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+    promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+    promoDetail: "Here's how you can earn rewards:",
+    promoDetailImg: require("@/assets/images/promo-info.png")
+  },
+  2: {
+    fullImg: require("@/assets/images/promo-fullpic.png"),
+    promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+    promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+    promoDetail: "Here's how you can earn rewards:",
+    promoDetailImg: require("@/assets/images/promo-info.png")
+  },
+  3: {
+    fullImg: require("@/assets/images/promo-fullpic.png"),
+    promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+    promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+    promoDetail: "Here's how you can earn rewards:",
+    promoDetailImg: require("@/assets/images/promo-info.png")
+  },
+  4: {
+    fullImg: require("@/assets/images/promo-fullpic.png"),
+    promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+    promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+    promoDetail: "Here's how you can earn rewards:",
+    promoDetailImg: require("@/assets/images/promo-info.png")
+  }
+}
