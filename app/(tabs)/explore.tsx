@@ -160,7 +160,7 @@ export default function SettingsScreen() {
 
         <Description>Choose what data you share with us</Description>
 
-        <MenuItem>
+        <MenuItem disabled>
           <MenuText>Biometric</MenuText>
           <Switch
             value={isBiometricEnabled}

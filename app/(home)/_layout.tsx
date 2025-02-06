@@ -26,6 +26,14 @@ const HomeLayout = () => {
           headerTitleAlign: "center",
         }}
       />
+      <Stack.Screen
+        name="promos"
+        options={{
+          title: "Promos & Discounts",
+          headerBackVisible: true,
+          headerTitleAlign: "center"
+        }}
+      />
     </Stack>
   );
 };

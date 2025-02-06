@@ -7,7 +7,7 @@ import { useAppTheme } from "@/hooks/useTheme";
 // Standard credit card ratio
 
 const ParentView = styled(Card)({
-  baxShadow: "none",
+  boxShadow: "none",
   position: "relative",
   overflow: "hidden",
 });

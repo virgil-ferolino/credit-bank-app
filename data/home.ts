@@ -4,14 +4,17 @@ export const menuList = [
   {
     label: "Add Card",
     image: require("@/assets/images/deposit-check.png"),
+    routePath: "/addNewCard"
   },
   {
     label: "Activate Card",
     image: require("@/assets/images/card-check.png"),
+    routePath: "/"
   },
   {
     label: "Promos & Discounts",
     image: require("@/assets/images/ticket.png"),
+    routePath: "/promos"
   },
 ];
 
@@ -185,3 +188,23 @@ export const initialNotifications: NotificationItem[] = [
     read: false,
   },
 ];
+
+export const promos = [
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  {
+    promoImage: require("@/assets/images/promo-pic.png"),
+    promoHeader: "A Love-Filled Season for Savings"
+  },
+  
+]

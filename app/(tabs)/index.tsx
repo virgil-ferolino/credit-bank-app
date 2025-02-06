@@ -123,7 +123,7 @@ export default function HomeScreen() {
         >
           {menuList.map((item, ids) => (
             <StyledWhiteCard key={ids}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push(item.routePath)}>
                 <Card.Content
                   style={{ alignItems: "center", width: 100, height: 125 }}
                 >
