@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "expo-router";
+import { RelativePathString, useRouter } from "expo-router";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
@@ -69,11 +69,15 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const handleNotification = () => {
-    router.push("/notification");
+    router.push("/(home)/notification");
   };
 
   const handleViewRecent = () => {
-    router.push("/transaction");
+    router.push("/(home)/transaction");
+  };
+
+  const handleNavigateMenu = (route: RelativePathString) => {
+    router.push(route);
   };
 
   return (
@@ -123,7 +127,11 @@ export default function HomeScreen() {
         >
           {menuList.map((item, ids) => (
             <StyledWhiteCard key={ids}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  handleNavigateMenu(item.route as RelativePathString)
+                }
+              >
                 <Card.Content
                   style={{ alignItems: "center", width: 100, height: 125 }}
                 >
