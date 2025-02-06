@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Text,
-  Switch,
+  // Switch,
   Modal,
   TouchableOpacity,
   View,

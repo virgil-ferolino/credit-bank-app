@@ -3,7 +3,7 @@ import { ScrollView, Platform, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React, { useState } from "react";
-import Icon from "react-native-vector-icons/Feather"; // Import the Feather icon set
+import { MaterialIcons } from "@expo/vector-icons";
 
 const commonPadding = Platform.OS === "ios" ? 40 : 60;
 const StyledView = styled(ScrollView)({
@@ -17,8 +17,7 @@ const StyledTextInput = styled(TextInput)({
   marginBottom: 12,
   backgroundColor: "white",
   borderRadius: 10,
-  height: 30,
-  paddingVertical: 6,
+  height: 50,
 });
 
 const StyledButton = styled(Button)({
@@ -43,22 +42,33 @@ const StyledText = styled(Text)({
 });
 
 const ChangePassword = () => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [passwords, setPasswords] = useState({
+    password: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [visibility, setVisibility] = useState({
+    password: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
 
-  const togglePasswordVisibility = (field: string) => {
-    if (field === "password") {
-      setPasswordVisible(!passwordVisible);
-    } else if (field === "newPassword") {
-      setNewPasswordVisible(!newPasswordVisible);
-    } else if (field === "confirmPassword") {
-      setConfirmPasswordVisible(!confirmPasswordVisible);
-    }
+  const togglePasswordVisibility = (field: keyof typeof visibility) => {
+    setVisibility((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handlePasswordChange = (
+    field: keyof typeof passwords,
+    value: string
+  ) => {
+    setPasswords((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return (
@@ -66,17 +76,18 @@ const ChangePassword = () => {
       <StyledView>
         <StyledText>Password</StyledText>
         <StyledTextInput
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={!passwordVisible}
+          value={passwords.password}
+          onChangeText={(value: string) =>
+            handlePasswordChange("password", value)
+          }
           right={
             <TextInput.Icon
               icon={() => (
                 <TouchableOpacity
                   onPress={() => togglePasswordVisibility("password")}
                 >
-                  <Icon
-                    name={passwordVisible ? "eye-off" : "eye"}
+                  <MaterialIcons
+                    name={visibility.password ? "visibility-off" : "visibility"}
                     size={20}
                     color="#004068"
                   />
@@ -87,17 +98,21 @@ const ChangePassword = () => {
         />
         <StyledText>New Password</StyledText>
         <StyledTextInput
-          value={newPassword}
-          onChangeText={setNewPassword}
-          secureTextEntry={!newPasswordVisible}
+          value={passwords.newPassword}
+          onChangeText={(value: string) =>
+            handlePasswordChange("newPassword", value)
+          }
+          secureTextEntry={!visibility.newPassword}
           right={
             <TextInput.Icon
               icon={() => (
                 <TouchableOpacity
                   onPress={() => togglePasswordVisibility("newPassword")}
                 >
-                  <Icon
-                    name={newPasswordVisible ? "eye-off" : "eye"}
+                  <MaterialIcons
+                    name={
+                      visibility.newPassword ? "visibility-off" : "visibility"
+                    }
                     size={20}
                     color="#004068"
                   />
@@ -108,17 +123,23 @@ const ChangePassword = () => {
         />
         <StyledText>Confirm Password</StyledText>
         <StyledTextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry={!confirmPasswordVisible}
+          value={passwords.confirmPassword}
+          onChangeText={(value: string) =>
+            handlePasswordChange("confirmPassword", value)
+          }
+          secureTextEntry={!visibility.confirmPassword}
           right={
             <TextInput.Icon
               icon={() => (
                 <TouchableOpacity
                   onPress={() => togglePasswordVisibility("confirmPassword")}
                 >
-                  <Icon
-                    name={confirmPasswordVisible ? "eye-off" : "eye"}
+                  <MaterialIcons
+                    name={
+                      visibility.confirmPassword
+                        ? "visibility-off"
+                        : "visibility"
+                    }
                     size={20}
                     color="#004068"
                   />
