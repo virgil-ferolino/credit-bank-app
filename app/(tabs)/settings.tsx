@@ -142,7 +142,7 @@ export default function SettingsScreen() {
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onPress={() => reroute.push("/contactUs")}>
           <MenuText>Contact Us</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>

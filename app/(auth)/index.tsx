@@ -1,13 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
-import { Image } from "react-native";
+import { Dimensions, Image } from "react-native";
 import { useRouter } from "expo-router";
+import ParallaxScrollView from "@/components/ParralaxView";
 
 interface FormValues {
   email: string;
   password: string;
 }
+
+const { height } = Dimensions.get("window");
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -23,81 +26,81 @@ export default function LoginScreen() {
   };
 
   return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
-      <StyledSurface>
-        <Title>Sign in your account</Title>
-
-        <StyledTextInput
-          mode="outlined"
-          label="ex: john@email.com"
-          value={formValue.email}
-          onChangeText={handleInputChange("email")}
-          placeholder="ex: john@email.com"
-          keyboardType="email-address"
-          autoCapitalize="none"
+    <ParallaxScrollView>
+      <Container>
+        <BackgroundImage
+          source={require("@/assets/images/bgworld.png")}
+          resizeMode="cover"
         />
+        <StyledSurface>
+          <Title>Sign in your account</Title>
 
-        <StyledTextInput
-          mode="outlined"
-          label="Password"
-          value={formValue.password}
-          onChangeText={handleInputChange("password")}
-          secureTextEntry
-        />
+          <StyledTextInput
+            mode="outlined"
+            label="ex: john@email.com"
+            value={formValue.email}
+            onChangeText={handleInputChange("email")}
+            placeholder="ex: john@email.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
 
-        {/* <SignInButton mode="contained" onPress={() => {}}>
-          SIGN IN
-        </SignInButton> */}
+          <StyledTextInput
+            mode="outlined"
+            label="Password"
+            value={formValue.password}
+            onChangeText={handleInputChange("password")}
+            secureTextEntry
+          />
 
-        <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
-          SIGN IN
-        </Button>
+          <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
+            SIGN IN
+          </Button>
 
-        <OrText>or sign in with</OrText>
+          <OrText>or sign in with</OrText>
 
-        <SocialButtons>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/google.svg")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/fb.svg")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/twitter.svg")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-        </SocialButtons>
+          <SocialButtons>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/google.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/fb.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/twitter.svg")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+          </SocialButtons>
 
-        <SignUpContainer>
-          <SignUpText>Don't have an account? </SignUpText>
-          <SignUpButton
-            mode="text"
-            onPress={() => router.push("/(auth)/signup")}
-          >
-            SIGN UP
-          </SignUpButton>
-        </SignUpContainer>
-      </StyledSurface>
-    </Container>
+          <SignUpContainer>
+            <SignUpText>Don't have an account? </SignUpText>
+            <SignUpButton
+              mode="text"
+              onPress={() => router.push("/(auth)/signup")}
+            >
+              SIGN UP
+            </SignUpButton>
+          </SignUpContainer>
+        </StyledSurface>
+      </Container>
+    </ParallaxScrollView>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #006d77;
-`;
+const Container = styled.View({
+  backgroundColor: "#006d77",
+  width: "100%",
+  justifyContent: "flex-end",
+  height: height,
+});
 
 const BackgroundImage = styled.Image`
   flex: 1;
@@ -107,8 +110,6 @@ const BackgroundImage = styled.Image`
 `;
 
 const StyledSurface = styled(Surface)`
-  position: absolute;
-  bottom: 0;
   width: 100%;
   background-color: white;
   border-top-left-radius: 20px;
@@ -128,14 +129,6 @@ const Title = styled(Text)`
 const StyledTextInput = styled(TextInput)`
   margin-bottom: 12px;
   background-color: white;
-`;
-
-const SignInButton = styled(Button)`
-  margin-top: 10px;
-  background-color: #006d77;
-  padding-vertical: 6px;
-  font-weight: bold;
-  height: 45px;
 `;
 
 const OrText = styled(Text)`

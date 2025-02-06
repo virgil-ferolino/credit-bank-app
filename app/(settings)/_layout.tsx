@@ -11,6 +11,15 @@ const SettingsLayout = () => {
           headerBackVisible: true,
         }}
       />
+      <Stack.Screen
+        name="contactUs"
+        options={{
+          headerShown: true,
+          headerTitle: "Contact Us",
+          headerTitleAlign: "center",
+          headerBackVisible: true,
+        }}
+      />
     </Stack>
   );
 };
