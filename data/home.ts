@@ -4,7 +4,7 @@ export const menuList = [
   {
     label: "Add Card",
     image: require("@/assets/images/deposit-check.png"),
-    route: "/(home)/activate-card",
+    route: "/(mycard)/addNewCard",
   },
   {
     label: "Activate Card",
