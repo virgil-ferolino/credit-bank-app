@@ -1,12 +1,27 @@
 import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
 import { useState } from "react";
-import { Dimensions, Image, Modal, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, Modal, ScrollView, TouchableOpacity, View } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 const { height } = Dimensions.get("screen")
+
+interface PromoType {
+    promoId: number,
+    promoImage: string,
+    promoHeader: string,
+    promoContent: PromoContentType
+}
+
+interface PromoContentType {
+    promoImageFull: string,
+    promoTitle: string,
+    promoDesc: string,
+    promoDetail: string,
+    promoDetailImage: string,
+}
 
 const StyledCard = styled(Card)({
     width: 350,
@@ -59,7 +74,7 @@ const Overlay = styled(TouchableOpacity)({
 });
 
 const ModalContainer = styled(Animated.View)({
-    height: height * 0.93,
+    height: height * 0.90,
     backgroundColor: '#fff',
     padding: 20,
     scrollbarWidth: "none", // For Firefox
@@ -71,78 +86,95 @@ const ModalContainer = styled(Animated.View)({
     overflowY: "auto",
 });
 
-const ModalContent = styled(View)({
+const ModalContent = styled(ScrollView)({
     flex:1,
 });
 
 const PromoImageHeader = styled(Image)({
     width: "100%",
-    height: "20%"
+    height: 180
 })
 
 const PromoImageDetail = styled(Image)({
     width: "100%",
-    height: "70%"
+    height: 550
 })
 
+const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, onClose: () => void, promoContent:PromoContentType }) => {
+    return (
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisible}>
+            <Overlay
+                onPress={onClose}
+                activeOpacity={2}>
+                <ModalContainer>
+                    <ModalContent>
+                        <PromoImageHeader source={promoContent.promoImageFull} />
+                        <StyledText
+                            style={{
+                                marginTop:15
+                            }}>
+                            {promoContent.promoTitle}
+                        </StyledText>
+                        <Text
+                            style={{
+                                marginTop:15,
+                                marginLeft:10,
+                                marginRight:10
+                            }}>
+                            {promoContent.promoDesc}
+                        </Text>
+                        <StyledText
+                            style={{
+                                marginTop:15,
+                                marginBottom:15
+                            }}>
+                            {promoContent.promoDetail}
+                        </StyledText>
+                        {promoContent?.promoDetailImage &&(
+                            <PromoImageDetail source={promoContent.promoDetailImage} />
+                        )}
+                    </ModalContent>
+                </ModalContainer>
+            </Overlay>
+        </Modal>
+    )
+}
+
+const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
+    return(
+        <StyledCard>
+            <StyledImage source={promo.promoImage} />
+            <Card.Content>
+                <StyledText>
+                    {promo.promoHeader}
+                </StyledText>
+                <StyledButton onPress={() => onOpen(promo)}>
+                    <ButtonText>
+                        Read more
+                    </ButtonText>
+                </StyledButton>
+            </Card.Content>
+        </StyledCard>
+    )
+}
+
 const Promos = () => {
-    const [visible, setVisible] = useState(false)
+    const [selectedPromo, setSelectedPromo] = useState<PromoType | null>(null)
 
     return (
         <ParallaxScrollView>
             <HeaderView>
                 {promos.map((promo) => (
-                    <View key={promo.promoId}>
-                        <StyledCard>
-                            <StyledImage source={promo.promoImage} />
-                            <Card.Content>
-                                <StyledText>
-                                    {promo.promoHeader}
-                                </StyledText>
-                                <StyledButton onPress={() => setVisible(true)}>
-                                    <ButtonText>Read more</ButtonText>
-                                </StyledButton>
-                            </Card.Content>
-                        </StyledCard>
-                        <Modal
-                            animationType="slide"
-                            transparent={true} 
-                            visible={visible}>
-                            <Overlay
-                                activeOpacity={2}
-                                onPress={() => setVisible(false)}>
-                                <ModalContainer>
-                                    <ModalContent>
-                                        <PromoImageHeader source={promo.promoContent?.promoImageFull} />
-                                        <StyledText
-                                            style={{
-                                                marginTop: 15,
-                                        }}>
-                                            {promo.promoContent?.promoTitle}
-                                        </StyledText>
-                                        <Text
-                                            style={{
-                                                marginTop: 15,
-                                                marginLeft: 10,
-                                                marginRight: 10
-                                        }}>
-                                            {promo.promoContent?.promoDesc}
-                                        </Text>
-                                        <StyledText
-                                            style={{
-                                                marginTop: 15,
-                                                marginBottom: 15
-                                        }}>
-                                            {promo.promoContent?.promoDetail}
-                                        </StyledText>
-                                        <PromoImageDetail source={promo.promoContent?.promoDetailImage} />
-                                    </ModalContent>
-                                </ModalContainer>
-                            </Overlay>
-                        </Modal>
-                    </View>
+                    <PromoCard
+                        key={promo.promoId}
+                        promo={promo}
+                        onOpen={() => setSelectedPromo(promo)} />
                 ))}
             </HeaderView>
+            {selectedPromo && <PromoModal isVisible={!!selectedPromo} promoContent={selectedPromo.promoContent} onClose={() => setSelectedPromo(null)} />}
         </ParallaxScrollView>
     );
 }
