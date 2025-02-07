@@ -3,7 +3,7 @@ import { Platform, ScrollView, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
 const WebView = styled(View)({
@@ -28,13 +28,17 @@ export default function ParallaxScrollView({ children }: PropsWithChildren) {
       {isWeb ? (
         <WebView>
           <StyledScrollView>
-            <SafeAreaView>{children}</SafeAreaView>
+            <SafeAreaProvider>
+              <SafeAreaView>{children}</SafeAreaView>
+            </SafeAreaProvider>
           </StyledScrollView>
         </WebView>
       ) : (
         <Animated.View>
           <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-            <SafeAreaView>{children}</SafeAreaView>
+            <SafeAreaProvider>
+              <SafeAreaView>{children}</SafeAreaView>
+            </SafeAreaProvider>
           </Animated.ScrollView>
         </Animated.View>
       )}
