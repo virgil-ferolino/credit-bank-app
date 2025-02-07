@@ -3,6 +3,7 @@ export interface CreditCardProps {
   cardHolder?: string;
   expiryDate?: string;
   cvv?: string;
+  key?: number
 }
 
 export interface CreditCarousel {

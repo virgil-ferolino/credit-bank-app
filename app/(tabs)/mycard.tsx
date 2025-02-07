@@ -1,6 +1,6 @@
-import { Card, Text, Button } from "react-native-paper";
+import { Card, Text, Button, Avatar } from "react-native-paper";
 import { useRouter } from "expo-router";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
@@ -8,6 +8,7 @@ import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
 interface LabelValue {
   label: string;
   value: string | number;
+  iconName?: string;
 }
 
 const ParentView = styled(View)({
@@ -69,6 +70,12 @@ const TextBold = styled(Text)({
   fontWeight: "bold",
 });
 
+const TransactionLabel = styled(View)({
+  flexDirection: "row",
+  gap: 10,
+  alignItems: "center",
+});
+
 const MyCards = () => {
   const reroute = useRouter();
 
@@ -86,14 +93,17 @@ const MyCards = () => {
     {
       label: "YOUTUBE",
       value: "-$5.00",
+      iconName: "YT",
     },
     {
       label: "SPOTIFY",
       value: "-$12.00",
+      iconName: "ST",
     },
     {
       label: "MOBILE LEGENDS",
       value: "$12.00",
+      iconName: "ML",
     },
   ];
   return (
@@ -136,12 +146,21 @@ const MyCards = () => {
           </StyledAccountView>
         </CategoryView>
         <CategoryView>
-          <TextBold variant="titleMedium">Recent Transactions</TextBold>
+          <HeaderView>
+            <TextBold variant="titleMedium">Recent Transactions</TextBold>
+            <Pressable>
+              <Text variant="titleSmall">View More</Text>
+            </Pressable>
+          </HeaderView>
+
           <Card style={{ boxShadow: "none" }}>
             <StyledTransactionCard>
-              {transactionsArray.map(({ label, value }, index) => (
+              {transactionsArray.map(({ label, value, iconName }, index) => (
                 <HeaderView key={index}>
-                  <Text variant="titleMedium">{label}</Text>
+                  <TransactionLabel>
+                    <Avatar.Text label={iconName ?? ""} size={40} />
+                    <Text variant="titleMedium">{label}</Text>
+                  </TransactionLabel>
                   <Text
                     variant="titleMedium"
                     style={{
