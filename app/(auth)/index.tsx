@@ -62,19 +62,19 @@ export default function LoginScreen() {
           <SocialButtons>
             <SocialButton onPress={() => {}}>
               <SocialIcon
-                source={require("@/assets/images/google.svg")}
+                source={require("@/assets/images/google.png")}
                 resizeMode="contain"
               />
             </SocialButton>
             <SocialButton onPress={() => {}}>
               <SocialIcon
-                source={require("@/assets/images/fb.svg")}
+                source={require("@/assets/images/fb.png")}
                 resizeMode="contain"
               />
             </SocialButton>
             <SocialButton onPress={() => {}}>
               <SocialIcon
-                source={require("@/assets/images/twitter.svg")}
+                source={require("@/assets/images/twitter.png")}
                 resizeMode="contain"
               />
             </SocialButton>

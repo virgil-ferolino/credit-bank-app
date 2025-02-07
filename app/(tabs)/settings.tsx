@@ -88,8 +88,8 @@ const ModalButton = styled(TouchableOpacity)(() => ({
   padding: 6,
   width: "50%",
   alignItems: "center",
-  borderTopWidth: 1,
-  borderTopColor: "gray",
+  borderTopWidth: 2,
+  borderTopColor: "#D3D3D3",
 }));
 
 const ModalButtonText = styled(Text)(() => ({
@@ -98,8 +98,8 @@ const ModalButtonText = styled(Text)(() => ({
 }));
 
 const Separator = styled(View)(() => ({
-  borderLeftWidth: 1,
-  borderLeftColor: "gray",
+  borderLeftWidth: 2,
+  borderLeftColor: "#D3D3D3",
   height: "100%",
 }));
 
@@ -137,7 +137,7 @@ export default function SettingsScreen() {
         </Section>
 
         <Description>General</Description>
-        <MenuItem>
+        <MenuItem onPress={() => reroute.push("/profile")}>
           <MenuText>My Profile</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>

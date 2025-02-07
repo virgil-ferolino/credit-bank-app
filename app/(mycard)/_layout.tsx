@@ -1,8 +1,13 @@
+import IosBackButton from "@/components/IosBackButton";
 import { Stack } from "expo-router";
 
 const MyCardsLayout = () => {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerRight: () => <IosBackButton />,
+      }}
+    >
       <Stack.Screen
         name="addNewCard"
         options={{
