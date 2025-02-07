@@ -1,9 +1,8 @@
 import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
-import { useState } from "react";
-import { Dimensions, Image, Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Animated, Dimensions, Image, Modal, PanResponder, ScrollView, TouchableOpacity, View } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
-import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 const { height } = Dimensions.get("screen")
@@ -56,42 +55,36 @@ const StyledButton = styled(Button)({
 const ButtonText = styled(Text)({
     color: "white",
     fontSize: 14,
-    fontWeight: "thin"
 });
 
 const HeaderView = styled(View)({
-    display: "flex",
-    flexDirection: "col",
     flexGrow: 1,
     alignItems: "center",
 });
 
 const Overlay = styled(TouchableOpacity)({
     flex:1,
-    backgroundColor: "transparent",
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "flex-end"
 });
 
 const ModalContainer = styled(Animated.View)({
-    height: height * 0.90,
+    height: height * 0.9,
     backgroundColor: '#fff',
-    padding: 20,
-    scrollbarWidth: "none", // For Firefox
-    msOverflowStyle: "none", // For IE/Edge
-    maxWidth: 480,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     width: "100%",
     alignSelf: "center",
-    WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
-    overflowY: "auto",
-});
-
-const ModalContent = styled(ScrollView)({
-    flex:1,
+    overflow: "hidden",
+    flex: 1,
 });
 
 const PromoImageHeader = styled(Image)({
     width: "100%",
-    height: 180
+    height: 250,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginBottom: 15,
 })
 
 const PromoImageDetail = styled(Image)({
@@ -100,6 +93,34 @@ const PromoImageDetail = styled(Image)({
 })
 
 const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, onClose: () => void, promoContent:PromoContentType }) => {
+    const translateY = new Animated.Value(height);
+    const scrollY = new Animated.Value(0);
+
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderMove: (_evt, gestureState) => {
+            if (gestureState.dy > 100) {
+                onClose();
+            }
+            else {
+                Animated.spring(translateY, {
+                    toValue: 0,
+                    useNativeDriver: false,
+                }).start();
+            }
+        },
+    });
+
+    useEffect(() => {
+        if (isVisible) {
+            Animated.spring(translateY, {
+                toValue:0,
+                useNativeDriver:false,
+            }).start();
+        }
+    }, [isVisible]);
+
     return (
         <Modal
             animationType="slide"
@@ -107,9 +128,22 @@ const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, o
             visible={isVisible}>
             <Overlay
                 onPress={onClose}
-                activeOpacity={2}>
-                <ModalContainer>
-                    <ModalContent>
+                activeOpacity={1}>
+                <ModalContainer
+                    style={{
+                        transform: [{translateY}]
+                    }}
+                    {...panResponder.panHandlers}>
+                    <Animated.ScrollView
+                        scrollEventThrottle={16}
+                        onScroll={Animated.event(
+                            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                            { useNativeDriver: false }
+                        )}
+                        contentContainerStyle={{ 
+                            paddingTop: 20,
+                            paddingBottom: 20,
+                         }}>
                         <PromoImageHeader source={promoContent.promoImageFull} />
                         <StyledText
                             style={{
@@ -135,7 +169,7 @@ const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, o
                         {promoContent?.promoDetailImage &&(
                             <PromoImageDetail source={promoContent.promoDetailImage} />
                         )}
-                    </ModalContent>
+                    </Animated.ScrollView>
                 </ModalContainer>
             </Overlay>
         </Modal>
