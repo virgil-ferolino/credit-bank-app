@@ -67,7 +67,7 @@ const Container = styled.View`
 
 const Content = styled.View`
   flex: 1;
-  width: ${Platform.OS === "web" ? "80%" : "100%"};
+  width: ${Platform.OS === "web" ? "100%" : "100%"};
   max-width: 480px;
 `;
 
