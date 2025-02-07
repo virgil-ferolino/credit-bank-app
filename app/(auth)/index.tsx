@@ -53,7 +53,7 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
-          <Button mode="contained" onPress={() => router.push("/(tabs)/")}>
+          <Button mode="contained" onPress={() => router.push("/(tabs)")}>
             SIGN IN
           </Button>
 
