@@ -55,7 +55,7 @@ const AddNewCard = () => {
   const [formValue, setFormValue] = useState(initialValues);
   const inputRestrict = (e: string, dateFormat: boolean = true) => {
     let formatText = e.replace(/[^0-9]/g, "");
-    if (dateFormat != true) return formatText.slice(0, 12);
+    if (dateFormat != true) return formatText.slice(0, 16);
     return (formatText = `${formatText.slice(0, 2)}/${formatText.slice(2, 4)}`);
   };
 
@@ -121,7 +121,7 @@ const AddNewCard = () => {
               })
             }
             keyboardType="numeric"
-            maxLength={12}
+            maxLength={16}
             inputMode="numeric"
           />
         </StyledContainer>
