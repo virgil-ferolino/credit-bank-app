@@ -1,14 +1,13 @@
 import ParallaxScrollView from "@/components/ParralaxView";
 import { useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import { Text, TextInput, Button } from "react-native-paper";
 import styled from "styled-components/native";
 
 // Define styled components outside the component
 const StyledView = styled(View)({
-  paddingLeft: 15,
-  paddingRight: 15,
-  marginTop: Platform.OS === "web" ? 15 : -30,
+  paddingHorizontal: 16,
+  paddingVertical: 8,
   gap: 15,
 });
 
@@ -55,7 +54,7 @@ const AddNewCard = () => {
   const [formValue, setFormValue] = useState(initialValues);
   const inputRestrict = (e: string, dateFormat: boolean = true) => {
     let formatText = e.replace(/[^0-9]/g, "");
-    if (dateFormat != true) return formatText.slice(0, 12);
+    if (dateFormat !== true) return formatText.slice(0, 12);
     return (formatText = `${formatText.slice(0, 2)}/${formatText.slice(2, 4)}`);
   };
 

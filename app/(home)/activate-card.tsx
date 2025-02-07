@@ -27,7 +27,7 @@ export default function ActivateCard() {
           paddingHorizontal: 16,
           flexDirection: "column",
           rowGap: 5,
-          paddingVertical: 5,
+          paddingVertical: 8,
         }}
       >
         <Card elevation={3}>
