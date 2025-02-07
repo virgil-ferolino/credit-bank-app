@@ -41,6 +41,7 @@ type CardInfoArrayProps = {
   placeHolder: string;
   onChangeText: (e: string) => void;
   value: string;
+  maxLength?: number;
 };
 
 const initialValues = {
@@ -52,19 +53,27 @@ const initialValues = {
 };
 const AddNewCard = () => {
   const [formValue, setFormValue] = useState(initialValues);
+  const inputRestrict = (e: string, dateFormat: boolean = true) => {
+    let formatText = e.replace(/[^0-9]/g, "");
+    if (dateFormat != true) return formatText.slice(0, 16);
+    return (formatText = `${formatText.slice(0, 2)}/${formatText.slice(2, 4)}`);
+  };
 
   const cardInfoArray: CardInfoArrayProps[] = [
     {
       title: "Expiry",
       placeHolder: "MM/YY",
-      onChangeText: (e) => setFormValue({ ...formValue, expiry: e }),
+      onChangeText: (e) =>
+        setFormValue({ ...formValue, expiry: inputRestrict(e) }),
       value: formValue.expiry,
     },
     {
       title: "CVV",
       placeHolder: "XXX",
-      onChangeText: (e) => setFormValue({ ...formValue, cvv: e }),
+      onChangeText: (e) =>
+        setFormValue({ ...formValue, cvv: inputRestrict(e, false) }),
       value: formValue.cvv,
+      maxLength: 3,
     },
   ];
 
@@ -105,12 +114,20 @@ const AddNewCard = () => {
             placeholder="XXXX XXXX XXXX XXXX"
             placeholderTextColor="#9A9A9A"
             activeOutlineColor="black"
-            onChangeText={(e) => setFormValue({ ...formValue, cardNumber: e })}
+            onChangeText={(e) =>
+              setFormValue({
+                ...formValue,
+                cardNumber: inputRestrict(e, false),
+              })
+            }
+            keyboardType="numeric"
+            maxLength={16}
+            inputMode="numeric"
           />
         </StyledContainer>
         <StyledCardInfoContainer>
           {cardInfoArray.map(
-            ({ title, placeHolder, onChangeText, value }, index) => (
+            ({ title, placeHolder, onChangeText, value, maxLength }, index) => (
               <StyledCardInfo key={index}>
                 <Text variant="bodyLarge">{title}</Text>
                 <TextInput
@@ -121,6 +138,7 @@ const AddNewCard = () => {
                   placeholderTextColor="#9A9A9A"
                   activeOutlineColor="black"
                   onChangeText={onChangeText}
+                  maxLength={maxLength}
                 />
               </StyledCardInfo>
             )
