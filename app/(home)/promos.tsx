@@ -9,7 +9,6 @@ import styled from "styled-components/native";
 const { height } = Dimensions.get("screen")
 
 interface PromoType {
-    promoId: number,
     promoImage: string,
     promoHeader: string,
     promoContent: PromoContentType
@@ -167,9 +166,9 @@ const Promos = () => {
     return (
         <ParallaxScrollView>
             <HeaderView>
-                {promos.map((promo) => (
+                {promos.map((promo, index) => (
                     <PromoCard
-                        key={promo.promoId}
+                        key={index}
                         promo={promo}
                         onOpen={() => setSelectedPromo(promo)} />
                 ))}
