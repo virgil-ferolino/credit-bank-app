@@ -17,8 +17,17 @@ export default function TabLayout() {
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: "absolute",
+          },
+          web: {
+            position: "fixed",
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "80%",
+            maxWidth: 480,
+            padding: 10,
+            backgroundColor: theme.colors.background,
           },
           default: {},
         }),
@@ -46,7 +55,6 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="gear.circle.fill" color={color} />
           ),
