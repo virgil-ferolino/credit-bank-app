@@ -1,7 +1,7 @@
 import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
 import { useEffect, useState } from "react";
-import { Animated, Dimensions, Image, Modal, PanResponder, ScrollView, TouchableOpacity, View } from "react-native";
+import { Animated, Dimensions, Image, Modal, PanResponder, TouchableOpacity, View } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
 
