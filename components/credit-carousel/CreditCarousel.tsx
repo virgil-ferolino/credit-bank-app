@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ViewToken } from "react-native";
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -9,7 +8,7 @@ import PaginationDot from "./PaginationDot";
 import AnimatedCard from "./AnimatedCard";
 
 export default function CreditCardList() {
-  const [paginationIndex, setPaginationIndex] = useState(0);
+  const [paginationIndex, _setPaginationIndex] = useState(0);
 
   const creditCardArray = [
     {
@@ -41,21 +40,6 @@ export default function CreditCardList() {
       scrollX.value = e.contentOffset.x;
     },
   });
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
-  const onViewableItemsChanged = ({
-    viewableItems,
-  }: {
-    viewableItems: ViewToken[];
-  }) => {
-    if (
-      viewableItems[0]?.index !== null &&
-      viewableItems[0]?.index !== undefined
-    ) {
-      setPaginationIndex(viewableItems[0].index);
-    }
-  };
 
   return (
     <Animated.View style={{ flex: 1 }}>
@@ -68,8 +52,6 @@ export default function CreditCardList() {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         onScroll={onScrollHandler}
-        viewabilityConfig={viewabilityConfig}
-        onViewableItemsChanged={onViewableItemsChanged}
       />
       <PaginationDot
         cards={creditCardArray}

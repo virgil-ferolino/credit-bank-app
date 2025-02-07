@@ -24,9 +24,9 @@ export default function TabLayout() {
             bottom: 0,
             left: "50%",
             transform: "translateX(-50%)",
-            width: "80%",
+            width: "100%",
             maxWidth: 480,
-            padding: 10,
+
             backgroundColor: theme.colors.background,
           },
           default: {},

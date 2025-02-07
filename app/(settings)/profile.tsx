@@ -1,9 +1,21 @@
-import { Text, TextInput, Button, Avatar } from "react-native-paper";
-import { ScrollView, Platform, View, TouchableOpacity } from "react-native";
+import { Text, Button, Avatar } from "react-native-paper";
+import {
+  ScrollView,
+  Platform,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React, { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+
+import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 
 const commonPadding = Platform.OS === "ios" ? 40 : 60;
 
@@ -16,6 +28,7 @@ const StyledView = styled(ScrollView)({
 
 const StyledTextInput = styled(TextInput)({
   marginBottom: 12,
+  paddingHorizontal: 12,
   backgroundColor: "white",
   borderRadius: 10,
   height: 45,
@@ -71,10 +84,6 @@ const Profile = () => {
     phoneNumber: "09123456789",
   });
 
-  const [avatarUri, setAvatarUri] = useState(
-    "https://images7.alphacoders.com/489/thumb-1920-489447.jpg"
-  );
-
   const handleFieldChange = (field: keyof typeof fields, value: string) => {
     setFields((prev) => ({
       ...prev,
@@ -82,18 +91,98 @@ const Profile = () => {
     }));
   };
 
-  const handleChangePhoto = () => {
-    setAvatarUri("https://example.com/new-photo.jpg");
+  // const handleChangePhoto = () => {
+  //   setAvatarUri("https://example.com/new-photo.jpg");
+  // };
+
+  const [facing, setFacing] = useState<CameraType>("front");
+  const [permission, requestPermission] = useCameraPermissions();
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+
+  const toggleCameraFacing = () => {
+    setFacing((current) => (current === "back" ? "front" : "back"));
   };
 
-  return (
+  const handleChangePhoto = async () => {
+    if (!permission) {
+      return;
+    }
+
+    if (!permission.granted) {
+      const newPermission = await requestPermission();
+      if (!newPermission.granted) {
+        return;
+      }
+    }
+
+    setIsCameraOpen(true);
+  };
+
+  const capturePhoto = async () => {
+    console.log("picture");
+  };
+
+  const openCamera = () => {
+    return (
+      <CameraView style={{ flex: 1 }} facing={facing}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "flex-end",
+            alignItems: "center",
+            paddingBottom: 40,
+            backgroundColor: "transparent",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 30,
+              position: "absolute",
+              bottom: 20,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#004068",
+                borderRadius: 100,
+                padding: 14,
+              }}
+              onPress={toggleCameraFacing}
+            >
+              <MaterialCommunityIcons
+                name="camera-flip-outline"
+                size={28}
+                color="#FFFFFF"
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#004068",
+                borderRadius: 100,
+                padding: 14,
+              }}
+              onPress={capturePhoto}
+            >
+              <Ionicons name="camera-outline" size={28} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </CameraView>
+    );
+  };
+
+  return isCameraOpen ? (
+    openCamera()
+  ) : (
     <ParallaxScrollView>
       <StyledView>
         <AvatarFrame>
           <Avatar.Image
             size={120}
             source={{
-              uri: avatarUri,
+              uri: "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
             }}
           />
           <OverlayButton onPress={handleChangePhoto}>
