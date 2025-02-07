@@ -34,6 +34,16 @@ const HeaderType = styled(Text)({
   color: "#fff",
   fontSize: 11,
 });
+const ToggleHide = styled(Card)({
+  width: 25,
+  height: 25,
+  borderRadius: 15,
+  marginRight: 50,
+  backgroundColor: "#ffffff",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 0,
+});
 // Card Number
 const CardNumber = styled(Text)({
   color: "#fff",
@@ -147,7 +157,12 @@ const AnimatedCard = ({ cards, index, scrollX }: CreditCarousel) => {
             <WhiteCircle />
           </HeaderView>
 
-          <CardNumber>{cards?.cardNumber}</CardNumber>
+          <HeaderView>
+            <CardNumber>{cards?.cardNumber}</CardNumber>
+            <ToggleHide>
+              <Image source={require("@/assets/images/eye.png")} />
+            </ToggleHide>
+          </HeaderView>
 
           <CardDetailsView>
             <CardDetailSection>
