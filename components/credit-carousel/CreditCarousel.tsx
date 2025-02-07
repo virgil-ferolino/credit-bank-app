@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ViewToken } from "react-native";
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -9,7 +8,7 @@ import PaginationDot from "./PaginationDot";
 import AnimatedCard from "./AnimatedCard";
 
 export default function CreditCardList() {
-  const [paginationIndex, setPaginationIndex] = useState(0);
+  const [paginationIndex, _setPaginationIndex] = useState(0);
 
   const creditCardArray = [
     {
@@ -53,7 +52,6 @@ export default function CreditCardList() {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         onScroll={onScrollHandler}
-
       />
       <PaginationDot
         cards={creditCardArray}
