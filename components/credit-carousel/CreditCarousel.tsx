@@ -41,21 +41,6 @@ export default function CreditCardList() {
       scrollX.value = e.contentOffset.x;
     },
   });
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
-  const onViewableItemsChanged = ({
-    viewableItems,
-  }: {
-    viewableItems: ViewToken[];
-  }) => {
-    if (
-      viewableItems[0]?.index !== null &&
-      viewableItems[0]?.index !== undefined
-    ) {
-      setPaginationIndex(viewableItems[0].index);
-    }
-  };
 
   return (
     <Animated.View style={{ flex: 1 }}>
@@ -68,8 +53,7 @@ export default function CreditCardList() {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         onScroll={onScrollHandler}
-        viewabilityConfig={viewabilityConfig}
-        onViewableItemsChanged={onViewableItemsChanged}
+
       />
       <PaginationDot
         cards={creditCardArray}

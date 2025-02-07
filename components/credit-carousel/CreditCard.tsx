@@ -24,6 +24,7 @@ const HeaderView = styled(View)({
   justifyContent: "space-between",
   alignItems: "center",
   marginBottom: 24,
+  position: "relative",
 });
 const HeaderName = styled(Text)({
   color: "#fff",
@@ -39,7 +40,6 @@ const CardNumber = styled(Text)({
   color: "#fff",
   fontSize: 17,
   letterSpacing: 2,
-  marginBottom: 24,
 });
 // Card Details
 const CardDetailsView = styled(View)({
@@ -75,6 +75,16 @@ const WhiteCircle = styled(View)({
   borderRadius: 15,
   marginHorizontal: 5,
   backgroundColor: "#ffffff",
+});
+const ToggleHide = styled(View)({
+  width: 25,
+  height: 25,
+  borderRadius: 15,
+  marginRight: 50,
+  backgroundColor: "#ffffff",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 0,
 });
 const RedCircle = styled(View)({
   width: 30,
@@ -117,8 +127,12 @@ const CreditCard = ({
             <HeaderType>Credit Card</HeaderType>
             <WhiteCircle />
           </HeaderView>
-
-          <CardNumber>{cardNumber}</CardNumber>
+          <HeaderView>
+            <CardNumber>{cardNumber}</CardNumber>
+            <ToggleHide>
+              <Image source={require("@/assets/images/eye.png")} />
+            </ToggleHide>
+          </HeaderView>
 
           <CardDetailsView>
             <CardDetailSection>
