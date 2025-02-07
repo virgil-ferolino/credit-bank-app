@@ -1,45 +1,15 @@
-import { useEffect, useState } from "react";
-import {
-  Dimensions,
-  FlatList,
-  Platform,
-  StyleSheet,
-  View,
-  ViewToken,
-  type ScaledSize,
-} from "react-native";
-import CreditCard from "./CreditCard";
-import styled from "styled-components/native";
-import Animated from "react-native-reanimated";
+import { useState } from "react";
+import { ViewToken } from "react-native";
+
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
+import PaginationDot from "./PaginationDot";
+import AnimatedCard from "./AnimatedCard";
 
 export default function CreditCardList() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [webActiveIndex, setWebActiveIndex] = useState(0);
-
-  const [dimension, setDimension] = useState(Dimensions.get("window"));
-  useEffect(() => {
-    const windowDimension = Dimensions.addEventListener(
-      "change",
-      ({ window }: { window: ScaledSize }) => {
-        setDimension(window);
-      }
-    );
-    return () => windowDimension?.remove();
-  }, []);
-  const CARD_WIDTH = dimension.width > 480 ? 480 : dimension.width;
-  const MOBILE_CARD_WIDTH = Dimensions.get("window").width;
-  const handleScroll = (event: any) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.floor(contentOffsetX / (CARD_WIDTH - 20));
-    setWebActiveIndex(newIndex);
-  };
-
-  const CarouselPagination = styled(View)({
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  });
+  const [paginationIndex, setPaginationIndex] = useState(0);
 
   const creditCardArray = [
     {
@@ -65,104 +35,47 @@ export default function CreditCardList() {
     },
   ];
 
+  const scrollX = useSharedValue(0);
+  const onScrollHandler = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      scrollX.value = e.contentOffset.x;
+    },
+  });
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
   const onViewableItemsChanged = ({
     viewableItems,
   }: {
     viewableItems: ViewToken[];
   }) => {
-    if (viewableItems[0]) {
-      setActiveIndex(parseInt(viewableItems[0].index?.toString() || "0"));
+    if (
+      viewableItems[0]?.index !== null &&
+      viewableItems[0]?.index !== undefined
+    ) {
+      setPaginationIndex(viewableItems[0].index);
     }
   };
 
-  const PaginationDot = ({ active }: { active: boolean }) => (
-    <View
-      style={[styles.dot, active ? styles.activeDot : styles.inactiveDot]}
-    />
-  );
-
-  return Platform.OS === "web" ? (
+  return (
     <Animated.View style={{ flex: 1 }}>
       <Animated.FlatList
         data={creditCardArray}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              width: CARD_WIDTH,
-              padding: 15,
-            }}
-          >
-            <CreditCard
-              cardHolder={item.cardHolder}
-              cardNumber={item.cardNumber}
-              cvv={item.cvv}
-              expiryDate={item.expiryDate}
-            />
-          </View>
+        renderItem={({ item, index }) => (
+          <AnimatedCard cards={item} index={index} scrollX={scrollX} />
         )}
         horizontal
-        pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        centerContent
-        contentContainerStyle={{ gap: 15 }}
-      />
-      <CarouselPagination>
-        {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === webActiveIndex} />
-        ))}
-      </CarouselPagination>
-    </Animated.View>
-  ) : (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={creditCardArray}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              padding: 15,
-              width: MOBILE_CARD_WIDTH,
-              paddingHorizontal: 15,
-            }}
-          >
-            <CreditCard
-              cardHolder={item.cardHolder}
-              cardNumber={item.cardNumber}
-              cvv={item.cvv}
-              expiryDate={item.expiryDate}
-            />
-          </View>
-        )}
-        horizontal
         pagingEnabled
-        showsHorizontalScrollIndicator={false}
+        onScroll={onScrollHandler}
+        viewabilityConfig={viewabilityConfig}
         onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
       />
-      <CarouselPagination>
-        {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === activeIndex} />
-        ))}
-      </CarouselPagination>
-    </View>
+      <PaginationDot
+        cards={creditCardArray}
+        paginationIndex={paginationIndex}
+        scrollX={scrollX}
+      />
+    </Animated.View>
   );
 }
-
-const styles = StyleSheet.create({
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: "#2196F3",
-    width: 20,
-  },
-  inactiveDot: {
-    backgroundColor: "#BDBDBD",
-  },
-});

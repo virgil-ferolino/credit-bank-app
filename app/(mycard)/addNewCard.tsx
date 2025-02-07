@@ -120,7 +120,7 @@ const AddNewCard = () => {
               })
             }
             keyboardType="numeric"
-            maxLength={12}
+            maxLength={16}
             inputMode="numeric"
           />
         </StyledContainer>
