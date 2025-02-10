@@ -91,7 +91,7 @@ const PromoImageHeader = styled(Image)({
 
 const PromoImageDetail = styled(Image)({
     width: "100%",
-    height: 500,
+    height: 525
 })
 
 const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
