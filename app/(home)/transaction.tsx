@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Platform, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Avatar, Text } from "react-native-paper";
 
@@ -13,7 +13,6 @@ export default function Transaction() {
         style={{
           flexDirection: "column",
           rowGap: 3,
-          marginTop: Platform.OS === "web" ? 0 : -30,
         }}
       >
         <FlatList
