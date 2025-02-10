@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
 import { Image } from "react-native";
 import { useRouter } from "expo-router";
+
 interface FormValues {
   email: string;
   password: string;
@@ -89,12 +90,14 @@ export default function LoginScreen() {
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: "100svh",
-});
+const Container = styled.View`
+  max-width: 480px;
+  height: 100%;
+  max-width: 480px;
+  background-color: #006d77;
+  align-self: center;
+  justify-content: flex-end;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
