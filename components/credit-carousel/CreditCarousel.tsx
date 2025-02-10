@@ -95,9 +95,6 @@ export default function CreditCardList() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
-        centerContent
-        contentContainerStyle={{ gap: 15 }}
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
