@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -16,12 +16,13 @@ import {
 } from "@expo/vector-icons";
 
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
 
-const commonPadding = Platform.OS === "ios" ? 40 : 60;
+const commonPadding = Platform.OS === "ios" ? 20 : 30;
 
 const StyledView = styled(ScrollView)({
   paddingTop: 20,
-  gap: 10,
+  gap: 5,
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
 });
@@ -31,7 +32,7 @@ const StyledTextInput = styled(TextInput)({
   paddingHorizontal: 12,
   backgroundColor: "white",
   borderRadius: 10,
-  height: 45,
+  height: 60,
 });
 
 const StyledButton = styled(Button)({
@@ -42,6 +43,18 @@ const StyledButton = styled(Button)({
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
   height: 40,
+});
+
+const StyledButtonChangePhoto = styled(Button)({
+  marginBottom: 50,
+  backgroundColor: "#004068",
+  color: "black",
+  borderRadius: 10,
+  paddingLeft: commonPadding,
+  paddingRight: commonPadding,
+  height: 40,
+  width: "70%",
+  alignSelf: "center",
 });
 
 const StyledButtonTitle = styled(Text)({
@@ -91,13 +104,11 @@ const Profile = () => {
     }));
   };
 
-  // const handleChangePhoto = () => {
-  //   setAvatarUri("https://example.com/new-photo.jpg");
-  // };
-
   const [facing, setFacing] = useState<CameraType>("front");
   const [permission, requestPermission] = useCameraPermissions();
   const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [photo, setPhoto] = useState<string | null>(null);
+  const cameraRef = useRef<CameraView | null>(null);
 
   const toggleCameraFacing = () => {
     setFacing((current) => (current === "back" ? "front" : "back"));
@@ -119,12 +130,42 @@ const Profile = () => {
   };
 
   const capturePhoto = async () => {
-    console.log("picture");
+    if (cameraRef.current) {
+      try {
+        const photoData = await cameraRef.current.takePictureAsync();
+        if (photoData?.uri) {
+          console.log("Captured photo: ", photoData);
+          setPhoto(photoData.uri);
+          setIsCameraOpen(false);
+        } else {
+          console.error("Failed to capture photo, no URI found.");
+        }
+      } catch (error) {
+        console.error("Error capturing photo: ", error);
+      }
+    }
+  };
+
+  const openGallery = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permission.granted) {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        setPhoto(result.assets[0].uri);
+      }
+    } else {
+      console.error("Permission to access gallery was denied");
+    }
   };
 
   const openCamera = () => {
     return (
-      <CameraView style={{ flex: 1 }} facing={facing}>
+      <CameraView style={{ flex: 1 }} facing={facing} ref={cameraRef}>
         <View
           style={{
             flex: 1,
@@ -182,13 +223,19 @@ const Profile = () => {
           <Avatar.Image
             size={120}
             source={{
-              uri: "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
+              uri:
+                photo ||
+                "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
             }}
           />
           <OverlayButton onPress={handleChangePhoto}>
             <MaterialIcons name="camera-alt" size={24} color="white" />
           </OverlayButton>
         </AvatarFrame>
+
+        <StyledButtonChangePhoto onPress={openGallery}>
+          <StyledButtonTitle>Change Photo</StyledButtonTitle>
+        </StyledButtonChangePhoto>
 
         <StyledText>Name</StyledText>
         <StyledTextInput

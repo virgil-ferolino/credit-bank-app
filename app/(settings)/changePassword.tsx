@@ -5,10 +5,9 @@ import ParallaxScrollView from "@/components/ParralaxView";
 import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const commonPadding = Platform.OS === "ios" ? 40 : 60;
+const commonPadding = Platform.OS === "ios" ? 20 : 30;
 const StyledView = styled(ScrollView)({
   paddingTop: 20,
-  gap: 10,
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
 });
@@ -17,7 +16,7 @@ const StyledTextInput = styled(TextInput)({
   marginBottom: 12,
   backgroundColor: "white",
   borderRadius: 10,
-  height: 45,
+  height: 55,
 });
 
 const StyledButton = styled(Button)({
@@ -27,12 +26,13 @@ const StyledButton = styled(Button)({
   borderRadius: 10,
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
-  height: 40,
+  height: 45,
 });
 
 const StyledButtonTitle = styled(Text)({
   color: "white",
-  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
 });
 
 const StyledText = styled(Text)({
