@@ -1,7 +1,8 @@
 import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Dimensions, Image, Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, Modal, View, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -51,102 +52,56 @@ const StyledText = styled(Text)({
 const StyledButton = styled(Button)({
     marginTop:10,
     backgroundColor: "#0265A1",
+    width: 100,
 });
 
 const ButtonText = styled(Text)({
     color: "white",
     fontSize: 14,
-    fontWeight: "thin"
 });
 
 const HeaderView = styled(View)({
-    display: "flex",
-    flexDirection: "col",
     flexGrow: 1,
     alignItems: "center",
 });
 
-const Overlay = styled(TouchableOpacity)({
+const Overlay = styled(View)({
     flex:1,
-    backgroundColor: "transparent",
-    justifyContent: "flex-end"
-});
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+})
 
 const ModalContainer = styled(Animated.View)({
-    height: height * 0.90,
-    backgroundColor: '#fff',
-    padding: 20,
-    scrollbarWidth: "none", // For Firefox
-    msOverflowStyle: "none", // For IE/Edge
+    height: height * 0.882,
+    backgroundColor: "white",
     maxWidth: 480,
     width: "100%",
     alignSelf: "center",
-    WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
-    overflowY: "auto",
-});
+})
 
-const ModalContent = styled(ScrollView)({
-    flex:1,
-});
+const ModalContent = styled(View)({
+    flex: 1,
+    rowGap: 8,
+})
 
 const PromoImageHeader = styled(Image)({
     width: "100%",
-    height: 180
+    height: 150,
 })
 
 const PromoImageDetail = styled(Image)({
     width: "100%",
-    height: 550
+    height: 525
 })
-
-const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, onClose: () => void, promoContent:PromoContentType }) => {
-    return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isVisible}>
-            <Overlay
-                onPress={onClose}
-                activeOpacity={2}>
-                <ModalContainer>
-                    <ModalContent>
-                        <PromoImageHeader source={promoContent.promoImageFull} />
-                        <StyledText
-                            style={{
-                                marginTop:15
-                            }}>
-                            {promoContent.promoTitle}
-                        </StyledText>
-                        <Text
-                            style={{
-                                marginTop:15,
-                                marginLeft:10,
-                                marginRight:10
-                            }}>
-                            {promoContent.promoDesc}
-                        </Text>
-                        <StyledText
-                            style={{
-                                marginTop:15,
-                                marginBottom:15
-                            }}>
-                            {promoContent.promoDetail}
-                        </StyledText>
-                        {promoContent?.promoDetailImage &&(
-                            <PromoImageDetail source={promoContent.promoDetailImage} />
-                        )}
-                    </ModalContent>
-                </ModalContainer>
-            </Overlay>
-        </Modal>
-    )
-}
 
 const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
     return(
         <StyledCard>
             <StyledImage source={promo.promoImage} />
-            <Card.Content>
+            <Card.Content
+                style={{
+                    alignItems: "center"
+                }}>
                 <StyledText>
                     {promo.promoHeader}
                 </StyledText>
@@ -157,6 +112,58 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType
                 </StyledButton>
             </Card.Content>
         </StyledCard>
+    )
+}
+
+const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onClose: () => void, contentSrc: PromoContentType }) => {
+    return (
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisible}>
+            <Overlay activeOpacity={1}>
+                <ModalContainer>
+                    <ModalContent>
+                        <TouchableOpacity
+                                    onPress={onClose} 
+                                    hitSlop={20}
+                                    style={{
+                                        alignSelf: "flex-end",
+                                        padding: 10,
+                                        position: "absolute",
+                                        top: 10,
+                                        right: 10,
+                                        zIndex: 10,
+                                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                                        borderRadius: 100,
+                                    }}>
+                            <Ionicons name="close" size={24} color="black" />
+                        </TouchableOpacity>
+                        <ScrollView scrollEventThrottle={16}>
+                            <PromoImageHeader source={contentSrc.promoImageFull} />
+                            <View style={{ padding: 20,}}>
+                                <StyledText>
+                                    {contentSrc.promoTitle}
+                                </StyledText>
+                                <Text
+                                    style={{
+                                        marginTop: 15,
+                                        marginLeft: 10,
+                                        marginRight: 10,}}>
+                                    {contentSrc.promoDesc}
+                                </Text>
+                                <StyledText>
+                                    {contentSrc.promoDetail}
+                                </StyledText>
+                                {contentSrc?.promoDetailImage && (
+                                    <PromoImageDetail source={contentSrc.promoDetailImage} />
+                                )}
+                            </View>
+                        </ScrollView>
+                    </ModalContent>
+                </ModalContainer>
+            </Overlay>
+        </Modal>
     )
 }
 
@@ -173,7 +180,11 @@ const Promos = () => {
                         onOpen={() => setSelectedPromo(promo)} />
                 ))}
             </HeaderView>
-            {selectedPromo && <PromoModal isVisible={!!selectedPromo} promoContent={selectedPromo.promoContent} onClose={() => setSelectedPromo(null)} />}
+            {selectedPromo
+            && <PromoModal
+                isVisible={!!selectedPromo}
+                contentSrc={selectedPromo.promoContent}
+                onClose={() => setSelectedPromo(null)} />}
         </ParallaxScrollView>
     );
 }
