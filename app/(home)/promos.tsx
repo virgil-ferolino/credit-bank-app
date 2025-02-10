@@ -1,8 +1,10 @@
 import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
-import { useEffect, useState } from "react";
-import { Animated, Dimensions, Image, Modal, PanResponder, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Dimensions, Image, Modal, View, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 const { height } = Dimensions.get("screen")
@@ -50,6 +52,7 @@ const StyledText = styled(Text)({
 const StyledButton = styled(Button)({
     marginTop:10,
     backgroundColor: "#0265A1",
+    width: 100,
 });
 
 const ButtonText = styled(Text)({
@@ -62,125 +65,43 @@ const HeaderView = styled(View)({
     alignItems: "center",
 });
 
-const Overlay = styled(TouchableOpacity)({
+const Overlay = styled(View)({
     flex:1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "flex-end"
-});
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+})
 
 const ModalContainer = styled(Animated.View)({
-    height: height * 0.9,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    height: height * 0.882,
+    backgroundColor: "white",
+    maxWidth: 480,
     width: "100%",
     alignSelf: "center",
-    overflow: "hidden",
+})
+
+const ModalContent = styled(View)({
     flex: 1,
-});
+    rowGap: 8,
+})
 
 const PromoImageHeader = styled(Image)({
     width: "100%",
-    height: 250,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    marginBottom: 15,
+    height: 150,
 })
 
 const PromoImageDetail = styled(Image)({
     width: "100%",
-    height: 550
+    height: 500,
 })
-
-const PromoModal = ({ isVisible, onClose, promoContent }: { isVisible:boolean, onClose: () => void, promoContent:PromoContentType }) => {
-    const translateY = new Animated.Value(height);
-    const scrollY = new Animated.Value(0);
-
-    const panResponder = PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onMoveShouldSetPanResponder: () => true,
-        onPanResponderMove: (_evt, gestureState) => {
-            if (gestureState.dy > 100) {
-                onClose();
-            }
-            else {
-                Animated.spring(translateY, {
-                    toValue: 0,
-                    useNativeDriver: false,
-                }).start();
-            }
-        },
-    });
-
-    useEffect(() => {
-        if (isVisible) {
-            Animated.spring(translateY, {
-                toValue:0,
-                useNativeDriver:false,
-            }).start();
-        }
-    }, [isVisible]);
-
-    return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isVisible}>
-            <Overlay
-                onPress={onClose}
-                activeOpacity={1}>
-                <ModalContainer
-                    style={{
-                        transform: [{translateY}]
-                    }}
-                    {...panResponder.panHandlers}>
-                    <Animated.ScrollView
-                        scrollEventThrottle={16}
-                        onScroll={Animated.event(
-                            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                            { useNativeDriver: false }
-                        )}
-                        contentContainerStyle={{ 
-                            paddingTop: 20,
-                            paddingBottom: 20,
-                         }}>
-                        <PromoImageHeader source={promoContent.promoImageFull} />
-                        <StyledText
-                            style={{
-                                marginTop:15
-                            }}>
-                            {promoContent.promoTitle}
-                        </StyledText>
-                        <Text
-                            style={{
-                                marginTop:15,
-                                marginLeft:10,
-                                marginRight:10
-                            }}>
-                            {promoContent.promoDesc}
-                        </Text>
-                        <StyledText
-                            style={{
-                                marginTop:15,
-                                marginBottom:15
-                            }}>
-                            {promoContent.promoDetail}
-                        </StyledText>
-                        {promoContent?.promoDetailImage &&(
-                            <PromoImageDetail source={promoContent.promoDetailImage} />
-                        )}
-                    </Animated.ScrollView>
-                </ModalContainer>
-            </Overlay>
-        </Modal>
-    )
-}
 
 const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
     return(
         <StyledCard>
             <StyledImage source={promo.promoImage} />
-            <Card.Content>
+            <Card.Content
+                style={{
+                    alignItems: "center"
+                }}>
                 <StyledText>
                     {promo.promoHeader}
                 </StyledText>
@@ -191,6 +112,58 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType
                 </StyledButton>
             </Card.Content>
         </StyledCard>
+    )
+}
+
+const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onClose: () => void, contentSrc: PromoContentType }) => {
+    return (
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisible}>
+            <Overlay activeOpacity={1}>
+                <ModalContainer>
+                    <ModalContent>
+                        <TouchableOpacity
+                                    onPress={onClose} 
+                                    hitSlop={20}
+                                    style={{
+                                        alignSelf: "flex-end",
+                                        padding: 10,
+                                        position: "absolute",
+                                        top: 10,
+                                        right: 10,
+                                        zIndex: 10,
+                                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                                        borderRadius: 100,
+                                    }}>
+                            <Ionicons name="close" size={24} color="black" />
+                        </TouchableOpacity>
+                        <ScrollView scrollEventThrottle={16}>
+                            <PromoImageHeader source={contentSrc.promoImageFull} />
+                            <View style={{ padding: 20,}}>
+                                <StyledText>
+                                    {contentSrc.promoTitle}
+                                </StyledText>
+                                <Text
+                                    style={{
+                                        marginTop: 15,
+                                        marginLeft: 10,
+                                        marginRight: 10,}}>
+                                    {contentSrc.promoDesc}
+                                </Text>
+                                <StyledText>
+                                    {contentSrc.promoDetail}
+                                </StyledText>
+                                {contentSrc?.promoDetailImage && (
+                                    <PromoImageDetail source={contentSrc.promoDetailImage} />
+                                )}
+                            </View>
+                        </ScrollView>
+                    </ModalContent>
+                </ModalContainer>
+            </Overlay>
+        </Modal>
     )
 }
 
@@ -207,7 +180,11 @@ const Promos = () => {
                         onOpen={() => setSelectedPromo(promo)} />
                 ))}
             </HeaderView>
-            {selectedPromo && <PromoModal isVisible={!!selectedPromo} promoContent={selectedPromo.promoContent} onClose={() => setSelectedPromo(null)} />}
+            {selectedPromo
+            && <PromoModal
+                isVisible={!!selectedPromo}
+                contentSrc={selectedPromo.promoContent}
+                onClose={() => setSelectedPromo(null)} />}
         </ParallaxScrollView>
     );
 }
