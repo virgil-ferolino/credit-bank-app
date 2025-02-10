@@ -3,7 +3,7 @@ module.exports = {
   extends: ["expo", "plugin:@typescript-eslint/recommended"],
   ignorePatterns: ["/dist/*"],
   rules: {
-    "no-console": "error",
+    "no-console": "warn",
     "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "react/jsx-filename-extension": [
       "warn",
