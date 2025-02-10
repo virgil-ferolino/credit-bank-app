@@ -1,8 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
-import { Image } from "react-native";
+import {
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useRouter } from "expo-router";
+
 interface FormValues {
   email: string;
   password: string;
@@ -27,73 +33,82 @@ export default function LoginScreen() {
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
-      <StyledSurface>
-        <Title>Sign in your account</Title>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+        >
+          <StyledSurface>
+            <Title>Sign in your account</Title>
 
-        <StyledTextInput
-          mode="outlined"
-          label="ex: john@email.com"
-          value={formValue.email}
-          onChangeText={handleInputChange("email")}
-          placeholder="ex: john@email.com"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <StyledTextInput
-          mode="outlined"
-          label="Password"
-          value={formValue.password}
-          onChangeText={handleInputChange("password")}
-          secureTextEntry
-        />
-
-        <Button mode="contained" onPress={() => router.push("/(tabs)")}>
-          SIGN IN
-        </Button>
-
-        <OrText>or sign in with</OrText>
-
-        <SocialButtons>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/google.png")}
-              resizeMode="contain"
+            <StyledTextInput
+              mode="outlined"
+              label="ex: john@email.com"
+              value={formValue.email}
+              onChangeText={handleInputChange("email")}
+              placeholder="ex: john@email.com"
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/fb.png")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-          <SocialButton onPress={() => {}}>
-            <SocialIcon
-              source={require("@/assets/images/twitter.png")}
-              resizeMode="contain"
-            />
-          </SocialButton>
-        </SocialButtons>
 
-        <SignUpContainer>
-          <SignUpText>Don't have an account? </SignUpText>
-          <SignUpButton
-            mode="text"
-            onPress={() => router.push("/(auth)/signup")}
-          >
-            SIGN UP
-          </SignUpButton>
-        </SignUpContainer>
-      </StyledSurface>
+            <StyledTextInput
+              mode="outlined"
+              label="Password"
+              value={formValue.password}
+              onChangeText={handleInputChange("password")}
+              secureTextEntry
+            />
+
+            <Button mode="contained" onPress={() => router.push("/(tabs)")}>
+              SIGN IN
+            </Button>
+
+            <OrText>or sign in with</OrText>
+
+            <SocialButtons>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/google.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/fb.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/twitter.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+            </SocialButtons>
+
+            <SignUpContainer>
+              <SignUpText>Don't have an account? </SignUpText>
+              <SignUpButton
+                mode="text"
+                onPress={() => router.push("/(auth)/signup")}
+              >
+                SIGN UP
+              </SignUpButton>
+            </SignUpContainer>
+          </StyledSurface>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Container>
   );
 }
 
 const Container = styled.View`
-  width: 480px;
-  height: 100%;
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
   align-self: center;
-  justify-content: flex-end;
 `;
 
 const BackgroundImage = styled.Image`
@@ -105,6 +120,8 @@ const BackgroundImage = styled.Image`
 
 const StyledSurface = styled(Surface)`
   width: 100%;
+  max-width: 480px;
+  align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
