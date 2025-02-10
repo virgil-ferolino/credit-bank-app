@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import CreditCard from "./CreditCard";
 import styled from "styled-components/native";
-import Animated from "react-native-reanimated";
 
 export default function CreditCardList() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -73,8 +72,8 @@ export default function CreditCardList() {
   );
 
   return Platform.OS === "web" ? (
-    <Animated.View style={{ flex: 1 }}>
-      <Animated.FlatList
+    <View style={{ flex: 1 }}>
+      <FlatList
         data={creditCardArray}
         renderItem={({ item }) => (
           <View
@@ -101,7 +100,7 @@ export default function CreditCardList() {
           <PaginationDot key={index} active={index === webActiveIndex} />
         ))}
       </CarouselPagination>
-    </Animated.View>
+    </View>
   ) : (
     <View style={{ flex: 1 }}>
       <FlatList
