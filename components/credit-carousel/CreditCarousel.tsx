@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -9,19 +9,35 @@ import {
 } from "react-native";
 import CreditCard from "./CreditCard";
 import styled from "styled-components/native";
+import { useCardData } from "@/store/mycard/useCardData";
 
 export default function CreditCardList() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [webActiveIndex, setWebActiveIndex] = useState(0);
+  const { activeIndex, setActiveIndex } = useCardData((state) => state);
 
-  const { width } = Dimensions.get("window");
+  const windowDimensions = Dimensions.get("window");
+  const screenDimensions = Dimensions.get("screen");
 
-  const CARD_WIDTH = width > 480 ? 480 : width;
-  const MOBILE_CARD_WIDTH = Dimensions.get("window").width;
+  const [dimensions, setDimensions] = useState({
+    window: windowDimensions,
+    screen: screenDimensions,
+  });
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener(
+      "change",
+      ({ window, screen }) => {
+        setDimensions({ window, screen });
+      }
+    );
+    return () => subscription?.remove();
+  });
+
+  const CARD_WIDTH =
+    windowDimensions.width > 480 ? 480 : windowDimensions.width;
   const handleScroll = (event: any) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const newIndex = Math.floor(contentOffsetX / (CARD_WIDTH - 20));
-    setWebActiveIndex(newIndex);
+    setActiveIndex({ ...activeIndex, web: newIndex });
   };
 
   const CarouselPagination = styled(View)({
@@ -61,7 +77,10 @@ export default function CreditCardList() {
     viewableItems: ViewToken[];
   }) => {
     if (viewableItems[0]) {
-      setActiveIndex(parseInt(viewableItems[0].index?.toString() || "0"));
+      setActiveIndex({
+        ...activeIndex,
+        mobile: parseInt(viewableItems[0].index?.toString() || "0"),
+      });
     }
   };
 
@@ -97,7 +116,7 @@ export default function CreditCardList() {
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === webActiveIndex} />
+          <PaginationDot key={index} active={index === activeIndex.web} />
         ))}
       </CarouselPagination>
     </View>
@@ -109,7 +128,7 @@ export default function CreditCardList() {
           <View
             style={{
               padding: 15,
-              width: MOBILE_CARD_WIDTH,
+              width: dimensions.screen.width,
               paddingHorizontal: 15,
             }}
           >
@@ -131,7 +150,10 @@ export default function CreditCardList() {
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === activeIndex} />
+          <PaginationDot
+            key={index}
+            active={index === activeIndex.mobile}
+          />
         ))}
       </CarouselPagination>
     </View>

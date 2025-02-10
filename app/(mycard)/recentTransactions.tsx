@@ -1,11 +1,16 @@
 import React from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, Platform, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Avatar, Text } from "react-native-paper";
 import Container from "@/components/Container";
-import { transactionsArray } from "../(tabs)/mycard";
+import { useCardData } from "@/store/mycard/useCardData";
 
 export default function RecentTransactions() {
+  const { cardData, activeIndex } = useCardData((state) => state);
+  const transactionList =
+    Platform.OS === "web"
+      ? cardData[activeIndex.web].transaction
+      : cardData[activeIndex.mobile].transaction;
   return (
     <Container>
       <Animated.View
@@ -15,7 +20,7 @@ export default function RecentTransactions() {
         }}
       >
         <FlatList
-          data={transactionsArray}
+          data={transactionList}
           nestedScrollEnabled={true}
           renderItem={({ item, index }) => (
             <TouchableOpacity key={index}>

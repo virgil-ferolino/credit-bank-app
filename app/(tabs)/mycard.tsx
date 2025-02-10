@@ -1,15 +1,14 @@
 import { Card, Text, Button, Avatar } from "react-native-paper";
-import { useRouter } from "expo-router";
-import { Pressable, View } from "react-native";
+import { Router, useRouter } from "expo-router";
+import { Platform, Pressable, View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
-
-interface LabelValue {
-  label: string;
-  value: string | number;
-  iconName?: string;
-}
+import {
+  CardDataProps,
+  LabelValue,
+  useCardData,
+} from "@/store/mycard/useCardData";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -99,46 +98,70 @@ const renderViewMore = (item: LabelValue[]) => {
   });
 };
 
-const accountDetailsArray: LabelValue[] = [
-  {
-    label: "Outstanding Balance",
-    value: "PHP 80,450.00",
-  },
-  {
-    label: "Available Credit",
-    value: "PHP 60,530.00",
-  },
-];
-export const transactionsArray: LabelValue[] = [
-  {
-    label: "YOUTUBE",
-    value: "-$5.00",
-    iconName: "YT",
-  },
-  {
-    label: "SPOTIFY",
-    value: "-$12.00",
-    iconName: "ST",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-];
+const renderCardDetails = (
+  data: CardDataProps,
+  reroute: Router,
+  key: number
+) => {
+  return (
+    <ParentView key={key}>
+      <PointView>
+        <StyledPointTitle variant="titleMedium">Point Balance</StyledPointTitle>
+        <StyledPointContent variant="headlineLarge">
+          {data.pointBalance}
+        </StyledPointContent>
+      </PointView>
+      <CategoryView>
+        <TextBold variant="titleMedium">Account Details</TextBold>
+        <StyledAccountView>
+          {data.account.map(({ label, value }, index) => (
+            <HeaderView key={index}>
+              <StyledAccountText variant="titleMedium">
+                {label}
+              </StyledAccountText>
+              <StyledAccountText variant="titleMedium">
+                {value}
+              </StyledAccountText>
+            </HeaderView>
+          ))}
+        </StyledAccountView>
+      </CategoryView>
+      <CategoryView>
+        <HeaderView>
+          <TextBold variant="titleMedium">Recent Transactions</TextBold>
+          <Pressable onPress={() => reroute.push("/recentTransactions")}>
+            <Text variant="titleSmall">View more</Text>
+          </Pressable>
+        </HeaderView>
+
+        <Card style={{ boxShadow: "none" }}>
+          <StyledTransactionCard>
+            {renderViewMore(data.transaction)}
+          </StyledTransactionCard>
+        </Card>
+      </CategoryView>
+    </ParentView>
+  );
+};
 
 const MyCards = () => {
   const reroute = useRouter();
+  const { activeIndex, cardData } = useCardData((state) => state);
+  const platformView = () => {
+    if (Platform.OS === "web") {
+      return cardData.map((data, index) =>
+        activeIndex.web === index
+          ? renderCardDetails(data, reroute, index)
+          : null
+      );
+    } else {
+      return cardData.map((data, index) =>
+        activeIndex.mobile === index
+          ? renderCardDetails(data, reroute, index)
+          : null
+      );
+    }
+  };
 
   return (
     <ParallaxScrollView>
@@ -155,45 +178,7 @@ const MyCards = () => {
         </HeaderView>
       </ParentView>
       <CreditCarousel />
-      <ParentView>
-        <PointView>
-          <StyledPointTitle variant="titleMedium">
-            Point Balance
-          </StyledPointTitle>
-          <StyledPointContent variant="headlineLarge">
-            17,532
-          </StyledPointContent>
-        </PointView>
-        <CategoryView>
-          <TextBold variant="titleMedium">Account Details</TextBold>
-          <StyledAccountView>
-            {accountDetailsArray.map(({ label, value }, index) => (
-              <HeaderView key={index}>
-                <StyledAccountText variant="titleMedium">
-                  {label}
-                </StyledAccountText>
-                <StyledAccountText variant="titleMedium">
-                  {value}
-                </StyledAccountText>
-              </HeaderView>
-            ))}
-          </StyledAccountView>
-        </CategoryView>
-        <CategoryView>
-          <HeaderView>
-            <TextBold variant="titleMedium">Recent Transactions</TextBold>
-            <Pressable onPress={() => reroute.push("/recentTransactions")}>
-              <Text variant="titleSmall">View more</Text>
-            </Pressable>
-          </HeaderView>
-
-          <Card style={{ boxShadow: "none" }}>
-            <StyledTransactionCard>
-              {renderViewMore(transactionsArray)}
-            </StyledTransactionCard>
-          </Card>
-        </CategoryView>
-      </ParentView>
+      {platformView()}
     </ParallaxScrollView>
   );
 };
