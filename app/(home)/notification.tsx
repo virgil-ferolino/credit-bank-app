@@ -89,7 +89,7 @@ const Notification = () => {
 
   return (
     <Container>
-      <Animated.View style={{ marginTop: Platform.OS === "web" ? 0 : -30 }}>
+      <Animated.View>
         <TouchableOpacity hitSlop={20}>
           <ReadAll variant="labelMedium">Read All</ReadAll>
         </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import styled from "styled-components/native";
 
@@ -18,7 +18,9 @@ const StyledContainer = styled(View)({
 export default function Container({ children }: PropsWithChildren) {
   return (
     <StyledContainer>
-      <SafeAreaView>{children}</SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView>{children}</SafeAreaView>
+      </SafeAreaProvider>
     </StyledContainer>
   );
 }
