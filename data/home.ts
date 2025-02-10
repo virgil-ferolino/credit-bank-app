@@ -265,7 +265,7 @@ export const promos = [
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
-      promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+      promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
       promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
       promoDetailImage: require("@/assets/images/promo-info.png")
@@ -276,7 +276,7 @@ export const promos = [
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
-      promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+      promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
       promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
       promoDetailImage: require("@/assets/images/promo-info.png")
@@ -287,7 +287,7 @@ export const promos = [
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
-      promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+      promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
       promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
       promoDetailImage: require("@/assets/images/promo-info.png")
@@ -298,7 +298,7 @@ export const promos = [
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
-      promoTitle: "Happy Valentine's Day! \nHere's a Special Offer for YOU",
+      promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
       promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
       promoDetailImage: require("@/assets/images/promo-info.png")
