@@ -65,8 +65,9 @@ const PromoComponent = {
         height: 150,
     }),
     ImageDetail: styled(Image)({
+        flexGrow: 1,
         width: "100%",
-        height: 525
+        height: 600,
     })
 }
 
@@ -151,7 +152,7 @@ const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onC
                                     {contentSrc.promoDetail}
                                 </PromoComponent.StyledText>
                                 {contentSrc?.promoDetailImage && (
-                                    <PromoComponent.ImageDetail source={contentSrc.promoDetailImage} />
+                                    <PromoComponent.ImageDetail source={contentSrc.promoDetailImage} resizeMode="contain" />
                                 )}
                             </View>
                         </ScrollView>
