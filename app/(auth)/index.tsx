@@ -1,10 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
-import { Dimensions, Image } from "react-native";
+import { Image } from "react-native";
 import { useRouter } from "expo-router";
-import ParallaxScrollView from "@/components/ParralaxView";
-
 interface FormValues {
   email: string;
   password: string;
