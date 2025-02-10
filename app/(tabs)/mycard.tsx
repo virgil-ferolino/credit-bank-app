@@ -4,7 +4,6 @@ import { Pressable, View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
-import { Fragment } from "react";
 
 interface LabelValue {
   label: string;
@@ -142,7 +141,7 @@ const MyCards = () => {
   const reroute = useRouter();
 
   return (
-    <Fragment>
+    <ParallaxScrollView>
       <ParentView>
         <HeaderView>
           <Text variant="titleMedium">My Cards</Text>
@@ -155,49 +154,47 @@ const MyCards = () => {
           </StyledAddButton>
         </HeaderView>
       </ParentView>
-      <ParallaxScrollView>
-        <CreditCarousel />
-        <ParentView>
-          <PointView>
-            <StyledPointTitle variant="titleMedium">
-              Point Balance
-            </StyledPointTitle>
-            <StyledPointContent variant="headlineLarge">
-              17,532
-            </StyledPointContent>
-          </PointView>
-          <CategoryView>
-            <TextBold variant="titleMedium">Account Details</TextBold>
-            <StyledAccountView>
-              {accountDetailsArray.map(({ label, value }, index) => (
-                <HeaderView key={index}>
-                  <StyledAccountText variant="titleMedium">
-                    {label}
-                  </StyledAccountText>
-                  <StyledAccountText variant="titleMedium">
-                    {value}
-                  </StyledAccountText>
-                </HeaderView>
-              ))}
-            </StyledAccountView>
-          </CategoryView>
-          <CategoryView>
-            <HeaderView>
-              <TextBold variant="titleMedium">Recent Transactions</TextBold>
-              <Pressable onPress={() => reroute.push("/recentTransactions")}>
-                <Text variant="titleSmall">View more</Text>
-              </Pressable>
-            </HeaderView>
+      <CreditCarousel />
+      <ParentView>
+        <PointView>
+          <StyledPointTitle variant="titleMedium">
+            Point Balance
+          </StyledPointTitle>
+          <StyledPointContent variant="headlineLarge">
+            17,532
+          </StyledPointContent>
+        </PointView>
+        <CategoryView>
+          <TextBold variant="titleMedium">Account Details</TextBold>
+          <StyledAccountView>
+            {accountDetailsArray.map(({ label, value }, index) => (
+              <HeaderView key={index}>
+                <StyledAccountText variant="titleMedium">
+                  {label}
+                </StyledAccountText>
+                <StyledAccountText variant="titleMedium">
+                  {value}
+                </StyledAccountText>
+              </HeaderView>
+            ))}
+          </StyledAccountView>
+        </CategoryView>
+        <CategoryView>
+          <HeaderView>
+            <TextBold variant="titleMedium">Recent Transactions</TextBold>
+            <Pressable onPress={() => reroute.push("/recentTransactions")}>
+              <Text variant="titleSmall">View more</Text>
+            </Pressable>
+          </HeaderView>
 
-            <Card style={{ boxShadow: "none" }}>
-              <StyledTransactionCard>
-                {renderViewMore(transactionsArray)}
-              </StyledTransactionCard>
-            </Card>
-          </CategoryView>
-        </ParentView>
-      </ParallaxScrollView>
-    </Fragment>
+          <Card style={{ boxShadow: "none" }}>
+            <StyledTransactionCard>
+              {renderViewMore(transactionsArray)}
+            </StyledTransactionCard>
+          </Card>
+        </CategoryView>
+      </ParentView>
+    </ParallaxScrollView>
   );
 };
 
