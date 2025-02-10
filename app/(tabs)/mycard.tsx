@@ -4,7 +4,7 @@ import { Pressable, View } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
 interface LabelValue {
   label: string;
