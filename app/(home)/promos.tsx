@@ -23,95 +23,91 @@ interface PromoContentType {
     promoDetailImage: string,
 }
 
-const StyledCard = styled(Card)({
-    width: 350,
-    height: 300,
-    borderRadius: 12,
-    overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
-});
+const PromoComponent = {
+    StyledCard: styled(Card)({
+        width: 350,
+        height: 300,
+        borderRadius: 12,
+        overflow: "hidden",
+        backgroundColor: "white",
+        marginTop: 10,
+        marginBottom: 10,
+    }),
+    StyledImage: styled(Image)({
+        width: "100%",
+        height: 180,
+        borderBottomLeftRadius:0,
+        borderBottomRightRadius: 0
+    }),
+    StyledText: styled(Text)({
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "#333",
+        fontSize: 15,
+        marginTop: 20,
+        marginBottom: 10
+    }),
+    StyledButton: styled(Button)({
+        marginTop:10,
+        backgroundColor: "#0265A1",
+        width: 100,
+    }),
+    ButtonText: styled(Text)({
+        color: "white",
+        fontSize: 14,
+    }),
+    HeaderView: styled(View)({
+        flexGrow: 1,
+        alignItems: "center",
+    }),
+    ImageHeader: styled(Image)({
+        width: "100%",
+        height: 150,
+    }),
+    ImageDetail: styled(Image)({
+        flexGrow: 1,
+        width: "100%",
+        height: 600,
+    })
+}
 
-const StyledImage = styled(Image)({
-    width: "100%",
-    height: 180,
-    borderBottomLeftRadius:0,
-    borderBottomRightRadius: 0
-})
-
-const StyledText = styled(Text)({
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#333",
-    fontSize: 15,
-    marginTop: 20,
-    marginBottom: 10
-});
-
-const StyledButton = styled(Button)({
-    marginTop:10,
-    backgroundColor: "#0265A1",
-    width: 100,
-});
-
-const ButtonText = styled(Text)({
-    color: "white",
-    fontSize: 14,
-});
-
-const HeaderView = styled(View)({
-    flexGrow: 1,
-    alignItems: "center",
-});
-
-const Overlay = styled(View)({
-    flex:1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0, 0, 0, 0.5)"
-})
-
-const ModalContainer = styled(Animated.View)({
-    height: height * 0.882,
-    backgroundColor: "white",
-    maxWidth: 480,
-    width: "100%",
-    alignSelf: "center",
-})
-
-const ModalContent = styled(View)({
-    flex: 1,
-    rowGap: 8,
-})
-
-const PromoImageHeader = styled(Image)({
-    width: "100%",
-    height: 150,
-})
-
-const PromoImageDetail = styled(Image)({
-    width: "100%",
-    height: 525
-})
+const ModalComponent = {
+    Overlay: styled(View)({
+        flex:1,
+        justifyContent: "flex-end",
+        backgroundColor: "rgba(0, 0, 0, 0.5)"
+    }),
+    Container: styled(Animated.View)({
+        height: height * 0.882,
+        backgroundColor: "white",
+        maxWidth: 480,
+        width: "100%",
+        alignSelf: "center",
+    }),
+    Content: styled(View)({
+        flex: 1,
+        rowGap: 8,
+    })
+}
 
 const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
     return(
-        <StyledCard>
-            <StyledImage source={promo.promoImage} />
+        <PromoComponent.StyledCard>
+            <PromoComponent.StyledImage source={promo.promoImage} />
             <Card.Content
                 style={{
                     alignItems: "center"
                 }}>
-                <StyledText>
+                <PromoComponent.StyledText>
                     {promo.promoHeader}
-                </StyledText>
-                <StyledButton onPress={() => onOpen(promo)}>
-                    <ButtonText>
+                </PromoComponent.StyledText>
+                <PromoComponent.StyledButton onPress={() => onOpen(promo)}>
+                    <PromoComponent.ButtonText>
                         Read more
-                    </ButtonText>
-                </StyledButton>
+                    </PromoComponent.ButtonText>
+                </PromoComponent.StyledButton>
             </Card.Content>
-        </StyledCard>
+        </PromoComponent.StyledCard>
     )
 }
 
@@ -121,9 +117,9 @@ const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onC
             animationType="slide"
             transparent={true}
             visible={isVisible}>
-            <Overlay activeOpacity={1}>
-                <ModalContainer>
-                    <ModalContent>
+            <ModalComponent.Overlay activeOpacity={1}>
+                <ModalComponent.Container>
+                    <ModalComponent.Content>
                         <TouchableOpacity
                                     onPress={onClose} 
                                     hitSlop={20}
@@ -140,11 +136,11 @@ const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onC
                             <Ionicons name="close" size={24} color="black" />
                         </TouchableOpacity>
                         <ScrollView scrollEventThrottle={16}>
-                            <PromoImageHeader source={contentSrc.promoImageFull} />
+                            <PromoComponent.ImageHeader source={contentSrc.promoImageFull} />
                             <View style={{ padding: 20,}}>
-                                <StyledText>
+                                <PromoComponent.StyledText>
                                     {contentSrc.promoTitle}
-                                </StyledText>
+                                </PromoComponent.StyledText>
                                 <Text
                                     style={{
                                         marginTop: 15,
@@ -152,17 +148,17 @@ const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onC
                                         marginRight: 10,}}>
                                     {contentSrc.promoDesc}
                                 </Text>
-                                <StyledText>
+                                <PromoComponent.StyledText>
                                     {contentSrc.promoDetail}
-                                </StyledText>
+                                </PromoComponent.StyledText>
                                 {contentSrc?.promoDetailImage && (
-                                    <PromoImageDetail source={contentSrc.promoDetailImage} />
+                                    <PromoComponent.ImageDetail source={contentSrc.promoDetailImage} resizeMode="contain" />
                                 )}
                             </View>
                         </ScrollView>
-                    </ModalContent>
-                </ModalContainer>
-            </Overlay>
+                    </ModalComponent.Content>
+                </ModalComponent.Container>
+            </ModalComponent.Overlay>
         </Modal>
     )
 }
@@ -172,14 +168,14 @@ const Promos = () => {
 
     return (
         <ParallaxScrollView>
-            <HeaderView>
+            <PromoComponent.HeaderView>
                 {promos.map((promo, index) => (
                     <PromoCard
                         key={index}
                         promo={promo}
                         onOpen={() => setSelectedPromo(promo)} />
                 ))}
-            </HeaderView>
+            </PromoComponent.HeaderView>
             {selectedPromo
             && <PromoModal
                 isVisible={!!selectedPromo}
