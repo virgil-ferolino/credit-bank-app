@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -6,27 +6,17 @@ import {
   StyleSheet,
   View,
   ViewToken,
-  type ScaledSize,
 } from "react-native";
 import CreditCard from "./CreditCard";
 import styled from "styled-components/native";
-import Animated from "react-native-reanimated";
 
 export default function CreditCardList() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [webActiveIndex, setWebActiveIndex] = useState(0);
 
-  const [dimension, setDimension] = useState(Dimensions.get("window"));
-  useEffect(() => {
-    const windowDimension = Dimensions.addEventListener(
-      "change",
-      ({ window }: { window: ScaledSize }) => {
-        setDimension(window);
-      }
-    );
-    return () => windowDimension?.remove();
-  }, []);
-  const CARD_WIDTH = dimension.width > 480 ? 480 : dimension.width;
+  const { width } = Dimensions.get("window");
+
+  const CARD_WIDTH = width > 480 ? 480 : width;
   const MOBILE_CARD_WIDTH = Dimensions.get("window").width;
   const handleScroll = (event: any) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -82,8 +72,8 @@ export default function CreditCardList() {
   );
 
   return Platform.OS === "web" ? (
-    <Animated.View style={{ flex: 1 }}>
-      <Animated.FlatList
+    <View style={{ flex: 1 }}>
+      <FlatList
         data={creditCardArray}
         renderItem={({ item }) => (
           <View
@@ -104,16 +94,13 @@ export default function CreditCardList() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
-        centerContent
-        contentContainerStyle={{ gap: 15 }}
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
           <PaginationDot key={index} active={index === webActiveIndex} />
         ))}
       </CarouselPagination>
-    </Animated.View>
+    </View>
   ) : (
     <View style={{ flex: 1 }}>
       <FlatList
