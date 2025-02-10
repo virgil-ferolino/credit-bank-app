@@ -90,7 +90,7 @@ const ModalComponent = {
     })
 }
 
-const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType) => void }) => {
+const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:() => void }) => {
     return(
         <PromoComponent.StyledCard>
             <PromoComponent.StyledImage source={promo.promoImage} />
@@ -101,7 +101,7 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:(promo:PromoType
                 <PromoComponent.StyledText>
                     {promo.promoHeader}
                 </PromoComponent.StyledText>
-                <PromoComponent.StyledButton onPress={() => onOpen(promo)}>
+                <PromoComponent.StyledButton onPress={onOpen}>
                     <PromoComponent.ButtonText>
                         Read more
                     </PromoComponent.ButtonText>
