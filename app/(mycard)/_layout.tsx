@@ -16,6 +16,14 @@ const MyCardsLayout = () => {
           headerTitleAlign: "center",
         }}
       />
+      <Stack.Screen
+        name="recentTransactions"
+        options={{
+          title: "Recent Transactions",
+          headerBackVisible: true,
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack>
   );
 };

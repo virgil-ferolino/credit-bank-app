@@ -2,6 +2,7 @@ import ParallaxScrollView from "@/components/ParralaxView";
 import { useState } from "react";
 import { View } from "react-native";
 import { Text, TextInput, Button } from "react-native-paper";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 // Define styled components outside the component
@@ -11,7 +12,7 @@ const StyledView = styled(View)({
   gap: 15,
 });
 
-const StyledContainer = styled(View)({
+const StyledContainer = styled(Animated.View)({
   gap: 10,
 });
 
@@ -22,7 +23,7 @@ const StyledCardInfoContainer = styled(View)({
   gap: 15,
 });
 
-const StyledCardInfo = styled(View)({
+const StyledCardInfo = styled(Animated.View)({
   flexGrow: 1,
   gap: 10,
   flexBasis: "calc(50% - 15px)",
@@ -54,8 +55,10 @@ const AddNewCard = () => {
   const [formValue, setFormValue] = useState(initialValues);
   const inputRestrict = (e: string, dateFormat: boolean = true) => {
     let formatText = e.replace(/[^0-9]/g, "");
-    if (dateFormat !== true) return formatText.slice(0, 12);
-    return (formatText = `${formatText.slice(0, 2)}/${formatText.slice(2, 4)}`);
+    if (dateFormat !== true) return formatText;
+    return (formatText = `${formatText.slice(0, 2)}${
+      formatText.slice(2, 4) === "" ? "" : "/"
+    }${formatText.slice(2, 4)}`);
   };
 
   const cardInfoArray: CardInfoArrayProps[] = [
