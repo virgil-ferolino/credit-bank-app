@@ -89,12 +89,12 @@ export default function LoginScreen() {
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: "100svh",
-});
+const Container = styled.View`
+  width: 480px;
+  height: 100%;
+  align-self: center;
+  justify-content: flex-end;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
