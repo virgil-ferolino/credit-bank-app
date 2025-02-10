@@ -2,12 +2,9 @@ import ParallaxScrollView from "@/components/ParralaxView"
 import { promos } from "@/data/home";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Dimensions, Image, Modal, View, ScrollView, TouchableOpacity } from "react-native";
+import { Image, View, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
-import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
-
-const { height } = Dimensions.get("screen")
 
 interface PromoType {
     promoImage: string,
@@ -62,31 +59,12 @@ const PromoComponent = {
     }),
     ImageHeader: styled(Image)({
         width: "100%",
-        height: 150,
+        height: 200,
     }),
     ImageDetail: styled(Image)({
         flexGrow: 1,
         width: "100%",
         height: 600,
-    })
-}
-
-const ModalComponent = {
-    Overlay: styled(View)({
-        flex:1,
-        justifyContent: "flex-end",
-        backgroundColor: "rgba(0, 0, 0, 0.5)"
-    }),
-    Container: styled(Animated.View)({
-        height: height * 0.882,
-        backgroundColor: "white",
-        maxWidth: 480,
-        width: "100%",
-        alignSelf: "center",
-    }),
-    Content: styled(View)({
-        flex: 1,
-        rowGap: 8,
     })
 }
 
@@ -111,55 +89,47 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:() => void }) =>
     )
 }
 
-const PromoModal = ({ isVisible, onClose, contentSrc }: { isVisible:boolean, onClose: () => void, contentSrc: PromoContentType }) => {
+const PromoPage = ({ onClose, promoContentSrc }: { onClose: () => void, promoContentSrc:PromoContentType }) => {
     return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isVisible}>
-            <ModalComponent.Overlay activeOpacity={1}>
-                <ModalComponent.Container>
-                    <ModalComponent.Content>
-                        <TouchableOpacity
-                                    onPress={onClose} 
-                                    hitSlop={20}
-                                    style={{
-                                        alignSelf: "flex-end",
-                                        padding: 10,
-                                        position: "absolute",
-                                        top: 10,
-                                        right: 10,
-                                        zIndex: 10,
-                                        backgroundColor: "rgba(0, 0, 0, 0.3)",
-                                        borderRadius: 100,
-                                    }}>
-                            <Ionicons name="close" size={24} color="black" />
-                        </TouchableOpacity>
-                        <ScrollView scrollEventThrottle={16}>
-                            <PromoComponent.ImageHeader source={contentSrc.promoImageFull} />
-                            <View style={{ padding: 20,}}>
-                                <PromoComponent.StyledText>
-                                    {contentSrc.promoTitle}
-                                </PromoComponent.StyledText>
-                                <Text
-                                    style={{
-                                        marginTop: 15,
-                                        marginLeft: 10,
-                                        marginRight: 10,}}>
-                                    {contentSrc.promoDesc}
-                                </Text>
-                                <PromoComponent.StyledText>
-                                    {contentSrc.promoDetail}
-                                </PromoComponent.StyledText>
-                                {contentSrc?.promoDetailImage && (
-                                    <PromoComponent.ImageDetail source={contentSrc.promoDetailImage} resizeMode="contain" />
-                                )}
-                            </View>
-                        </ScrollView>
-                    </ModalComponent.Content>
-                </ModalComponent.Container>
-            </ModalComponent.Overlay>
-        </Modal>
+        <View style={{ flex:1 }}>
+            <TouchableOpacity
+                onPress={onClose}
+                style={{
+                    padding: 10,
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    zIndex: 10,
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    borderRadius: 100
+            }}>
+                <Ionicons name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
+            <ScrollView scrollEventThrottle={16}>
+                <PromoComponent.ImageHeader
+                    source={promoContentSrc.promoImageFull} />
+                <View style={{ padding: 20,}}>
+                    <PromoComponent.StyledText>
+                        {promoContentSrc.promoTitle}
+                    </PromoComponent.StyledText>
+                    <Text
+                        style={{
+                            marginTop: 15,
+                            marginLeft: 10,
+                            marginRight: 10,}}>
+                        {promoContentSrc.promoDesc}
+                    </Text>
+                    <PromoComponent.StyledText>
+                        {promoContentSrc.promoDetail}
+                    </PromoComponent.StyledText>
+                    {promoContentSrc?.promoDetailImage && (
+                        <PromoComponent.ImageDetail
+                        source={promoContentSrc.promoDetailImage}
+                        resizeMode="contain" />
+                    )}
+                        </View>
+                    </ScrollView>
+                </View>
     )
 }
 
@@ -168,19 +138,19 @@ const Promos = () => {
 
     return (
         <ParallaxScrollView>
-            <PromoComponent.HeaderView>
-                {promos.map((promo, index) => (
-                    <PromoCard
-                        key={index}
-                        promo={promo}
-                        onOpen={() => setSelectedPromo(promo)} />
-                ))}
-            </PromoComponent.HeaderView>
             {selectedPromo
-            && <PromoModal
-                isVisible={!!selectedPromo}
-                contentSrc={selectedPromo.promoContent}
-                onClose={() => setSelectedPromo(null)} />}
+            ? <PromoPage onClose={() => setSelectedPromo(null)} promoContentSrc={selectedPromo.promoContent} />
+            : (
+                <PromoComponent.HeaderView>
+                    {promos.map((promo, index) => (
+                        <PromoCard
+                            key={index}
+                            promo={promo}
+                            onOpen={() => setSelectedPromo(promo)} />
+                    ))}
+                </PromoComponent.HeaderView>
+            )
+            }
         </ParallaxScrollView>
     );
 }
