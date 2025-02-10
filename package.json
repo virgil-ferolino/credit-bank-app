@@ -16,16 +16,14 @@
     "preset": "jest-expo"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
     "*.ts": [
       "eslint --fix",
+      "prettier --write",
       "git add"
     ],
     "*.tsx": [
       "eslint --fix",
+      "prettier --write",
       "git add"
     ]
   },
