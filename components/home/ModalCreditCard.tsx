@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   View,
   Modal,
@@ -36,6 +36,18 @@ const ModalContent = styled(View)({
   rowGap: 8,
 });
 
+const ContainerOpacity = styled(View)({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  borderRadius: 10,
+  backgroundColor: "rgba(255, 255, 255, 0.7)",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 interface CardSettingProps {
   label: string;
   value: boolean;
@@ -66,8 +78,8 @@ const CardSetting: React.FC<CardSettingProps> = ({
 interface ModalCreditCardProps {
   isVisible: boolean;
   onClose: () => void;
-  isLockCard: boolean;
-  setIsShowLock: () => void;
+  isLock: boolean;
+  setIsLock: () => void;
   isHome: boolean;
   setIsHome: () => void;
 }
@@ -75,8 +87,8 @@ interface ModalCreditCardProps {
 const ModalCreditCard: React.FC<ModalCreditCardProps> = ({
   isVisible,
   onClose,
-  isLockCard,
-  setIsShowLock,
+  isLock,
+  setIsLock,
   isHome,
   setIsHome,
 }) => {
@@ -93,30 +105,23 @@ const ModalCreditCard: React.FC<ModalCreditCardProps> = ({
           </TouchableOpacity>
 
           <ModalContent>
-            {isLockCard ? (
-              <Card style={{ position: "relative" }}>
+            {isLock ? (
+              <Fragment>
                 <ImageBackground
                   source={{ uri: "https://legacy.reactjs.org/logo-og.png" }}
                   resizeMode="cover"
+                  style={{
+                    borderRadius: 10,
+                    overflow: "hidden",
+                  }}
                 >
                   <CreditCard />
 
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      backgroundColor: "rgba(255, 255, 255, 0.7)",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <ContainerOpacity>
                     <Ionicons name="lock-closed" size={62} color="gray" />
-                  </View>
+                  </ContainerOpacity>
                 </ImageBackground>
-              </Card>
+              </Fragment>
             ) : (
               <CreditCard />
             )}
@@ -128,8 +133,8 @@ const ModalCreditCard: React.FC<ModalCreditCardProps> = ({
 
               <CardSetting
                 label={"Lock Card"}
-                value={isLockCard}
-                onToggle={setIsShowLock}
+                value={isLock}
+                onToggle={setIsLock}
               />
               <CardSetting
                 label={"Set Home Card"}

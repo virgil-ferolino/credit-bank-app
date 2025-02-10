@@ -10,8 +10,6 @@ interface FormValues {
   password: string;
 }
 
-const { height } = Dimensions.get("window");
-
 export default function LoginScreen() {
   const router = useRouter();
   const initialValues: FormValues = {
@@ -93,14 +91,12 @@ export default function LoginScreen() {
   );
 }
 
-const Container = styled.View`
-  width: 100%;
-  max-width: 480px;
-  height: ${height}px;
-  background-color: #006d77;
-  align-self: center;
-  justify-content: flex-end;
-`;
+const Container = styled.View({
+  backgroundColor: "#006d77",
+  width: "100%",
+  justifyContent: "flex-end",
+  height: "100svh",
+});
 
 const BackgroundImage = styled.Image`
   flex: 1;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Platform, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 import { Avatar, Text } from "react-native-paper";
