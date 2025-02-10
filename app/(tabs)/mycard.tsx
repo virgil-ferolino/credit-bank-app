@@ -76,36 +76,70 @@ const TransactionLabel = styled(View)({
   alignItems: "center",
 });
 
+const renderViewMore = (item: LabelValue[]) => {
+  return item.map(({ label, iconName, value }, index) => {
+    if (index <= 2) {
+      return (
+        <HeaderView key={index}>
+          <TransactionLabel>
+            <Avatar.Text label={iconName ?? ""} size={40} />
+            <Text variant="titleMedium">{label}</Text>
+          </TransactionLabel>
+          <Text
+            variant="titleMedium"
+            style={{
+              color: value.toString().includes("-") ? "red" : "black",
+            }}
+          >
+            {value}
+          </Text>
+        </HeaderView>
+      );
+    } else return null;
+  });
+};
+
+const accountDetailsArray: LabelValue[] = [
+  {
+    label: "Outstanding Balance",
+    value: "PHP 80,450.00",
+  },
+  {
+    label: "Available Credit",
+    value: "PHP 60,530.00",
+  },
+];
+export const transactionsArray: LabelValue[] = [
+  {
+    label: "YOUTUBE",
+    value: "-$5.00",
+    iconName: "YT",
+  },
+  {
+    label: "SPOTIFY",
+    value: "-$12.00",
+    iconName: "ST",
+  },
+  {
+    label: "MOBILE LEGENDS",
+    value: "$12.00",
+    iconName: "ML",
+  },
+  {
+    label: "MOBILE LEGENDS",
+    value: "$12.00",
+    iconName: "ML",
+  },
+  {
+    label: "MOBILE LEGENDS",
+    value: "$12.00",
+    iconName: "ML",
+  },
+];
+
 const MyCards = () => {
   const reroute = useRouter();
 
-  const accountDetailsArray: LabelValue[] = [
-    {
-      label: "Outstanding Balance",
-      value: "PHP 80,450.00",
-    },
-    {
-      label: "Available Credit",
-      value: "PHP 60,530.00",
-    },
-  ];
-  const transactionsArray: LabelValue[] = [
-    {
-      label: "YOUTUBE",
-      value: "-$5.00",
-      iconName: "YT",
-    },
-    {
-      label: "SPOTIFY",
-      value: "-$12.00",
-      iconName: "ST",
-    },
-    {
-      label: "MOBILE LEGENDS",
-      value: "$12.00",
-      iconName: "ML",
-    },
-  ];
   return (
     <ParallaxScrollView>
       <ParentView>
@@ -148,29 +182,14 @@ const MyCards = () => {
         <CategoryView>
           <HeaderView>
             <TextBold variant="titleMedium">Recent Transactions</TextBold>
-            <Pressable>
-              <Text variant="titleSmall">View More</Text>
+            <Pressable onPress={() => reroute.push("/recentTransactions")}>
+              <Text variant="titleSmall">View more</Text>
             </Pressable>
           </HeaderView>
 
           <Card style={{ boxShadow: "none" }}>
             <StyledTransactionCard>
-              {transactionsArray.map(({ label, value, iconName }, index) => (
-                <HeaderView key={index}>
-                  <TransactionLabel>
-                    <Avatar.Text label={iconName ?? ""} size={40} />
-                    <Text variant="titleMedium">{label}</Text>
-                  </TransactionLabel>
-                  <Text
-                    variant="titleMedium"
-                    style={{
-                      color: value.toString().includes("-") ? "red" : "black",
-                    }}
-                  >
-                    {value}
-                  </Text>
-                </HeaderView>
-              ))}
+              {renderViewMore(transactionsArray)}
             </StyledTransactionCard>
           </Card>
         </CategoryView>

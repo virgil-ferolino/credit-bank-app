@@ -20,11 +20,7 @@ interface CountryCode {
 
 const { height } = Dimensions.get("window");
 
-interface VerifyPhoneScreenProps {
-  onSendCode: (countryCode: string, phoneNumber: string) => void;
-}
-
-export default function VerifyPhoneScreen({}: VerifyPhoneScreenProps) {
+export default function VerifyPhoneScreen() {
   const [countryCode, setCountryCode] = useState(countryCodes[0]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [menuVisible, setMenuVisible] = useState(false);
