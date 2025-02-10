@@ -26,81 +26,81 @@ export default function LoginScreen() {
   };
 
   return (
-    <ParallaxScrollView>
-      <Container>
-        <BackgroundImage
-          source={require("@/assets/images/bgworld.png")}
-          resizeMode="cover"
+    <Container>
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+      <StyledSurface>
+        <Title>Sign in your account</Title>
+
+        <StyledTextInput
+          mode="outlined"
+          label="ex: john@email.com"
+          value={formValue.email}
+          onChangeText={handleInputChange("email")}
+          placeholder="ex: john@email.com"
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
-        <StyledSurface>
-          <Title>Sign in your account</Title>
 
-          <StyledTextInput
-            mode="outlined"
-            label="ex: john@email.com"
-            value={formValue.email}
-            onChangeText={handleInputChange("email")}
-            placeholder="ex: john@email.com"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+        <StyledTextInput
+          mode="outlined"
+          label="Password"
+          value={formValue.password}
+          onChangeText={handleInputChange("password")}
+          secureTextEntry
+        />
 
-          <StyledTextInput
-            mode="outlined"
-            label="Password"
-            value={formValue.password}
-            onChangeText={handleInputChange("password")}
-            secureTextEntry
-          />
+        <Button mode="contained" onPress={() => router.push("/(tabs)")}>
+          SIGN IN
+        </Button>
 
-          <Button mode="contained" onPress={() => router.push("/(tabs)")}>
-            SIGN IN
-          </Button>
+        <OrText>or sign in with</OrText>
 
-          <OrText>or sign in with</OrText>
+        <SocialButtons>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
+              source={require("@/assets/images/google.png")}
+              resizeMode="contain"
+            />
+          </SocialButton>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
+              source={require("@/assets/images/fb.png")}
+              resizeMode="contain"
+            />
+          </SocialButton>
+          <SocialButton onPress={() => {}}>
+            <SocialIcon
+              source={require("@/assets/images/twitter.png")}
+              resizeMode="contain"
+            />
+          </SocialButton>
+        </SocialButtons>
 
-          <SocialButtons>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/google.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/fb.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/twitter.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-          </SocialButtons>
-
-          <SignUpContainer>
-            <SignUpText>Don't have an account? </SignUpText>
-            <SignUpButton
-              mode="text"
-              onPress={() => router.push("/(auth)/signup")}
-            >
-              SIGN UP
-            </SignUpButton>
-          </SignUpContainer>
-        </StyledSurface>
-      </Container>
-    </ParallaxScrollView>
+        <SignUpContainer>
+          <SignUpText>Don't have an account? </SignUpText>
+          <SignUpButton
+            mode="text"
+            onPress={() => router.push("/(auth)/signup")}
+          >
+            SIGN UP
+          </SignUpButton>
+        </SignUpContainer>
+      </StyledSurface>
+    </Container>
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: height,
-});
+const Container = styled.View`
+  width: 100%;
+  max-width: 480px;
+  height: ${height}px;
+  background-color: #006d77;
+  align-self: center;
+  justify-content: flex-end;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
