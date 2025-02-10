@@ -8,8 +8,6 @@ import { TouchableOpacity, View } from "react-native";
 import Container from "@/components/Container";
 import ModalCreditCard from "@/components/home/ModalCreditCard";
 
-import { Platform } from "react-native";sss
-
 const TextBold = styled(Text)({
   fontWeight: 700,
 });
