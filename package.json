@@ -16,17 +16,13 @@
     "preset": "jest-expo"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
     "*.ts": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
+ 
     ],
     "*.tsx": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
+  
     ]
   },
   "dependencies": {
@@ -42,6 +38,7 @@
     "expo-file-system": "~18.0.10",
     "expo-font": "~13.0.3",
     "expo-haptics": "~14.0.1",
+    "expo-image-picker": "^16.0.5",
     "expo-linear-gradient": "^14.0.2",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.17",

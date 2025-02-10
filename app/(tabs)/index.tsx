@@ -106,7 +106,7 @@ export default function HomeScreen() {
               }}
             />
             <View>
-              <WhiteText variant="labelSmall">Well cum back,</WhiteText>
+              <WhiteText variant="labelSmall">Welcome back,</WhiteText>
               <WhiteText variant="labelLarge">Charles James</WhiteText>
             </View>
           </View>
