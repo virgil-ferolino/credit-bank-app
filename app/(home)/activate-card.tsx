@@ -7,7 +7,6 @@ import { TouchableOpacity, View } from "react-native";
 
 import Container from "@/components/Container";
 import ModalCreditCard from "@/components/home/ModalCreditCard";
-import ModalLockCard from "@/components/home/ModalLockCard";
 
 const TextBold = styled(Text)({
   fontWeight: 700,
@@ -18,7 +17,6 @@ export default function ActivateCard() {
   const [isHome, setIsHome] = useState<boolean>(false);
 
   const [isShowCard, setIsShowCard] = useState<boolean>(false);
-  const [isShowLock, setIsShowLock] = useState<boolean>(false);
 
   return (
     <Container>
@@ -73,22 +71,10 @@ export default function ActivateCard() {
       <ModalCreditCard
         isVisible={isShowCard}
         onClose={() => setIsShowCard(false)}
-        isLockCard={isLockCard}
-        setIsShowLock={() => setIsShowLock(true)}
+        isLock={isLockCard}
+        setIsLock={() => setIsLockCard(!isLockCard)}
         isHome={isHome}
         setIsHome={() => setIsHome(!isHome)}
-      />
-
-      <ModalLockCard
-        isVisible={isShowLock}
-        onLock={() => {
-          setIsLockCard(true);
-          setIsShowLock(false);
-        }}
-        onCancel={() => {
-          setIsShowLock(false);
-          setIsLockCard(false);
-        }}
       />
     </Container>
   );
