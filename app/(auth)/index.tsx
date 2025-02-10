@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
@@ -45,10 +46,10 @@ export default function LoginScreen() {
 
             <StyledTextInput
               mode="outlined"
-              label="ex: john@email.com"
+              label="Email"
               value={formValue.email}
               onChangeText={handleInputChange("email")}
-              placeholder="ex: john@email.com"
+              placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
             />
