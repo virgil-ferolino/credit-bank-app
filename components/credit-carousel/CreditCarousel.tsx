@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   StyleSheet,
   View,
@@ -34,7 +36,7 @@ export default function CreditCardList() {
 
   const CARD_WIDTH =
     windowDimensions.width > 480 ? 480 : windowDimensions.width;
-  const handleScroll = (event: any) => {
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const newIndex = Math.floor(contentOffsetX / (CARD_WIDTH - 20));
     setActiveIndex({ ...activeIndex, web: newIndex });
