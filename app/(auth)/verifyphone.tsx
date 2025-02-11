@@ -1,7 +1,6 @@
-import ParallaxScrollView from "@/components/ParralaxView";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, Dimensions } from "react-native";
+import { ScrollView, View } from "react-native";
 import { TextInput, Button, Text, Menu } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -18,8 +17,6 @@ interface CountryCode {
   value: string;
 }
 
-const { height } = Dimensions.get("window");
-
 export default function VerifyPhoneScreen() {
   const [countryCode, setCountryCode] = useState(countryCodes[0]);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -28,12 +25,15 @@ export default function VerifyPhoneScreen() {
   const router = useRouter();
 
   return (
-    <ParallaxScrollView>
-      <Container>
-        <BackgroundImage
-          source={require("@/assets/images/bgworld.png")}
-          resizeMode="cover"
-        />
+    <Container>
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+      >
         <Card>
           <Title>Verify your phone number</Title>
           <Subtitle>
@@ -92,23 +92,22 @@ export default function VerifyPhoneScreen() {
             SEND CODE
           </Button>
         </Card>
-      </Container>
-    </ParallaxScrollView>
+      </ScrollView>
+    </Container>
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-
-  width: "100%",
-  justifyContent: "flex-end",
-  height: height,
-});
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
   width: 100%;
-  height: 100%;
+
   position: absolute;
 `;
 

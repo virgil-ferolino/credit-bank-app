@@ -18,6 +18,9 @@ const Overlay = styled(View)({
   flex: 1,
   justifyContent: "flex-end",
   backgroundColor: "rgba(0, 0, 0, 0.5)",
+  maxWidth: 480,
+  width: "100%",
+  alignSelf: "center",
 });
 
 const ModalContainer = styled(Animated.View)({

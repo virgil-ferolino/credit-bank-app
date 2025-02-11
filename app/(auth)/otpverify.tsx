@@ -1,14 +1,12 @@
-import ParallaxScrollView from "@/components/ParralaxView";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, TextInput as RNTextInput } from "react-native";
+import { TextInput as RNTextInput, ScrollView } from "react-native";
 import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
 
 interface FormValues {
   otp: string[];
 }
-const { height } = Dimensions.get("window");
 
 export default function VerifyPhoneScreen() {
   const router = useRouter();
@@ -33,12 +31,15 @@ export default function VerifyPhoneScreen() {
     .map(() => React.createRef<RNTextInput>());
 
   return (
-    <ParallaxScrollView>
-      <Container>
-        <BackgroundImage
-          source={require("@/assets/images/bgworld.png")}
-          resizeMode="cover"
-        />
+    <Container>
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+      >
         <Card>
           <Title>Verify your phone number</Title>
 
@@ -69,17 +70,17 @@ export default function VerifyPhoneScreen() {
             SEND CODE
           </Button>
         </Card>
-      </Container>
-    </ParallaxScrollView>
+      </ScrollView>
+    </Container>
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: height,
-});
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
@@ -93,8 +94,7 @@ const Card = styled(Surface)`
   bottom: 0;
   width: 100%;
   background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+
   padding-left: 60px;
   padding-right: 60px;
   padding-top: 50px;
@@ -121,6 +121,7 @@ const PhoneInputContainer = styled.View`
   flex-direction: row;
   gap: 8px;
   margin-bottom: 30px;
+  justify-content: center;
 `;
 
 const OtpInput = styled(RNTextInput)`

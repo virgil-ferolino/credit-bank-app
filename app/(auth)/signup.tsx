@@ -1,9 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import { Dimensions, Image } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import ParallaxScrollView from "@/components/ParralaxView";
 
 interface FormValues {
   name: string;
@@ -12,8 +11,6 @@ interface FormValues {
   confirmPassword: string;
   termsAccepted: boolean;
 }
-
-const { height } = Dimensions.get("window");
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -36,12 +33,15 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ParallaxScrollView>
-      <Container>
-        <BackgroundImage
-          source={require("@/assets/images/bgworld.png")}
-          resizeMode="cover"
-        />
+    <Container>
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+      >
         <Card>
           <Title>Create your account</Title>
 
@@ -128,17 +128,17 @@ export default function SignUpScreen() {
             </SignInButton>
           </SignInContainer>
         </Card>
-      </Container>
-    </ParallaxScrollView>
+      </ScrollView>
+    </Container>
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: height,
-});
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
