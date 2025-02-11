@@ -6,7 +6,7 @@ import Animated from "react-native-reanimated";
 
 import { Text } from "react-native-paper";
 
-import { Image, ScrollView, View } from "react-native";
+import { Image, View } from "react-native";
 
 import styled from "styled-components/native";
 
@@ -42,10 +42,10 @@ export default function GetPromo() {
                     title: selectedPromo?.promoHeader || "Promo",
                     headerBackVisible: false,
                 }} />
-            <Animated.View style={{ paddingVertical: 16, paddingHorizontal: 16}}>
+            <Animated.ScrollView style={{ paddingVertical: 16, paddingHorizontal: 16}} scrollEventThrottle={16}>
                 {selectedPromo
                 ? (
-                    <ScrollView scrollEventThrottle={16}>
+                    <View>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
                         <View style={{ padding: 20, }}>
                             <StyledText>
@@ -56,6 +56,7 @@ export default function GetPromo() {
                                     marginTop: 15,
                                     marginLeft: 10,
                                     marginRight: 10,
+                                    textAlign: "center"
                                 }}>
                                 {selectedPromo.promoContent.promoDesc}
                             </Text>
@@ -68,12 +69,12 @@ export default function GetPromo() {
                                     resizeMode="contain" />
                             )}
                         </View>
-                    </ScrollView>
+                    </View>
                 )
                 : (
                     <Text variant="bodyMedium">No promos here.</Text>
                 )}
-            </Animated.View>
+            </Animated.ScrollView>
         </Fragment>
     )
 }

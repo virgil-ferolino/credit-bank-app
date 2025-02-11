@@ -2,7 +2,6 @@ import Container from "@/components/Container";
 import { promos } from "@/data/home";
 import { PromoType, usePromoStore } from "@/store/home/usePromo";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { Image, FlatList } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
@@ -69,12 +68,6 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:() => void }) =>
 const Promos = () => {
     const router = useRouter();
 
-    const [promo, setPromo] = useState<PromoType[]>(promos)
-
-    const markAsRead = (index: number) => {
-        setPromo((prevPromo) => prevPromo.map((item, i) => i === index ? { ...item }: item))
-    }
-
     const setSelectedPromo = usePromoStore(
         (state) => state.setSelectedPromo
     );
@@ -83,18 +76,16 @@ const Promos = () => {
         setSelectedPromo(data);
 
         router.push({
-            pathname: "/[promoId]",
+            pathname: "/promo-[id]",
             params: { promoId: index },
         });
-
-        markAsRead(index);
     }
 
     return (
         <Container>
             <Animated.View>
                 <FlatList
-                    data={promo}
+                    data={promos}
                     nestedScrollEnabled={true}
                     renderItem={({ item, index }) => (
                         <PromoCard
