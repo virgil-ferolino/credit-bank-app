@@ -13,7 +13,6 @@ import { SFSymbol } from "expo-symbols";
 const tabBarStyle: StyleProp<ViewStyle> = {
   maxWidth: 480,
   width: "100%",
-  height: 50,
   alignSelf: "center",
 };
 
