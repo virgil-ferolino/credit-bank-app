@@ -4,17 +4,26 @@
     "slug": "credit-bank-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-title.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "splash": {
+        "backgroundColor": "#0061A7",
+        "image": "./assets/images/splash-logo.png"
+      },
+      "icon": "./assets/images/splash-logo.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-title.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/appIcon.png",
+        "backgroundColor": "#0061A7"
+      },
+      "package": "com.virgilferolino.creditbankapp",
+      "splash": {
+        "backgroundColor": "#0061A7",
+        "xxxhdpi": "./assets/images/splash-logo.png"
       }
     },
     "web": {
