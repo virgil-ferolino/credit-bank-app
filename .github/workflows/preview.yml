@@ -1,40 +1,56 @@
-name: preview
-on: pull_request
+name: Continuous Deployment (PRs)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: -dev
+
+env:
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
 jobs:
-  update:
-    name: EAS Update
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
-
-      - name: Checkout repository
+      - name: 🏗 Setup repo
         uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: npm
+      - name: 📦 Install dependencies
+        run: npm install
+      - name: 🧪 Run tests
+        run: npm test
 
-      - name: Setup EAS
-        uses: expo/expo-github-action@v8
+  continuously-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    concurrency: continuous-deploy-fingerprint-${{ github.run_id }}
+    permissions:
+      contents: read # Allow checkout
+      pull-requests: write # Allow comments on PRs
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@main
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Create preview
-        uses: expo/expo-github-action/preview@v8
+      - name: Continuously Deploy
+        uses: expo/expo-github-action/continuous-deploy-fingerprint@main
         with:
-          command: eas update --auto
+          profile: preview
+          branch: dev
