@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { NotificationItem } from "@/store/home/useNotification";
 
 export const menuList = [
@@ -266,10 +267,11 @@ export const promos = [
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
       promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
-      promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+      promoDesc:
+        "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
-      promoDetailImage: require("@/assets/images/promo-info.png")
-    }
+      promoDetailImage: require("@/assets/images/promo-info.png"),
+    },
   },
   {
     promoImage: require("@/assets/images/promo-pic.png"),
@@ -277,10 +279,11 @@ export const promos = [
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
       promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
-      promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+      promoDesc:
+        "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
-      promoDetailImage: require("@/assets/images/promo-info.png")
-    }
+      promoDetailImage: require("@/assets/images/promo-info.png"),
+    },
   },
   {
     promoImage: require("@/assets/images/promo-pic.png"),
@@ -288,10 +291,11 @@ export const promos = [
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
       promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
-      promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+      promoDesc:
+        "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
-      promoDetailImage: require("@/assets/images/promo-info.png")
-    }
+      promoDetailImage: require("@/assets/images/promo-info.png"),
+    },
   },
   {
     promoImage: require("@/assets/images/promo-pic.png"),
@@ -299,9 +303,10 @@ export const promos = [
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
       promoTitle: "Happy Valentine's Day!\nHere's a Special Offer for YOU💌💐",
-      promoDesc: "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
+      promoDesc:
+        "This Valentine's season, BankApp is making it sweeter for payroll employees and cooperative clients! Join A Love-Filled Season for Savings and earn exciting rewards for taking steps to build your financial future.",
       promoDetail: "Here's how you can earn rewards:",
-      promoDetailImage: require("@/assets/images/promo-info.png")
-    }
+      promoDetailImage: require("@/assets/images/promo-info.png"),
+    },
   },
 ];

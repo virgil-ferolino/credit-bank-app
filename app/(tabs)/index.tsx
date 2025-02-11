@@ -139,7 +139,11 @@ export default function HomeScreen() {
                   <Image source={item.image} />
                   <Text
                     variant="labelMedium"
-                    style={{ textAlign: "center", fontWeight: 700 }}
+                    style={{
+                      textAlign: "center",
+                      fontWeight: 600,
+                      fontSize: 12,
+                    }}
                   >
                     {item.label}
                   </Text>
