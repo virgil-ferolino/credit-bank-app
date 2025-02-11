@@ -18,7 +18,7 @@ const HomeLayout = () => {
         }}
       >
         <Stack.Screen
-          name="notification"
+          name="notification/index"
           options={{
             title: "Notifications",
             headerBackVisible: true,
@@ -26,7 +26,7 @@ const HomeLayout = () => {
           }}
         />
         <Stack.Screen
-          name="[id]"
+          name="notification/[id]"
           options={{
             headerBackVisible: true,
             headerTitleAlign: "left",

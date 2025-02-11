@@ -79,10 +79,7 @@ const Notification = () => {
   const handleNavigate = (index: number, data: NotificationItem) => {
     setSelectedNotification(data);
 
-    router.push({
-      pathname: "/[id]",
-      params: { id: index },
-    });
+    router.push("/notification/[id]");
 
     markAsRead(index);
   };
