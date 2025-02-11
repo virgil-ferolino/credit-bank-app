@@ -43,7 +43,7 @@ export default function GetPromo() {
                 options={{
                     headerTitle:"",
                     headerShown: true,
-                    headerBackVisible: true,
+                    headerBackVisible: false,
                 }} />
             <Animated.ScrollView scrollEventThrottle={16}>
                 {selectedPromo
