@@ -1,11 +1,6 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  TextInput as RNTextInput,
-  ScrollView,
-} from "react-native";
+import { TextInput as RNTextInput, ScrollView } from "react-native";
 import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -41,45 +36,41 @@ export default function VerifyPhoneScreen() {
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
-        >
-          <Card>
-            <Title>Verify your phone number</Title>
+        <Card>
+          <Title>Verify your phone number</Title>
 
-            <Subtitle>
-              We will send you a One-Time-Password (OTP){"\n"}on this mobile
-              number.
-            </Subtitle>
+          <Subtitle>
+            We will send you a One-Time-Password (OTP){"\n"}on this mobile
+            number.
+          </Subtitle>
 
-            <PhoneInputContainer>
-              {formValue.otp.map((digit, index) => (
-                <OtpInput
-                  key={index}
-                  ref={inputRefs[index]}
-                  keyboardType="number-pad"
-                  maxLength={1}
-                  selectTextOnFocus
-                  value={digit}
-                  onChangeText={handleOtpChange(index)}
-                />
-              ))}
-            </PhoneInputContainer>
+          <PhoneInputContainer>
+            {formValue.otp.map((digit, index) => (
+              <OtpInput
+                key={index}
+                ref={inputRefs[index]}
+                keyboardType="number-pad"
+                maxLength={1}
+                selectTextOnFocus
+                value={digit}
+                onChangeText={handleOtpChange(index)}
+              />
+            ))}
+          </PhoneInputContainer>
 
-            <Button
-              mode="contained"
-              onPress={() => router.push("/(auth)/verified")}
-              contentStyle={{ height: 45 }}
-            >
-              SEND CODE
-            </Button>
-          </Card>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/verified")}
+            contentStyle={{ height: 45 }}
+          >
+            SEND CODE
+          </Button>
+        </Card>
+      </ScrollView>
     </Container>
   );
 }
