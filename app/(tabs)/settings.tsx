@@ -155,24 +155,6 @@ export default function SettingsScreen() {
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
-        {/* <MenuItem>
-          <MenuText>Privacy Policy</MenuText>
-          <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
-        </MenuItem> */}
-        {/* 
-        <Description>Choose what data you share with us</Description> */}
-
-        {/* <MenuItem>
-          <MenuText>Biometric</MenuText>
-          <Switch
-            value={isBiometricEnabled}
-            onValueChange={setBiometricEnabled}
-            trackColor={{ false: "#525252", true: "#7E848D" }}
-            ios_backgroundColor="#D1D1D6"
-            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-          />
-        </MenuItem> */}
-
         <LogoutItem onPress={handleLogout}>
           <LogoutText>Log out</LogoutText>
           <MaterialIcons name="chevron-right" size={24} color="#FF0000" />
