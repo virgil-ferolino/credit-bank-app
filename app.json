@@ -23,7 +23,7 @@
       "package": "com.virgilferolino.creditbankapp",
       "splash": {
         "backgroundColor": "#0061A7",
-        "xxxhdpi": "./assets/images/splash-logo.png"
+        "xxhdpi": "./assets/images/splash-logo.png"
       },
       "permissions": [
         "android.permission.CAMERA",
@@ -50,7 +50,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo-title.png",
+          "image": "./assets/images/splash-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#0061A7"
@@ -58,7 +58,8 @@
       ]
     ],
     "splash": {
-      "backgroundColor": "#0061A7"
+      "backgroundColor": "#0061A7",
+      "image": "./assets/images/splash-logo.png"
     },
     "experiments": {
       "typedRoutes": true
