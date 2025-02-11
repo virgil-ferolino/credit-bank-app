@@ -83,7 +83,10 @@ const Promos = () => {
 
     return (
         <Container>
-            <Animated.View>
+            <Animated.View style={{
+                flexGrow: 1,
+                alignItems: "center",
+            }}>
                 <FlatList
                     data={promos}
                     nestedScrollEnabled={true}

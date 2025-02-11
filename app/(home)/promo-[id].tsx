@@ -6,9 +6,11 @@ import Animated from "react-native-reanimated";
 
 import { Text } from "react-native-paper";
 
-import { Image, View } from "react-native";
+import { Dimensions, Image, View } from "react-native";
 
 import styled from "styled-components/native";
+
+const { width } = Dimensions.get("window")
 
 const StyledText = styled(Text)({
     fontWeight: "bold",
@@ -20,14 +22,13 @@ const StyledText = styled(Text)({
 })
 
 const ImageHeader = styled(Image)({
-    width: "100%",
-    height: 200,
+    width: width,
+    height: (406/1000) * width, //formula: (image height / image width) * screen width
 })
 
 const ImageDetail = styled(Image)({
-    flexGrow: 1,
-    width: "100%",
-    height: 600,
+    width: width,
+    height: (1000/667) * width, //formula: (image height / image width) * screen width
 })
 
 export default function GetPromo() {
@@ -39,15 +40,15 @@ export default function GetPromo() {
         <Fragment>
             <Stack.Screen
                 options={{
-                    title: selectedPromo?.promoHeader || "Promo",
-                    headerBackVisible: false,
+                    title: selectedPromo?.promoHeader ? "" : "Promo",
+                    headerBackVisible: true,
                 }} />
-            <Animated.ScrollView style={{ paddingVertical: 16, paddingHorizontal: 16}} scrollEventThrottle={16}>
+            <Animated.ScrollView scrollEventThrottle={16}>
                 {selectedPromo
                 ? (
                     <View>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                        <View style={{ padding: 20, }}>
+                        <View>
                             <StyledText>
                                 {selectedPromo.promoContent.promoTitle}
                             </StyledText>
@@ -56,7 +57,7 @@ export default function GetPromo() {
                                     marginTop: 15,
                                     marginLeft: 10,
                                     marginRight: 10,
-                                    textAlign: "center"
+                                    paddingHorizontal: 15,
                                 }}>
                                 {selectedPromo.promoContent.promoDesc}
                             </Text>
@@ -64,9 +65,7 @@ export default function GetPromo() {
                                 {selectedPromo.promoContent.promoDetail}
                             </StyledText>
                             {selectedPromo.promoContent.promoDetailImage && (
-                                <ImageDetail
-                                    source={selectedPromo.promoContent.promoDetailImage}
-                                    resizeMode="contain" />
+                                <ImageDetail source={selectedPromo.promoContent.promoDetailImage} resizeMode="contain" />
                             )}
                         </View>
                     </View>
