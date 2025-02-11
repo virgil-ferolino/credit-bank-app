@@ -39,7 +39,7 @@ export default function GetPromo() {
     return (
         <Container>
             <Stack.Screen
-                name="promo-[index]"
+                name="promo-[id]"
                 options={{
                     headerTitle:"",
                     headerShown: true,

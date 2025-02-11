@@ -76,8 +76,8 @@ const Promos = () => {
         setSelectedPromo(data);
 
         router.push({
-            pathname: "/promo-[index]",
-            params: { promoIndex: index },
+            pathname: "/promo-[id]",
+            params: { promoId: index },
         });
     }
 
