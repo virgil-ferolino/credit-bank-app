@@ -1,6 +1,5 @@
 import { usePromoStore } from "@/store/home/usePromo";
 import { Stack } from "expo-router";
-import { Fragment } from "react";
 
 import Animated from "react-native-reanimated";
 
@@ -9,6 +8,7 @@ import { Text } from "react-native-paper";
 import { Dimensions, Image, View } from "react-native";
 
 import styled from "styled-components/native";
+import Container from "@/components/Container";
 
 const { width } = Dimensions.get("window")
 
@@ -22,13 +22,13 @@ const StyledText = styled(Text)({
 })
 
 const ImageHeader = styled(Image)({
-    width: width,
-    height: (406/1000) * width, //formula: (image height / image width) * screen width
+    width: Math.min(500, width),
+    height: Math.min(203, (203/500) * width),
 })
 
 const ImageDetail = styled(Image)({
-    width: width,
-    height: (1000/667) * (width * 0.935), //formula: (image height / image width) * (screen width * % of reduction in decimal values)
+    width: Math.min(450, width),
+    height: Math.min(690, (1000 /667) * (width * 0.935)),
 })
 
 export default function GetPromo() {
@@ -37,27 +37,25 @@ export default function GetPromo() {
     );
 
     return (
-        <Fragment>
+        <Container>
             <Stack.Screen
+                name="promo-[id]"
                 options={{
-                    title: selectedPromo?.promoHeader ? "" : "Promo",
+                    headerTitle:"",
+                    headerShown: true,
                     headerBackVisible: true,
                 }} />
             <Animated.ScrollView scrollEventThrottle={16}>
                 {selectedPromo
                 ? (
-                    <View style={{ 
-                        paddingHorizontal: 10,
-                        paddingBottom: 20, 
-                        alignItems: "center"
-                        }}>
+                    <View style={{ alignItems: "center" }}>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                        <View>
+                        <View style={{ alignItems: "center", paddingBottom: 20, }}>
                             <StyledText>
                                 {selectedPromo.promoContent.promoTitle}
                             </StyledText>
                             <Text
-                                style={{
+                                    style={{
                                     marginTop: 15,
                                     marginLeft: 10,
                                     marginRight: 10,
@@ -79,6 +77,6 @@ export default function GetPromo() {
                     <Text variant="bodyMedium">No promos here.</Text>
                 )}
             </Animated.ScrollView>
-        </Fragment>
+        </Container>
     )
 }
