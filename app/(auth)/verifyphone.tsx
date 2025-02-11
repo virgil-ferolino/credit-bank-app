@@ -27,7 +27,6 @@ export default function VerifyPhoneScreen() {
   return (
     <Container>
       <BackgroundImage
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />

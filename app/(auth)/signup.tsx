@@ -1,9 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import { Dimensions, Image } from "react-native";
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
-import ParallaxScrollView from "@/components/ParralaxView";
 
 interface FormValues {
   name: string;
@@ -12,8 +16,6 @@ interface FormValues {
   confirmPassword: string;
   termsAccepted: boolean;
 }
-
-const { height } = Dimensions.get("window");
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -36,109 +38,116 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ParallaxScrollView>
-      <Container>
-        <BackgroundImage
-          source={require("@/assets/images/bgworld.png")}
-          resizeMode="cover"
-        />
-        <Card>
-          <Title>Create your account</Title>
+    <Container>
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+        >
+          <Card>
+            <Title>Create your account</Title>
 
-          <StyledTextInput
-            mode="outlined"
-            label="Name"
-            value={formValue.name}
-            onChangeText={handleInputChange("name")}
-            placeholder="ex: jon smith"
-            autoCapitalize="words"
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Email"
-            value={formValue.email}
-            onChangeText={handleInputChange("email")}
-            placeholder="ex: jon.smith@email.com"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Password"
-            value={formValue.password}
-            onChangeText={handleInputChange("password")}
-            secureTextEntry
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Confirm password"
-            value={formValue.confirmPassword}
-            onChangeText={handleInputChange("confirmPassword")}
-            secureTextEntry
-          />
-
-          <TermsContainer>
-            <Checkbox.Android
-              status={formValue.termsAccepted ? "checked" : "unchecked"}
-              onPress={handleTermsAcceptedChange}
-              color="#006d77"
+            <StyledTextInput
+              mode="outlined"
+              label="Name"
+              value={formValue.name}
+              onChangeText={handleInputChange("name")}
+              placeholder="ex: jon smith"
+              autoCapitalize="words"
             />
-            <TermsText>
-              I understood the <TermsLink>terms & policy</TermsLink>
-            </TermsText>
-          </TermsContainer>
 
-          <Button
-            mode="contained"
-            onPress={() => router.push("/(auth)/verifyphone")}
-          >
-            SIGN UP
-          </Button>
+            <StyledTextInput
+              mode="outlined"
+              label="Email"
+              value={formValue.email}
+              onChangeText={handleInputChange("email")}
+              placeholder="ex: jon.smith@email.com"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
 
-          <OrText>or sign up with</OrText>
+            <StyledTextInput
+              mode="outlined"
+              label="Password"
+              value={formValue.password}
+              onChangeText={handleInputChange("password")}
+              secureTextEntry
+            />
 
-          <SocialButtons>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/google.png")}
-                resizeMode="contain"
+            <StyledTextInput
+              mode="outlined"
+              label="Confirm password"
+              value={formValue.confirmPassword}
+              onChangeText={handleInputChange("confirmPassword")}
+              secureTextEntry
+            />
+
+            <TermsContainer>
+              <Checkbox.Android
+                status={formValue.termsAccepted ? "checked" : "unchecked"}
+                onPress={handleTermsAcceptedChange}
+                color="#006d77"
               />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/fb.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/twitter.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-          </SocialButtons>
+              <TermsText>
+                I understood the <TermsLink>terms & policy</TermsLink>
+              </TermsText>
+            </TermsContainer>
 
-          <SignInContainer>
-            <SignInText>Have an account? </SignInText>
-            <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
-              SIGN IN
-            </SignInButton>
-          </SignInContainer>
-        </Card>
-      </Container>
-    </ParallaxScrollView>
+            <Button
+              mode="contained"
+              onPress={() => router.push("/(auth)/verifyphone")}
+            >
+              SIGN UP
+            </Button>
+
+            <OrText>or sign up with</OrText>
+
+            <SocialButtons>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/google.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/fb.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+              <SocialButton onPress={() => {}}>
+                <SocialIcon
+                  source={require("@/assets/images/twitter.png")}
+                  resizeMode="contain"
+                />
+              </SocialButton>
+            </SocialButtons>
+
+            <SignInContainer>
+              <SignInText>Have an account? </SignInText>
+              <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
+                SIGN IN
+              </SignInButton>
+            </SignInContainer>
+          </Card>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </Container>
   );
 }
 
-const Container = styled.View({
-  backgroundColor: "#006d77",
-  width: "100%",
-  justifyContent: "flex-end",
-  height: height,
-});
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+`;
 
 const BackgroundImage = styled.Image`
   flex: 1;
