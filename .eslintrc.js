@@ -8,6 +8,8 @@ module.exports = {
       "warn",
       { extensions: [".jsx", ".js", ".tsx", ".ts"] },
     ],
+    "@typescript-eslint/no-unsafe-function-type": "error",
     "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-empty-object-type": "error",
   },
 };

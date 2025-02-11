@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import { NotificationItem } from "@/store/home/useNotification";
 
 export const menuList = [
