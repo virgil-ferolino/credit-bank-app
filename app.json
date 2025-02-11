@@ -4,18 +4,33 @@
     "slug": "credit-bank-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-title.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "splash": {
+        "backgroundColor": "#0061A7",
+        "image": "./assets/images/splash-logo.png"
+      },
+      "icon": "./assets/images/splash-logo.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-title.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/appIcon.png",
+        "backgroundColor": "#0061A7"
+      },
+      "package": "com.virgilferolino.creditbankapp",
+      "splash": {
+        "backgroundColor": "#0061A7",
+        "xxxhdpi": "./assets/images/splash-logo.png"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -55,6 +70,12 @@
       "eas": {
         "projectId": "aa8a6234-c9ca-4a12-ae96-db06a086ac35"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/aa8a6234-c9ca-4a12-ae96-db06a086ac35"
     }
   }
 }

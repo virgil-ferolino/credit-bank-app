@@ -72,14 +72,16 @@ const ModalContainer = styled(View)(() => ({
   flex: 1,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay color
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  alignSelf: "center",
+  width: 480,
 }));
 
 const ModalContent = styled(View)(() => ({
   backgroundColor: "white",
   padding: 20,
   borderRadius: 25,
-  width: "80%",
+  width: "70%",
   alignItems: "center",
 }));
 
@@ -126,7 +128,7 @@ export default function SettingsScreen() {
   const handleConfirmLogout = () => {
     console.log("Logging out...");
     setModalVisible(false);
-    router.push("/(auth)/"); // Navigate to the auth route
+    router.push("/(auth)/");
   };
 
   return (
@@ -153,24 +155,6 @@ export default function SettingsScreen() {
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
-        {/* <MenuItem>
-          <MenuText>Privacy Policy</MenuText>
-          <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
-        </MenuItem> */}
-        {/* 
-        <Description>Choose what data you share with us</Description> */}
-
-        {/* <MenuItem>
-          <MenuText>Biometric</MenuText>
-          <Switch
-            value={isBiometricEnabled}
-            onValueChange={setBiometricEnabled}
-            trackColor={{ false: "#525252", true: "#7E848D" }}
-            ios_backgroundColor="#D1D1D6"
-            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-          />
-        </MenuItem> */}
-
         <LogoutItem onPress={handleLogout}>
           <LogoutText>Log out</LogoutText>
           <MaterialIcons name="chevron-right" size={24} color="#FF0000" />
@@ -189,7 +173,7 @@ export default function SettingsScreen() {
               >
                 Log out
               </Text>
-              <Text style={{ fontSize: 14, marginBottom: 35 }}>
+              <Text style={{ fontSize: 14, marginBottom: 30 }}>
                 Are you sure you want to logout?
               </Text>
               <ButtonsContainer>
