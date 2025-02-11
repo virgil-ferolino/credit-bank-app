@@ -1,4 +1,4 @@
-name: Continuous Development (PRs)
+name: Continuous Deployment (PRs)
 
 on:
   pull_request:
