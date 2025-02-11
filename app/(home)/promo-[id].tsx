@@ -28,7 +28,7 @@ const ImageHeader = styled(Image)({
 
 const ImageDetail = styled(Image)({
     width: width,
-    height: (1000/667) * width, //formula: (image height / image width) * screen width
+    height: (1000/667) * (width * 0.935), //formula: (image height / image width) * (screen width * % of reduction in decimal values)
 })
 
 export default function GetPromo() {
@@ -46,7 +46,11 @@ export default function GetPromo() {
             <Animated.ScrollView scrollEventThrottle={16}>
                 {selectedPromo
                 ? (
-                    <View>
+                    <View style={{ 
+                        paddingHorizontal: 10,
+                        paddingBottom: 20, 
+                        alignItems: "center"
+                        }}>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
                         <View>
                             <StyledText>
@@ -58,6 +62,7 @@ export default function GetPromo() {
                                     marginLeft: 10,
                                     marginRight: 10,
                                     paddingHorizontal: 15,
+                                    textAlign: "left"
                                 }}>
                                 {selectedPromo.promoContent.promoDesc}
                             </Text>
