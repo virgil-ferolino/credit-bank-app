@@ -65,6 +65,7 @@ const CardSetting: React.FC<CardSettingProps> = ({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+        paddingVertical: 0,
       }}
     >
       <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
