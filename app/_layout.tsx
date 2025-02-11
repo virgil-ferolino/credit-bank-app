@@ -7,11 +7,11 @@ import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/theme";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
@@ -35,7 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name="(settings)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="auto" backgroundColor={"#004068"} />
     </PaperProvider>
   );
 }

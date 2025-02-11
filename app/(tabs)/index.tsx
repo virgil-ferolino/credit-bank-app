@@ -9,6 +9,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { menuList, transaction } from "@/data/home";
+import theme from "@/theme";
 
 interface TransactionItem {
   title: string;
@@ -148,10 +149,21 @@ export default function HomeScreen() {
           ))}
         </View>
 
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <TextBold variant="labelLarge">Recent Transaction</TextBold>
           <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
-            <Text>View more</Text>
+            <Text
+              variant="bodySmall"
+              style={{ fontWeight: 700, color: theme.colors.primary }}
+            >
+              View more
+            </Text>
           </TouchableOpacity>
         </View>
 
