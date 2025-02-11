@@ -121,6 +121,7 @@ const PhoneInputContainer = styled.View`
   flex-direction: row;
   gap: 8px;
   margin-bottom: 30px;
+  justify-content: center;
 `;
 
 const OtpInput = styled(RNTextInput)`
