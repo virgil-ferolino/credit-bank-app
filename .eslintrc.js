@@ -1,4 +1,3 @@
-// https://docs.expo.dev/guides/using-eslint/
 module.exports = {
   extends: ["expo", "plugin:@typescript-eslint/recommended"],
   ignorePatterns: ["/dist/*"],
@@ -9,5 +8,6 @@ module.exports = {
       "warn",
       { extensions: [".jsx", ".js", ".tsx", ".ts"] },
     ],
+    "@typescript-eslint/no-require-imports": "off",
   },
 };
