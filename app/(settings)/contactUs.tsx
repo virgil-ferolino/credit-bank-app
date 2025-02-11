@@ -5,7 +5,7 @@ import ParallaxScrollView from "@/components/ParralaxView";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const commonPadding = Platform.OS === "ios" ? 30 : 50;
+const commonPadding = Platform.OS === "ios" ? 20 : 30;
 
 const StyledView = styled(ScrollView)({
   paddingTop: 20,

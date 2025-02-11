@@ -72,14 +72,16 @@ const ModalContainer = styled(View)(() => ({
   flex: 1,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay color
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  alignSelf: "center",
+  width: 480,
 }));
 
 const ModalContent = styled(View)(() => ({
   backgroundColor: "white",
   padding: 20,
   borderRadius: 25,
-  width: "80%",
+  width: "70%",
   alignItems: "center",
 }));
 
@@ -126,7 +128,7 @@ export default function SettingsScreen() {
   const handleConfirmLogout = () => {
     console.log("Logging out...");
     setModalVisible(false);
-    router.push("/(auth)/"); // Navigate to the auth route
+    router.push("/(auth)/");
   };
 
   return (
@@ -189,7 +191,7 @@ export default function SettingsScreen() {
               >
                 Log out
               </Text>
-              <Text style={{ fontSize: 14, marginBottom: 35 }}>
+              <Text style={{ fontSize: 14, marginBottom: 30 }}>
                 Are you sure you want to logout?
               </Text>
               <ButtonsContainer>
