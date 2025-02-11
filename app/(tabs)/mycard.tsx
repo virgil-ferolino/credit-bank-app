@@ -1,6 +1,6 @@
-import { Card, Text, Button, Avatar } from "react-native-paper";
+import { Card, Text, Avatar, Chip } from "react-native-paper";
 import { Router, useRouter } from "expo-router";
-import { Platform, Pressable, View } from "react-native";
+import { Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
@@ -9,6 +9,8 @@ import {
   LabelValue,
   useCardData,
 } from "@/store/mycard/useCardData";
+import theme from "@/theme";
+import { Ionicons } from "@expo/vector-icons";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -44,14 +46,7 @@ const StyledPointContent = styled(Text)({
   borderBottomLeftRadius: 7,
   fontWeight: "bold",
 });
-//
-const StyledAddButton = styled(Button)({
-  paddingLeft: 20,
-  paddingRight: 20,
-  borderRadius: 15,
-  boxShadow: "none",
-});
-//
+
 const StyledAccountView = styled(View)({
   padding: "10px 15px 10px 15px",
   backgroundColor: "#02708D",
@@ -112,7 +107,7 @@ const renderCardDetails = (
         </StyledPointContent>
       </PointView>
       <CategoryView>
-        <TextBold variant="titleMedium">Account Details</TextBold>
+        <TextBold variant="labelLarge">Account Details</TextBold>
         <StyledAccountView>
           {data.account.map(({ label, value }, index) => (
             <HeaderView key={index}>
@@ -128,10 +123,18 @@ const renderCardDetails = (
       </CategoryView>
       <CategoryView>
         <HeaderView>
-          <TextBold variant="titleMedium">Recent Transactions</TextBold>
-          <Pressable onPress={() => reroute.push("/recentTransactions")}>
-            <Text variant="titleSmall">View more</Text>
-          </Pressable>
+          <TextBold variant="labelLarge">Recent Transactions</TextBold>
+          <TouchableOpacity
+            onPress={() => reroute.push("/recentTransactions")}
+            hitSlop={20}
+          >
+            <Text
+              variant="bodySmall"
+              style={{ fontWeight: 700, color: theme.colors.primary }}
+            >
+              View more
+            </Text>
+          </TouchableOpacity>
         </HeaderView>
 
         <Card style={{ boxShadow: "none" }}>
@@ -168,13 +171,18 @@ const MyCards = () => {
       <ParentView>
         <HeaderView>
           <Text variant="titleMedium">My Cards</Text>
-          <StyledAddButton
-            buttonColor="#0265A1"
-            textColor="white"
+
+          <Chip
+            compact
+            textStyle={{ color: "white" }}
+            style={{ backgroundColor: theme.colors.primary }}
+            icon={() => (
+              <Ionicons name="add-outline" color={"white"} size={24} />
+            )}
             onPress={() => reroute.navigate("/addNewCard")}
           >
-            Add New Card
-          </StyledAddButton>
+            New Card
+          </Chip>
         </HeaderView>
       </ParentView>
       <CreditCarousel />
