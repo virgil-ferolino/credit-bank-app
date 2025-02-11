@@ -23,7 +23,7 @@ export const transaction = [
   {
     title: "Amazon",
     category: "Shopping",
-    price: "$120.50",
+    price: "$120.5021321321321",
   },
   {
     title: "Netflix",
