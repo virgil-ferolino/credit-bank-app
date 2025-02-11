@@ -1,12 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from "react-native";
+import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 
 interface FormValues {
@@ -43,101 +38,97 @@ export default function SignUpScreen() {
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
-        >
-          <Card>
-            <Title>Create your account</Title>
+        <Card>
+          <Title>Create your account</Title>
 
-            <StyledTextInput
-              mode="outlined"
-              label="Name"
-              value={formValue.name}
-              onChangeText={handleInputChange("name")}
-              placeholder="ex: jon smith"
-              autoCapitalize="words"
+          <StyledTextInput
+            mode="outlined"
+            label="Name"
+            value={formValue.name}
+            onChangeText={handleInputChange("name")}
+            placeholder="ex: jon smith"
+            autoCapitalize="words"
+          />
+
+          <StyledTextInput
+            mode="outlined"
+            label="Email"
+            value={formValue.email}
+            onChangeText={handleInputChange("email")}
+            placeholder="ex: jon.smith@email.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <StyledTextInput
+            mode="outlined"
+            label="Password"
+            value={formValue.password}
+            onChangeText={handleInputChange("password")}
+            secureTextEntry
+          />
+
+          <StyledTextInput
+            mode="outlined"
+            label="Confirm password"
+            value={formValue.confirmPassword}
+            onChangeText={handleInputChange("confirmPassword")}
+            secureTextEntry
+          />
+
+          <TermsContainer>
+            <Checkbox.Android
+              status={formValue.termsAccepted ? "checked" : "unchecked"}
+              onPress={handleTermsAcceptedChange}
+              color="#006d77"
             />
+            <TermsText>
+              I understood the <TermsLink>terms & policy</TermsLink>
+            </TermsText>
+          </TermsContainer>
 
-            <StyledTextInput
-              mode="outlined"
-              label="Email"
-              value={formValue.email}
-              onChangeText={handleInputChange("email")}
-              placeholder="ex: jon.smith@email.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/verifyphone")}
+          >
+            SIGN UP
+          </Button>
 
-            <StyledTextInput
-              mode="outlined"
-              label="Password"
-              value={formValue.password}
-              onChangeText={handleInputChange("password")}
-              secureTextEntry
-            />
+          <OrText>or sign up with</OrText>
 
-            <StyledTextInput
-              mode="outlined"
-              label="Confirm password"
-              value={formValue.confirmPassword}
-              onChangeText={handleInputChange("confirmPassword")}
-              secureTextEntry
-            />
-
-            <TermsContainer>
-              <Checkbox.Android
-                status={formValue.termsAccepted ? "checked" : "unchecked"}
-                onPress={handleTermsAcceptedChange}
-                color="#006d77"
+          <SocialButtons>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/google.png")}
+                resizeMode="contain"
               />
-              <TermsText>
-                I understood the <TermsLink>terms & policy</TermsLink>
-              </TermsText>
-            </TermsContainer>
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/fb.png")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+            <SocialButton onPress={() => {}}>
+              <SocialIcon
+                source={require("@/assets/images/twitter.png")}
+                resizeMode="contain"
+              />
+            </SocialButton>
+          </SocialButtons>
 
-            <Button
-              mode="contained"
-              onPress={() => router.push("/(auth)/verifyphone")}
-            >
-              SIGN UP
-            </Button>
-
-            <OrText>or sign up with</OrText>
-
-            <SocialButtons>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/google.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/fb.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/twitter.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-            </SocialButtons>
-
-            <SignInContainer>
-              <SignInText>Have an account? </SignInText>
-              <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
-                SIGN IN
-              </SignInButton>
-            </SignInContainer>
-          </Card>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <SignInContainer>
+            <SignInText>Have an account? </SignInText>
+            <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
+              SIGN IN
+            </SignInButton>
+          </SignInContainer>
+        </Card>
+      </ScrollView>
     </Container>
   );
 }
