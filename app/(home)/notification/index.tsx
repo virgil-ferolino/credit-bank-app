@@ -80,7 +80,7 @@ const Notification = () => {
     setSelectedNotification(data);
 
     router.push({
-      pathname: "/[id]",
+      pathname: "/notification/[id]",
       params: { id: index },
     });
 
