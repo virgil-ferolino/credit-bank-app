@@ -18,12 +18,18 @@ export default function VerifyPhoneScreen() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleOtpChange = (index: number) => (text: string) => {
-    const newOtp = [...formValue.otp];
-    newOtp[index] = text;
-    setFormValue({ ...formValue, otp: newOtp });
+    if (/^\d*$/.test(text)) {
+      const newOtp = [...formValue.otp];
+      newOtp[index] = text;
+      setFormValue({ ...formValue, otp: newOtp });
 
-    if (text.length === 1 && index < 4) {
-      (inputRefs[index + 1].current as RNTextInput)?.focus();
+      if (text.length === 1 && index < 4) {
+        (inputRefs[index + 1].current as RNTextInput)?.focus();
+      }
+
+      if (text === "" && index > 0) {
+        (inputRefs[index - 1].current as RNTextInput)?.focus();
+      }
     }
   };
 
