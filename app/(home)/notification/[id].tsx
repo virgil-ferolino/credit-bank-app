@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import Animated from "react-native-reanimated";
 
 import { Text } from "react-native-paper";
+import { Platform } from "react-native";
 
 export default function GetNotification() {
   const selectedNotification = useNotificationStore(
@@ -15,7 +16,7 @@ export default function GetNotification() {
       <Stack.Screen
         options={{
           title: selectedNotification?.title || "Notification",
-          headerBackVisible: true,
+          headerBackVisible: Platform.OS === "android",
           headerTitleAlign: "left",
         }}
       />
