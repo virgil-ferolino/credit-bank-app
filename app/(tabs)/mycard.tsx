@@ -76,11 +76,11 @@ const renderViewMore = (item: LabelValue[]) => {
       return (
         <HeaderView key={index}>
           <TransactionLabel>
-            <Avatar.Text label={iconName ?? ""} size={40} />
-            <Text variant="titleMedium">{label}</Text>
+            <Avatar.Text label={iconName ?? ""} size={30} />
+            <TextBold variant="bodyLarge">{label}</TextBold>
           </TransactionLabel>
           <Text
-            variant="titleMedium"
+            variant="bodyLarge"
             style={{
               color: value.toString().includes("-") ? "red" : "black",
             }}

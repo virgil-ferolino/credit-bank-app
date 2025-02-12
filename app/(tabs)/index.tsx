@@ -134,9 +134,17 @@ export default function HomeScreen() {
                 }
               >
                 <Card.Content
-                  style={{ alignItems: "center", width: 100, height: 125 }}
+                  style={{
+                    alignItems: "center",
+                    width: 100,
+                    height: 125,
+                    justifyContent: "center",
+                  }}
                 >
-                  <Image source={item.image} />
+                  <Image
+                    source={item.image}
+                    style={{ width: 70, height: 70 }}
+                  />
                   <Text
                     variant="labelMedium"
                     style={{

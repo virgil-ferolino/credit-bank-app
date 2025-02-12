@@ -39,6 +39,7 @@ export default function TabLayout() {
         tabBarLabelPosition: "below-icon",
         tabBarLabelStyle: tabBarLabelStyle,
         tabBarAllowFontScaling: true,
+        headerShown: false,
       }}
     >
       <Tabs.Screen
@@ -48,7 +49,6 @@ export default function TabLayout() {
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="house.fill" />
           ),
-          headerShown: false,
         }}
       />
       <Tabs.Screen
@@ -58,7 +58,6 @@ export default function TabLayout() {
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="creditcard.fill" />
           ),
-          headerShown: false,
         }}
       />
       <Tabs.Screen
@@ -68,7 +67,6 @@ export default function TabLayout() {
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="gear.circle.fill" />
           ),
-          headerShown: false,
         }}
       />
     </Tabs>
