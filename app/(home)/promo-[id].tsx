@@ -27,8 +27,8 @@ const ImageHeader = styled(Image)({
 })
 
 const ImageDetail = styled(Image)({
-    width: Math.min(450, width),
-    height: Math.min(690, (1000 /667) * (width * 0.935)),
+    width: Math.min(500, width),
+    height: Math.min(650, (1000 /667) * (width * 0.935)),
 })
 
 export default function GetPromo() {
@@ -45,31 +45,37 @@ export default function GetPromo() {
                     headerShown: true,
                     headerBackVisible: false,
                 }} />
-            <Animated.ScrollView scrollEventThrottle={16}>
+            <Animated.ScrollView
+                scrollEventThrottle={16}
+                contentContainerStyle={{ 
+                    backgroundColor: "white",
+                    alignContent: "center",
+                }}
+                >
                 {selectedPromo
                 ? (
-                    <View style={{ alignItems: "center" }}>
+                    <View style={{ alignItems: "center", }}>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                        <View style={{ alignItems: "center", paddingBottom: 20, }}>
+                        <View style={{ alignItems: "center", paddingBottom: 15, }}>
                             <StyledText>
                                 {selectedPromo.promoContent.promoTitle}
                             </StyledText>
                             <Text
-                                    style={{
-                                    marginTop: 15,
-                                    marginLeft: 10,
-                                    marginRight: 10,
-                                    paddingHorizontal: 15,
-                                    textAlign: "left"
-                                }}>
+                                style={{
+                                marginTop: 15,
+                                marginLeft: 10,
+                                marginRight: 10,
+                                paddingHorizontal: 15,
+                                textAlign: "left"
+                            }}>
                                 {selectedPromo.promoContent.promoDesc}
                             </Text>
                             <StyledText>
                                 {selectedPromo.promoContent.promoDetail}
                             </StyledText>
-                            {selectedPromo.promoContent.promoDetailImage && (
+                            {selectedPromo.promoContent.promoDetailImage && 
                                 <ImageDetail source={selectedPromo.promoContent.promoDetailImage} resizeMode="contain" />
-                            )}
+                            }
                         </View>
                     </View>
                 )
