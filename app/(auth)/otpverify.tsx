@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput as RNTextInput, ScrollView } from "react-native";
 import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
@@ -15,6 +15,7 @@ export default function VerifyPhoneScreen() {
   };
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleOtpChange = (index: number) => (text: string) => {
     const newOtp = [...formValue.otp];
@@ -25,6 +26,12 @@ export default function VerifyPhoneScreen() {
       (inputRefs[index + 1].current as RNTextInput)?.focus();
     }
   };
+
+  useEffect(() => {
+    // Check if all OTP fields are filled
+    const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
+    setIsButtonDisabled(!allFieldsFilled);
+  }, [formValue.otp]);
 
   const inputRefs = Array(5)
     .fill(0)
@@ -66,6 +73,7 @@ export default function VerifyPhoneScreen() {
             mode="contained"
             onPress={() => router.push("/(auth)/verified")}
             contentStyle={{ height: 45 }}
+            disabled={isButtonDisabled}
           >
             SEND CODE
           </Button>
@@ -90,15 +98,13 @@ const BackgroundImage = styled.Image`
 `;
 
 const Card = styled(Surface)`
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  background-color: white;
 
-  padding-left: 60px;
-  padding-right: 60px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  align-self: center;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 50px 30px;
   elevation: 4;
 `;
 

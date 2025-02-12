@@ -41,7 +41,6 @@ export default function LoginScreen() {
             label="Email"
             value={formValue.email}
             onChangeText={handleInputChange("email")}
-            placeholder="Email"
             keyboardType="email-address"
             autoCapitalize="none"
           />
@@ -112,7 +111,7 @@ const BackgroundImage = styled.Image`
 
 const StyledSurface = styled(Surface)`
   width: 100%;
-  max-width: 480px;
+
   align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
