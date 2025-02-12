@@ -13,7 +13,6 @@ interface PromoCardType {
 
 const StyledCard = styled(Card)({
     width: 350,
-    height: undefined,
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "white",
