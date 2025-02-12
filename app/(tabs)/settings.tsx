@@ -127,7 +127,7 @@ export default function SettingsScreen() {
 
   const handleConfirmLogout = () => {
     setModalVisible(false);
-    router.push("/(auth)/");
+    router.push("/(auth)");
   };
 
   return (
