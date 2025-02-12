@@ -9,7 +9,6 @@ import styled from "styled-components/native";
 interface PromoCardType {
     promo: PromoType;
     onOpen: () => void;
-    imageHeight?: number;
 }
 
 const StyledCard = styled(Card)({
@@ -24,6 +23,7 @@ const StyledCard = styled(Card)({
 
 const StyledImage = styled(Image)({
     width: "100%",
+    height: 200,
     borderBottomLeftRadius:0,
     borderBottomRightRadius: 0
 })
@@ -37,14 +37,10 @@ const StyledButton = styled(TouchableOpacity)({
     justifyContent: "center", 
 })
 
-const PromoCard = ({ promo, onOpen, imageHeight }: PromoCardType) => {
+const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
     return(
         <StyledCard>
-            <StyledImage
-                source={promo.promoImage}
-                style={{
-                    height: imageHeight
-                }}/>
+            <StyledImage source={promo.promoImage} />
             <Card.Content
                 style={{
                     alignItems: "center"
@@ -99,8 +95,7 @@ const Promos = () => {
                 <PromoCard
                     key={index}
                     promo={promoItem} 
-                    onOpen={() => handlePromoNav(index, promoItem)}
-                    imageHeight={180} />
+                    onOpen={() => handlePromoNav(index, promoItem)} />
             ))}
         </Animated.ScrollView>
     );

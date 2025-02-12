@@ -261,7 +261,7 @@ export const initialNotifications: NotificationItem[] = [
 
 export const promos = [
   {
-    promoImage: require("@/assets/images/promo-pic.png"),
+    promoImage: require("@/assets/images/promo-pic.jpg"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
@@ -273,7 +273,7 @@ export const promos = [
     },
   },
   {
-    promoImage: require("@/assets/images/promo-pic.png"),
+    promoImage: require("@/assets/images/promo-pic.jpg"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
@@ -285,7 +285,7 @@ export const promos = [
     },
   },
   {
-    promoImage: require("@/assets/images/promo-pic.png"),
+    promoImage: require("@/assets/images/promo-pic.jpg"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
@@ -297,7 +297,7 @@ export const promos = [
     },
   },
   {
-    promoImage: require("@/assets/images/promo-pic.png"),
+    promoImage: require("@/assets/images/promo-pic.jpg"),
     promoHeader: "A Love-Filled Season for Savings",
     promoContent: {
       promoImageFull: require("@/assets/images/promo-fullpic.png"),
