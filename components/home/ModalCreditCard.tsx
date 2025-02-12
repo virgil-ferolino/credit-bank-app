@@ -5,6 +5,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  Platform,
 } from "react-native";
 import styled from "styled-components/native";
 import Animated from "react-native-reanimated";
@@ -62,13 +63,17 @@ const CardSetting: React.FC<CardSettingProps> = ({
   value,
   onToggle,
 }) => (
-  <Card>
+  <Card
+    style={{
+      ...(Platform.OS === "web" && { padding: 8 }),
+    }}
+  >
     <Card.Content
       style={{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingVertical: 0,
+        paddingVertical: 8,
       }}
     >
       <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
