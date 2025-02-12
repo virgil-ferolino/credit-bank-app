@@ -88,6 +88,7 @@ export default function VerifyPhoneScreen() {
             mode="contained"
             onPress={() => router.push("/(auth)/otpverify")}
             disabled={phoneNumber.length < 10}
+            contentStyle={{ height: 45 }} // Matching the button height from the first code
           >
             SEND CODE
           </Button>
@@ -107,16 +108,18 @@ const Container = styled.View`
 const BackgroundImage = styled.Image`
   flex: 1;
   width: 100%;
-
+  height: 100%;
   position: absolute;
 `;
 
 const Card = styled(View)`
   width: 100%;
+  max-width: 480px;
+  align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding: 60px 30px 30px;
+  padding: 50px 30px;
   elevation: 4;
 `;
 

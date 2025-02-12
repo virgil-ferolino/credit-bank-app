@@ -41,7 +41,6 @@ export default function LoginScreen() {
             label="Email"
             value={formValue.email}
             onChangeText={handleInputChange("email")}
-            placeholder="Email"
             keyboardType="email-address"
             autoCapitalize="none"
           />

@@ -1,36 +1,26 @@
-import { useState } from "react";
+import React from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  termsAccepted: boolean;
-}
+// Validation Schema
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Minimum 6 characters")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm your password"),
+  termsAccepted: Yup.boolean().oneOf([true], "Accept terms and conditions"),
+});
 
 export default function SignUpScreen() {
   const router = useRouter();
-  const initialValues: FormValues = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    termsAccepted: false,
-  };
-
-  const [formValue, setFormValue] = useState<FormValues>(initialValues);
-
-  const handleInputChange = (field: keyof FormValues) => (text: string) => {
-    setFormValue({ ...formValue, [field]: text });
-  };
-
-  const handleTermsAcceptedChange = () => {
-    setFormValue({ ...formValue, termsAccepted: !formValue.termsAccepted });
-  };
 
   return (
     <Container>
@@ -43,96 +33,159 @@ export default function SignUpScreen() {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
       >
         <Card>
-          <Title>Create your account</Title>
-
-          <StyledTextInput
-            mode="outlined"
-            label="Name"
-            value={formValue.name}
-            onChangeText={handleInputChange("name")}
-            placeholder="ex: jon smith"
-            autoCapitalize="words"
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Email"
-            value={formValue.email}
-            onChangeText={handleInputChange("email")}
-            placeholder="ex: jon.smith@email.com"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Password"
-            value={formValue.password}
-            onChangeText={handleInputChange("password")}
-            secureTextEntry
-          />
-
-          <StyledTextInput
-            mode="outlined"
-            label="Confirm password"
-            value={formValue.confirmPassword}
-            onChangeText={handleInputChange("confirmPassword")}
-            secureTextEntry
-          />
-
-          <TermsContainer>
-            <Checkbox.Android
-              status={formValue.termsAccepted ? "checked" : "unchecked"}
-              onPress={handleTermsAcceptedChange}
-              color="#006d77"
-            />
-            <TermsText>
-              I understood the <TermsLink>terms & policy</TermsLink>
-            </TermsText>
-          </TermsContainer>
-
-          <Button
-            mode="contained"
-            onPress={() => router.push("/(auth)/verifyphone")}
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+              termsAccepted: false,
+            }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => {
+              console.log("Form Values: ", values);
+              router.push("/(auth)/verifyphone");
+            }}
           >
-            SIGN UP
-          </Button>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              isValid,
+              dirty,
+              setFieldValue,
+            }) => (
+              <>
+                <Title>Create your account</Title>
 
-          <OrText>or sign up with</OrText>
+                <StyledTextInput
+                  mode="outlined"
+                  label="Name"
+                  value={values.name}
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  placeholder="ex: Jon Smith"
+                  autoCapitalize="words"
+                  error={touched.name && errors.name ? true : false}
+                />
+                {touched.name && errors.name && (
+                  <ErrorText>{errors.name}</ErrorText>
+                )}
 
-          <SocialButtons>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/google.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/fb.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-            <SocialButton onPress={() => {}}>
-              <SocialIcon
-                source={require("@/assets/images/twitter.png")}
-                resizeMode="contain"
-              />
-            </SocialButton>
-          </SocialButtons>
+                <StyledTextInput
+                  mode="outlined"
+                  label="Email"
+                  value={values.email}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  placeholder="ex: jon.smith@email.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  error={touched.email && errors.email ? true : false}
+                />
+                {touched.email && errors.email && (
+                  <ErrorText>{errors.email}</ErrorText>
+                )}
 
-          <SignInContainer>
-            <SignInText>Have an account? </SignInText>
-            <SignInButton mode="text" onPress={() => router.push("/(auth)/")}>
-              SIGN IN
-            </SignInButton>
-          </SignInContainer>
+                <StyledTextInput
+                  mode="outlined"
+                  label="Password"
+                  value={values.password}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  secureTextEntry
+                  error={touched.password && errors.password ? true : false}
+                />
+                {touched.password && errors.password && (
+                  <ErrorText>{errors.password}</ErrorText>
+                )}
+
+                <StyledTextInput
+                  mode="outlined"
+                  label="Confirm Password"
+                  value={values.confirmPassword}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={handleBlur("confirmPassword")}
+                  secureTextEntry
+                  error={
+                    touched.confirmPassword && errors.confirmPassword
+                      ? true
+                      : false
+                  }
+                />
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <ErrorText>{errors.confirmPassword}</ErrorText>
+                )}
+
+                <TermsContainer>
+                  <Checkbox.Android
+                    status={values.termsAccepted ? "checked" : "unchecked"}
+                    onPress={() =>
+                      setFieldValue("termsAccepted", !values.termsAccepted)
+                    }
+                    color="#006d77"
+                  />
+                  <TermsText>
+                    I understood the <TermsLink>terms & policy</TermsLink>
+                  </TermsText>
+                </TermsContainer>
+                {touched.termsAccepted && errors.termsAccepted && (
+                  <ErrorText>{errors.termsAccepted}</ErrorText>
+                )}
+
+                <Button
+                  mode="contained"
+                  onPress={() => handleSubmit()}
+                  disabled={!(isValid && dirty)}
+                >
+                  SIGN UP
+                </Button>
+
+                <OrText>or sign up with</OrText>
+
+                <SocialButtons>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/google.png")}
+                      resizeMode="contain"
+                    />
+                  </SocialButton>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/fb.png")}
+                      resizeMode="contain"
+                    />
+                  </SocialButton>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/twitter.png")}
+                      resizeMode="contain"
+                    />
+                  </SocialButton>
+                </SocialButtons>
+
+                <SignInContainer>
+                  <SignInText>Have an account? </SignInText>
+                  <SignInButton
+                    mode="text"
+                    onPress={() => router.push("/(auth)/")}
+                  >
+                    SIGN IN
+                  </SignInButton>
+                </SignInContainer>
+              </>
+            )}
+          </Formik>
         </Card>
       </ScrollView>
     </Container>
   );
 }
 
+// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;
@@ -149,6 +202,8 @@ const BackgroundImage = styled.Image`
 
 const Card = styled(Surface)`
   width: 100%;
+  max-width: 480px;
+  align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -182,6 +237,12 @@ const TermsText = styled(Text)`
 const TermsLink = styled(Text)`
   color: #006d77;
   text-decoration: underline;
+`;
+
+const ErrorText = styled(Text)`
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
 `;
 
 const OrText = styled(Text)`
