@@ -43,7 +43,7 @@ export default function GetPromo() {
                 options={{
                     headerTitle:"",
                     headerShown: true,
-                    headerBackVisible: Platform.OS === 'ios'? false : true ,
+                    headerBackVisible: Platform.OS === 'android'
                 }} />
             <Animated.ScrollView
                 scrollEventThrottle={16}
