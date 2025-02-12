@@ -1,7 +1,7 @@
 import { promos } from "@/data/home";
 import { PromoType, usePromoStore } from "@/store/home/usePromo";
 import { useRouter } from "expo-router";
-import { Image, TouchableOpacity } from "react-native";
+import { FlatList, Image, TouchableOpacity } from "react-native";
 import { Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -85,18 +85,18 @@ const Promos = () => {
     }
 
     return (
-        <Animated.ScrollView
-            contentContainerStyle={{
-                flexGrow: 1,
-                alignItems: "center",
-        }}>
-            {promos.map((promoItem, index) => (
-                <PromoCard
-                    key={index}
-                    promo={promoItem} 
-                    onOpen={() => handlePromoNav(index, promoItem)} />
-            ))}
-        </Animated.ScrollView>
+        <Animated.View style={{ alignItems:"center" }}>
+            <FlatList
+                data={promos}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item, index}) => (
+                    <PromoCard
+                        key={index}
+                        promo={item}
+                        onOpen={() => handlePromoNav(index, item)} />  
+                    )}
+            />
+        </Animated.View>
     );
 }
  
