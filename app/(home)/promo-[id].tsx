@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 
 import { Text } from "react-native-paper";
 
-import { Dimensions, Image, View } from "react-native";
+import { Dimensions, Image, Platform, View } from "react-native";
 
 import styled from "styled-components/native";
 import Container from "@/components/Container";
@@ -43,7 +43,7 @@ export default function GetPromo() {
                 options={{
                     headerTitle:"",
                     headerShown: true,
-                    headerBackVisible: false,
+                    headerBackVisible: Platform.OS === 'ios'? false : true ,
                 }} />
             <Animated.ScrollView
                 scrollEventThrottle={16}
