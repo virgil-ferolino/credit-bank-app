@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput as RNTextInput, ScrollView } from "react-native";
 import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
@@ -15,16 +15,29 @@ export default function VerifyPhoneScreen() {
   };
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleOtpChange = (index: number) => (text: string) => {
-    const newOtp = [...formValue.otp];
-    newOtp[index] = text;
-    setFormValue({ ...formValue, otp: newOtp });
+    if (/^\d*$/.test(text)) {
+      const newOtp = [...formValue.otp];
+      newOtp[index] = text;
+      setFormValue({ ...formValue, otp: newOtp });
 
-    if (text.length === 1 && index < 4) {
-      (inputRefs[index + 1].current as RNTextInput)?.focus();
+      if (text.length === 1 && index < 4) {
+        (inputRefs[index + 1].current as RNTextInput)?.focus();
+      }
+
+      if (text === "" && index > 0) {
+        (inputRefs[index - 1].current as RNTextInput)?.focus();
+      }
     }
   };
+
+  useEffect(() => {
+    // Check if all OTP fields are filled
+    const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
+    setIsButtonDisabled(!allFieldsFilled);
+  }, [formValue.otp]);
 
   const inputRefs = Array(5)
     .fill(0)
@@ -66,6 +79,7 @@ export default function VerifyPhoneScreen() {
             mode="contained"
             onPress={() => router.push("/(auth)/verified")}
             contentStyle={{ height: 45 }}
+            disabled={isButtonDisabled}
           >
             SEND CODE
           </Button>
@@ -90,15 +104,13 @@ const BackgroundImage = styled.Image`
 `;
 
 const Card = styled(Surface)`
-  position: absolute;
-  bottom: 0;
   width: 100%;
+  max-width: 480px;
+  align-self: center;
   background-color: white;
-
-  padding-left: 60px;
-  padding-right: 60px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 50px 50px;
   elevation: 4;
 `;
 
@@ -107,10 +119,12 @@ const Title = styled(Text)`
   font-weight: 600;
   margin-bottom: 10px;
   color: #333;
+  align-self: center;
 `;
 
 const Subtitle = styled(Text)`
   font-size: 14px;
+  align-self: center;
   color: #666;
   margin-bottom: 25px;
   line-height: 20px;
