@@ -202,6 +202,8 @@ const BackgroundImage = styled.Image`
 
 const Card = styled(Surface)`
   width: 100%;
+  max-width: 480px;
+  align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;

@@ -105,12 +105,12 @@ const BackgroundImage = styled.Image`
 
 const Card = styled(Surface)`
   width: 100%;
-
+  max-width: 480px;
   align-self: center;
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding: 50px 30px;
+  padding: 50px 50px;
   elevation: 4;
 `;
 
@@ -119,10 +119,12 @@ const Title = styled(Text)`
   font-weight: 600;
   margin-bottom: 10px;
   color: #333;
+  align-self: center;
 `;
 
 const Subtitle = styled(Text)`
   font-size: 14px;
+  align-self: center;
   color: #666;
   margin-bottom: 25px;
   line-height: 20px;
