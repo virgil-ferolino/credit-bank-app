@@ -47,7 +47,7 @@ const CardSetting: React.FC<CardSettingProps> = ({
   <Card
     style={{
       ...(Platform.OS === "web" && { padding: 8 }),
-      ...(Platform.OS === "ios" && { padding: 28 }),
+      ...(Platform.OS === "ios" && { padding: 8 }),
     }}
   >
     <Card.Content
@@ -84,8 +84,9 @@ export default function ActivateCard() {
         height={"75%"}
         backdropMaskColor={"#00000090"}
         style={{
-          width: Platform.OS === "web" ? 480 : "100%",
+          width: "100%",
           alignSelf: "center",
+          maxWidth: 480,
         }}
       >
         <View
