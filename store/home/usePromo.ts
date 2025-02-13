@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export interface PromoType {
+    promoId: number,
     promoImage: string,
     promoHeader: string,
     promoContent: PromoContentType

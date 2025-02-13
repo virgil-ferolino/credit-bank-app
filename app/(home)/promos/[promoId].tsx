@@ -39,7 +39,7 @@ export default function GetPromo() {
     return (
         <Container>
             <Stack.Screen
-                name="promos/[id]"
+                name="promos/[promoId]"
                 options={{
                     headerTitle:"",
                     headerShown: true,
@@ -54,7 +54,7 @@ export default function GetPromo() {
                 showsVerticalScrollIndicator={false}
                 >
                 {selectedPromo
-                ? (
+                && (
                     <View style={{ alignItems: "center", }}>
                         <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
                         <View style={{ alignItems: "center", paddingBottom: 15, }}>
@@ -79,9 +79,6 @@ export default function GetPromo() {
                             }
                         </View>
                     </View>
-                )
-                : (
-                    <Text variant="bodyMedium">No promos here.</Text>
                 )}
             </Animated.ScrollView>
         </Container>

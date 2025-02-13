@@ -76,12 +76,12 @@ const Promos = () => {
         (state) => state.setSelectedPromo
     );
 
-    const handlePromoNav = (index: number, data: PromoType) => {
+    const handlePromoNav = (promoId: number, data: PromoType) => {
         setSelectedPromo(data);
 
         router.push({
-            pathname: "/promos/[id]",
-            params: { id: index },
+            pathname: "/promos/[promoId]",
+            params: { promoId: promoId },
         });
     }
 
@@ -91,11 +91,11 @@ const Promos = () => {
                 <FlatList
                     data={promos}
                     showsVerticalScrollIndicator={false}
-                    renderItem={({item, index}) => (
+                    renderItem={({item}) => (
                         <PromoCard
-                            key={index}
+                            key={item.promoId}
                             promo={item}
-                            onOpen={() => handlePromoNav(index, item)} />  
+                            onOpen={() => handlePromoNav(item.promoId, item)} />  
                         )}
                 />
             </Animated.View>
