@@ -1,26 +1,21 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { TextInput, Button, Text, Menu } from "react-native-paper";
+import { ScrollView, View, Modal, Pressable } from "react-native";
+import { TextInput, Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
+import { useRouter } from "expo-router";
 
-const countryCodes: CountryCode[] = [
+const countryCodes = [
   { label: "Philippines (+63)", value: "+63" },
   { label: "United States (+1)", value: "+1" },
   { label: "United Kingdom (+44)", value: "+44" },
   { label: "Australia (+61)", value: "+61" },
-  { label: "Canada (+1)", value: "+1" },
+  { label: "China (+86)", value: "+86" },
 ];
-
-interface CountryCode {
-  label: string;
-  value: string;
-}
 
 export default function VerifyPhoneScreen() {
   const [countryCode, setCountryCode] = useState(countryCodes[0]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [menuVisible, setMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const router = useRouter();
 
@@ -40,37 +35,23 @@ export default function VerifyPhoneScreen() {
             We will send you a One-Time-Password (OTP){"\n"}
             on this mobile number.
           </Subtitle>
+
           <PhoneInputContainer>
-            <Menu
-              visible={menuVisible}
-              onDismiss={() => setMenuVisible(false)}
-              anchor={
-                <CountryCodeInput
-                  mode="outlined"
-                  value={countryCode.value}
-                  onChangeText={() => {}}
-                  right={
-                    <TextInput.Icon
-                      icon="chevron-down"
-                      onPress={() => setMenuVisible(true)}
-                    />
-                  }
-                  editable={false}
-                  onPressIn={() => setMenuVisible(true)}
-                />
-              }
-            >
-              {countryCodes.map((code) => (
-                <Menu.Item
-                  key={code.value}
-                  onPress={() => {
-                    setCountryCode(code);
-                    setMenuVisible(false);
-                  }}
-                  title={code.label}
-                />
-              ))}
-            </Menu>
+            <Pressable onPress={() => setModalVisible(true)}>
+              <CountryCodeInput
+                mode="outlined"
+                value={countryCode.value}
+                editable={false}
+                pointerEvents="none"
+                right={
+                  <TextInput.Icon
+                    icon="chevron-down"
+                    onPress={() => setModalVisible(true)}
+                  />
+                }
+                // Make the input non-interactive, Pressable will handle the touch
+              />
+            </Pressable>
 
             <PhoneInput
               mode="outlined"
@@ -88,16 +69,60 @@ export default function VerifyPhoneScreen() {
             mode="contained"
             onPress={() => router.push("/(auth)/otpverify")}
             disabled={phoneNumber.length < 10}
-            contentStyle={{ height: 45 }} // Matching the button height from the first code
+            contentStyle={{ height: 45 }}
           >
             SEND CODE
           </Button>
         </Card>
       </ScrollView>
+
+      {/* Country Code Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <ModalOverlay onPress={() => setModalVisible(false)} />
+        <ModalContainer>
+          <ModalHeader>
+            <ModalTitle>Select Country Code</ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            {countryCodes.map((code) => (
+              <Pressable
+                key={code.value}
+                onPress={() => {
+                  setCountryCode(code);
+                  setModalVisible(false);
+                }}
+                style={{
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#f0f0f0",
+                }}
+              >
+                <Text style={{ fontSize: 16 }}>{code.label}</Text>
+              </Pressable>
+            ))}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              mode="outlined"
+              onPress={() => setModalVisible(false)}
+              style={{ borderRadius: 20 }}
+            >
+              CANCEL
+            </Button>
+          </ModalFooter>
+        </ModalContainer>
+      </Modal>
     </Container>
   );
 }
 
+// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;
@@ -119,7 +144,7 @@ const Card = styled(View)`
   background-color: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding: 50px 30px;
+  padding: 50px 50px;
   elevation: 4;
 `;
 
@@ -128,6 +153,7 @@ const Title = styled(Text)`
   font-weight: 600;
   margin-bottom: 10px;
   color: #333;
+  align-self: center;
 `;
 
 const Subtitle = styled(Text)`
@@ -135,13 +161,14 @@ const Subtitle = styled(Text)`
   color: #666;
   margin-bottom: 25px;
   line-height: 20px;
+  align-self: center;
 `;
 
 const PhoneInputContainer = styled(View)`
-  padding-bottom: 300px;
   flex-direction: row;
   gap: 8px;
   margin-bottom: 30px;
+  align-self: center;
 `;
 
 const CountryCodeInput = styled(TextInput)`
@@ -152,4 +179,41 @@ const CountryCodeInput = styled(TextInput)`
 const PhoneInput = styled(TextInput)`
   flex: 1;
   background-color: white;
+`;
+
+// Modal Styles
+const ModalOverlay = styled.Pressable`
+  flex: 1;
+`;
+
+const ModalContainer = styled(View)`
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 20px 0;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+`;
+
+const ModalHeader = styled(View)`
+  align-items: center;
+  padding: 10px;
+`;
+
+const ModalTitle = styled(Text)`
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const ModalBody = styled(ScrollView)`
+  max-height: 300px;
+`;
+
+const ModalFooter = styled(View)`
+  align-items: center;
+  padding: 10px;
 `;
