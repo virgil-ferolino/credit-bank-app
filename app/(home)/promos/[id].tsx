@@ -51,6 +51,7 @@ export default function GetPromo() {
                     backgroundColor: "white",
                     alignContent: "center",
                 }}
+                showsVerticalScrollIndicator={false}
                 >
                 {selectedPromo
                 ? (

@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import { promos } from "@/data/home";
 import { PromoType, usePromoStore } from "@/store/home/usePromo";
 import { useRouter } from "expo-router";
@@ -85,18 +86,20 @@ const Promos = () => {
     }
 
     return (
-        <Animated.View style={{ alignItems:"center" }}>
-            <FlatList
-                data={promos}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item, index}) => (
-                    <PromoCard
-                        key={index}
-                        promo={item}
-                        onOpen={() => handlePromoNav(index, item)} />  
-                    )}
-            />
-        </Animated.View>
+        <Container>
+            <Animated.View style={{ alignItems:"center" }}>
+                <FlatList
+                    data={promos}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({item, index}) => (
+                        <PromoCard
+                            key={index}
+                            promo={item}
+                            onOpen={() => handlePromoNav(index, item)} />  
+                        )}
+                />
+            </Animated.View>
+        </Container>
     );
 }
  
