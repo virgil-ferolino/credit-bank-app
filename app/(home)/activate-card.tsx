@@ -1,81 +1,196 @@
-import React, { useState } from "react";
+import React, { Fragment, useCallback, useRef, useState } from "react";
 import styled from "styled-components/native";
-import { Card, Text } from "react-native-paper";
+import { Card, Switch, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity, View } from "react-native";
+import {
+  ImageBackground,
+  Platform,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import Container from "@/components/Container";
-import ModalCreditCard from "@/components/home/ModalCreditCard";
+
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
+
+import CreditCard from "@/components/credit-carousel/CreditCard";
+import { Ionicons } from "@expo/vector-icons";
 
 const TextBold = styled(Text)({
   fontWeight: 700,
 });
 
+const ContainerOpacity = styled(View)({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  borderRadius: 10,
+  backgroundColor: "rgba(255, 255, 255, 0.7)",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+interface CardSettingProps {
+  label: string;
+  value: boolean;
+  onToggle: () => void;
+}
+
+const CardSetting: React.FC<CardSettingProps> = ({
+  label,
+  value,
+  onToggle,
+}) => (
+  <Card
+    style={{
+      ...(Platform.OS === "web" && { padding: 8 }),
+      ...(Platform.OS === "ios" && { padding: 28 }),
+    }}
+  >
+    <Card.Content
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingVertical: 8,
+      }}
+    >
+      <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+        {label}
+      </Text>
+      <Switch value={value} onValueChange={onToggle} />
+    </Card.Content>
+  </Card>
+);
+
 export default function ActivateCard() {
   const [isLockCard, setIsLockCard] = useState<boolean>(false);
   const [isHome, setIsHome] = useState<boolean>(false);
 
-  const [isShowCard, setIsShowCard] = useState<boolean>(false);
+  const sheetRef = useRef<BottomSheetMethods>(null);
 
-  return (
-    <Container>
-      <Animated.View
+  const handleSnapPress = useCallback(() => {
+    sheetRef.current?.open();
+  }, []);
+
+  const renderBottomSheet = () => {
+    return (
+      <BottomSheet
+        ref={sheetRef}
+        animationType={"slide"}
+        height={"75%"}
+        backdropMaskColor={"#00000090"}
         style={{
-          paddingHorizontal: 16,
-          flexDirection: "column",
-          rowGap: 5,
-          paddingVertical: 8,
+          width: Platform.OS === "web" ? 480 : "100%",
+          alignSelf: "center",
         }}
       >
-        <Card elevation={3}>
-          <LinearGradient
-            colors={["#9EA448", "#B93B3B"]}
-            style={{ borderRadius: 10 }}
-            start={{ x: 0, y: 1 }}
-            end={{ x: 1, y: 0.8 }}
-          >
-            <TouchableOpacity onPress={() => setIsShowCard(true)}>
-              <Card.Content
+        <View
+          style={{
+            paddingHorizontal: 16,
+            flexDirection: "column",
+            rowGap: 16,
+          }}
+        >
+          {isLockCard ? (
+            <Fragment>
+              <ImageBackground
+                source={{ uri: "https://legacy.reactjs.org/logo-og.png" }}
+                resizeMode="cover"
                 style={{
-                  padding: 20,
+                  borderRadius: 10,
+                  overflow: "hidden",
                 }}
               >
-                <View
+                <CreditCard />
+
+                <ContainerOpacity>
+                  <Ionicons name="lock-closed" size={62} color="gray" />
+                </ContainerOpacity>
+              </ImageBackground>
+            </Fragment>
+          ) : (
+            <CreditCard />
+          )}
+
+          <View style={{ flexDirection: "column", rowGap: 8 }}>
+            <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+              Card Settings
+            </Text>
+
+            <CardSetting
+              label={"Lock Card"}
+              value={isLockCard}
+              onToggle={() => setIsLockCard(!isLockCard)}
+            />
+
+            <CardSetting
+              label={"Lock Card"}
+              value={isHome}
+              onToggle={() => setIsHome(!isHome)}
+            />
+          </View>
+        </View>
+      </BottomSheet>
+    );
+  };
+
+  return (
+    <Fragment>
+      <Container>
+        <Animated.View
+          style={{
+            paddingHorizontal: 16,
+            flexDirection: "column",
+            rowGap: 5,
+            paddingVertical: 8,
+          }}
+        >
+          <Card elevation={3}>
+            <LinearGradient
+              colors={["#9EA448", "#B93B3B"]}
+              style={{ borderRadius: 10 }}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0.8 }}
+            >
+              <TouchableOpacity onPress={handleSnapPress}>
+                <Card.Content
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
+                    padding: 20,
                   }}
                 >
-                  <Text variant="bodyMedium">Credit Card</Text>
-                  <Text variant="bodyMedium">1234 1234 1234 1234</Text>
-                </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text variant="bodyMedium">Credit Card</Text>
+                    <Text variant="bodyMedium">1234 1234 1234 1234</Text>
+                  </View>
 
-                <TextBold variant="bodyLarge">Personal Savings</TextBold>
+                  <TextBold variant="bodyLarge">Personal Savings</TextBold>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <TextBold variant="bodyMedium">123456789</TextBold>
-                  <TextBold variant="bodyMedium">PHP 128,000.00</TextBold>
-                </View>
-              </Card.Content>
-            </TouchableOpacity>
-          </LinearGradient>
-        </Card>
-      </Animated.View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <TextBold variant="bodyMedium">123456789</TextBold>
+                    <TextBold variant="bodyMedium">PHP 128,000.00</TextBold>
+                  </View>
+                </Card.Content>
+              </TouchableOpacity>
+            </LinearGradient>
+          </Card>
+        </Animated.View>
+      </Container>
 
-      <ModalCreditCard
-        isVisible={isShowCard}
-        onClose={() => setIsShowCard(false)}
-        isLock={isLockCard}
-        setIsLock={() => setIsLockCard(!isLockCard)}
-        isHome={isHome}
-        setIsHome={() => setIsHome(!isHome)}
-      />
-    </Container>
+      {renderBottomSheet()}
+    </Fragment>
   );
 }

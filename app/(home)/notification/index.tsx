@@ -97,6 +97,7 @@ const Notification = () => {
         <FlatList
           data={notifications}
           nestedScrollEnabled={true}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <RenderNotificationItem
               key={index}
