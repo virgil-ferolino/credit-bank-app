@@ -131,7 +131,6 @@ const Subtitle = styled(Text)`
 `;
 
 const PhoneInputContainer = styled.View`
-  padding-bottom: 300px;
   flex-direction: row;
   gap: 8px;
   margin-bottom: 30px;
