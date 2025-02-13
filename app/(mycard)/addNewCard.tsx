@@ -151,7 +151,6 @@ const AddNewCard = () => {
           textColor="white"
           labelStyle={{ fontSize: 17 }}
           onPress={() => {
-            console.log(formValue);
             setFormValue(initialValues);
           }}
         >

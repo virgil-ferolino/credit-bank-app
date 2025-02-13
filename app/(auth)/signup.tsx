@@ -171,7 +171,7 @@ export default function SignUpScreen() {
                   <SignInText>Have an account? </SignInText>
                   <SignInButton
                     mode="text"
-                    onPress={() => router.push("/(auth)/")}
+                    onPress={() => router.push("/(auth)")}
                   >
                     SIGN IN
                   </SignInButton>

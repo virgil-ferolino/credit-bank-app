@@ -1,6 +1,11 @@
 import { useRouter } from "expo-router";
 import React, { useState, useEffect } from "react";
-import { TextInput as RNTextInput, ScrollView } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  TextInput as RNTextInput,
+  ScrollView,
+} from "react-native";
 import { Button, Text, Surface } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -50,41 +55,46 @@ export default function VerifyPhoneScreen() {
         resizeMode="cover"
       />
 
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
       >
-        <Card>
-          <Title>Verify your phone number</Title>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
+        >
+          <Card>
+            <Title>Verify your phone number</Title>
 
-          <Subtitle>
-            We will send you a One-Time-Password (OTP){"\n"}on this mobile
-            number.
-          </Subtitle>
+            <Subtitle>
+              We will send you a One-Time-Password (OTP){"\n"}on this mobile
+              number.
+            </Subtitle>
 
-          <PhoneInputContainer>
-            {formValue.otp.map((digit, index) => (
-              <OtpInput
-                key={index}
-                ref={inputRefs[index]}
-                keyboardType="number-pad"
-                maxLength={1}
-                selectTextOnFocus
-                value={digit}
-                onChangeText={handleOtpChange(index)}
-              />
-            ))}
-          </PhoneInputContainer>
+            <PhoneInputContainer>
+              {formValue.otp.map((digit, index) => (
+                <OtpInput
+                  key={index}
+                  ref={inputRefs[index]}
+                  keyboardType="number-pad"
+                  maxLength={1}
+                  selectTextOnFocus
+                  value={digit}
+                  onChangeText={handleOtpChange(index)}
+                />
+              ))}
+            </PhoneInputContainer>
 
-          <Button
-            mode="contained"
-            onPress={() => router.push("/(auth)/verified")}
-            contentStyle={{ height: 45 }}
-            disabled={isButtonDisabled}
-          >
-            SEND CODE
-          </Button>
-        </Card>
-      </ScrollView>
+            <Button
+              mode="contained"
+              onPress={() => router.push("/(auth)/verified")}
+              contentStyle={{ height: 45 }}
+              disabled={isButtonDisabled}
+            >
+              SEND CODE
+            </Button>
+          </Card>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Container>
   );
 }
@@ -119,12 +129,11 @@ const Title = styled(Text)`
   font-weight: 600;
   margin-bottom: 10px;
   color: #333;
-  align-self: center;
 `;
 
 const Subtitle = styled(Text)`
   font-size: 14px;
-  align-self: center;
+
   color: #666;
   margin-bottom: 25px;
   line-height: 20px;
@@ -133,8 +142,8 @@ const Subtitle = styled(Text)`
 const PhoneInputContainer = styled.View`
   flex-direction: row;
   gap: 8px;
+  align-self: center;
   margin-bottom: 30px;
-  justify-content: center;
 `;
 
 const OtpInput = styled(RNTextInput)`
