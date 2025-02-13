@@ -1,10 +1,14 @@
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
+import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { CreditCardProps } from "./types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppTheme } from "@/hooks/useTheme";
+import { useState } from "react";
 // Standard credit card ratio
+
+type OffNumber = "cn" | "cvv" | "exp";
 
 const ParentView = styled(Card)({
   boxShadow: "none",
@@ -76,7 +80,7 @@ const WhiteCircle = styled(View)({
   marginHorizontal: 5,
   backgroundColor: "#ffffff",
 });
-const ToggleHide = styled(View)({
+const ToggleHide = styled(TouchableOpacity)({
   width: 25,
   height: 25,
   borderRadius: 15,
@@ -101,14 +105,37 @@ const OrangeCircle = styled(View)({
 });
 
 const CreditCard = ({
-  cardNumber = "**** **** **** 1234",
+  cardNumber = "1234123412341234",
   cardHolder = "JAMES CHARLES",
-  expiryDate = "**/**",
-  cvv = "***",
+  expiryDate = "12/12",
+  cvv = "123",
 }: CreditCardProps) => {
   const {
     colors: { gradientStart, gradientEnd },
   } = useAppTheme();
+  const [toggleHidden, setToggleHidden] = useState(true);
+
+  const renderNumbers = (a: string, card: OffNumber) => {
+    const format = a.replace(/\s+/g, "");
+    const digits = (x: number, y: number, z: string) => {
+      if (toggleHidden) {
+        return z.slice(x, y).replace(/\d/g, "*");
+      } else return z.slice(x, y);
+    };
+    switch (card) {
+      case "cn":
+        return `${digits(0, 4, a)} ${digits(4, 8, a)} ${digits(
+          8,
+          12,
+          a
+        )} ${format.slice(12, 16)}`;
+      case "cvv":
+        return digits(0, 3, a);
+      case "exp":
+        const exp = a.replace(/[^0-9]/g, "");
+        return `${digits(0, 2, exp)}/${digits(2, 4, exp)}`;
+    }
+  };
   return (
     <ParentView>
       <LinearGradient
@@ -128,9 +155,12 @@ const CreditCard = ({
             <WhiteCircle />
           </HeaderView>
           <HeaderView>
-            <CardNumber>{cardNumber}</CardNumber>
-            <ToggleHide>
-              <Image source={require("@/assets/images/eye.png")} />
+            <CardNumber>{renderNumbers(cardNumber, "cn")}</CardNumber>
+            <ToggleHide onPress={() => setToggleHidden((prev) => !prev)}>
+              <Ionicons
+                name={toggleHidden ? "eye-off-outline" : "eye-outline"}
+                size={20}
+              />
             </ToggleHide>
           </HeaderView>
 
@@ -143,12 +173,14 @@ const CreditCard = ({
             <CardDetailRow>
               <CardDetailSection>
                 <CardDetailsLabel>Expired Date</CardDetailsLabel>
-                <CardDetailsValue>{expiryDate}</CardDetailsValue>
+                <CardDetailsValue>
+                  {renderNumbers(expiryDate, "exp")}
+                </CardDetailsValue>
               </CardDetailSection>
 
               <CardDetailSection>
                 <CardDetailsLabel>CVV</CardDetailsLabel>
-                <CardDetailsValue>{cvv}</CardDetailsValue>
+                <CardDetailsValue>{renderNumbers(cvv, "cvv")}</CardDetailsValue>
               </CardDetailSection>
 
               <CardLogo>
