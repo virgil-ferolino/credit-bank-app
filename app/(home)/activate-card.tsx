@@ -83,6 +83,10 @@ export default function ActivateCard() {
         animationType={"slide"}
         height={"75%"}
         backdropMaskColor={"#00000090"}
+        style={{
+          width: Platform.OS === "web" ? 480 : "100%",
+          alignSelf: "center",
+        }}
       >
         <View
           style={{
