@@ -53,12 +53,13 @@ const initialValues = {
 };
 const AddNewCard = () => {
   const [formValue, setFormValue] = useState(initialValues);
-  const inputRestrict = (e: string, dateFormat: boolean = true) => {
-    let formatText = e.replace(/[^0-9]/g, "");
-    if (dateFormat !== true) return formatText;
-    return (formatText = `${formatText.slice(0, 2)}${
-      formatText.slice(2, 4) === "" ? "" : "/"
-    }${formatText.slice(2, 4)}`);
+  const inputRestrict = (a: string, b: boolean = true) => {
+    let c = a.replace(/[^0-9]/g, "");
+    if (b !== true) return c;
+    return (c = `${c.slice(0, 2)}${c.slice(2, 4) === "" ? "" : "/"}${c.slice(
+      2,
+      4
+    )}`);
   };
 
   const cardInfoArray: CardInfoArrayProps[] = [
@@ -79,54 +80,54 @@ const AddNewCard = () => {
     },
   ];
 
+  const cardDetailsArr = [
+    {
+      label: "Card Type",
+      onChangeText: (e: string) => setFormValue({ ...formValue, cardType: e }),
+      value: formValue.cardType,
+      editable: false,
+    },
+    {
+      label: "Card Holder Name",
+      onChangeText: (e: string) =>
+        setFormValue({ ...formValue, cardHolderName: e }),
+      value: formValue.cardHolderName,
+      placeHolder: "John Doe",
+    },
+    {
+      label: "Card Number",
+      onChangeText: (e: string) =>
+        setFormValue({
+          ...formValue,
+          cardNumber: inputRestrict(e, false),
+        }),
+      value: formValue.cardNumber,
+      placeHolder: "XXXX XXXX XXXX XXXX",
+    },
+  ];
+
   return (
     <ParallaxScrollView>
       <StyledView>
-        <StyledContainer>
-          <Text variant="bodyLarge">Card Type</Text>
-          <TextInput
-            mode="outlined"
-            value={formValue.cardType}
-            outlineStyle={{ borderRadius: 10 }}
-            activeOutlineColor="black"
-            editable={false}
-            onChangeText={(e) => setFormValue({ ...formValue, cardType: e })}
-          />
-        </StyledContainer>
-        <StyledContainer>
-          <Text variant="bodyLarge">Card Holder Name</Text>
-          <TextInput
-            mode="outlined"
-            value={formValue.cardHolderName}
-            outlineStyle={{ borderRadius: 10 }}
-            placeholder="John Doe"
-            placeholderTextColor="#9A9A9A"
-            activeOutlineColor="black"
-            onChangeText={(e) =>
-              setFormValue({ ...formValue, cardHolderName: e })
-            }
-          />
-        </StyledContainer>
-        <StyledContainer>
-          <Text variant="bodyLarge">Card Number</Text>
-          <TextInput
-            mode="outlined"
-            value={formValue.cardNumber}
-            outlineStyle={{ borderRadius: 10 }}
-            placeholder="XXXX XXXX XXXX XXXX"
-            placeholderTextColor="#9A9A9A"
-            activeOutlineColor="black"
-            onChangeText={(e) =>
-              setFormValue({
-                ...formValue,
-                cardNumber: inputRestrict(e, false),
-              })
-            }
-            keyboardType="numeric"
-            maxLength={16}
-            inputMode="numeric"
-          />
-        </StyledContainer>
+        {cardDetailsArr.map((data, index) => (
+          <StyledContainer key={index}>
+            <Text variant="bodyLarge">{data.label}</Text>
+            <TextInput
+              mode="outlined"
+              value={data.value}
+              outlineStyle={{ borderRadius: 10 }}
+              placeholder={data.placeHolder ?? ""}
+              placeholderTextColor={data.placeHolder ? "#9A9A9A" : ""}
+              editable={data.editable ?? true}
+              onChangeText={data.onChangeText}
+              keyboardType={
+                data.label === "Card Number" ? "numeric" : undefined
+              }
+              maxLength={data.label === "Card Number" ? 16 : undefined}
+              inputMode={data.label === "Card Number" ? "numeric" : undefined}
+            />
+          </StyledContainer>
+        ))}
         <StyledCardInfoContainer>
           {cardInfoArray.map(
             ({ title, placeHolder, onChangeText, value, maxLength }, index) => (
@@ -138,7 +139,6 @@ const AddNewCard = () => {
                   placeholder={placeHolder}
                   outlineStyle={{ borderRadius: 10 }}
                   placeholderTextColor="#9A9A9A"
-                  activeOutlineColor="black"
                   onChangeText={onChangeText}
                   maxLength={maxLength}
                 />

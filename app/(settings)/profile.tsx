@@ -1,11 +1,5 @@
-import { Text, Button, Avatar } from "react-native-paper";
-import {
-  ScrollView,
-  Platform,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { Text, Button, Avatar, TextInput } from "react-native-paper";
+import { ScrollView, Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React, { useState, useRef } from "react";
@@ -14,7 +8,6 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 
@@ -27,26 +20,15 @@ const StyledView = styled(ScrollView)({
   paddingRight: commonPadding,
 });
 
-const StyledTextInput = styled(TextInput)({
-  marginBottom: 12,
-  paddingHorizontal: 12,
-  backgroundColor: "white",
-  borderRadius: 10,
-  height: 60,
-});
-
 const StyledButton = styled(Button)({
-  marginTop: 15,
-  backgroundColor: "#004068",
+  marginTop: 35,
+  backgroundColor: "#0265A1",
   color: "black",
-  paddingLeft: commonPadding,
-  paddingRight: commonPadding,
-  height: 38,
 });
 
 const StyledButtonChangePhoto = styled(Button)({
   marginBottom: 15,
-  backgroundColor: "#004068",
+  backgroundColor: "#0265A1",
   color: "black",
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
@@ -63,13 +45,14 @@ const StyledButtonTitle = styled(Text)({
 const StyledText = styled(Text)({
   color: "#6F6F6F",
   marginBottom: 10,
+  marginTop: 20,
   fontSize: 16,
 });
 
 const AvatarFrame = styled(View)({
   alignSelf: "center",
   borderWidth: 6,
-  borderColor: "#004068",
+  borderColor: "#0265A1",
   borderRadius: 70,
   marginBottom: 20,
   width: 132,
@@ -83,7 +66,7 @@ const OverlayButton = styled(TouchableOpacity)({
   position: "absolute",
   bottom: 0,
   right: 0,
-  backgroundColor: "#004068",
+  backgroundColor: "#0265A1",
   borderRadius: 30,
   padding: 8,
 });
@@ -230,32 +213,36 @@ const Profile = () => {
             <MaterialIcons name="camera-alt" size={24} color="white" />
           </OverlayButton>
         </AvatarFrame>
-
         <StyledButtonChangePhoto onPress={openGallery}>
           <StyledButtonTitle>Change Photo</StyledButtonTitle>
         </StyledButtonChangePhoto>
-
         <StyledText>Name</StyledText>
-        <StyledTextInput
+        <TextInput
+          mode="outlined"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="black"
           value={fields.name}
           onChangeText={(value: string) => handleFieldChange("name", value)}
-          style={{ marginBottom: 20 }}
         />
 
         <StyledText>Email</StyledText>
-        <StyledTextInput
+        <TextInput
+          mode="outlined"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="black"
           value={fields.email}
           onChangeText={(value: string) => handleFieldChange("email", value)}
         />
-
         <StyledText>Phone Number</StyledText>
-        <StyledTextInput
+        <TextInput
+          mode="outlined"
+          outlineStyle={{ borderRadius: 10 }}
+          activeOutlineColor="black"
           value={fields.phoneNumber}
           onChangeText={(value: string) =>
             handleFieldChange("phoneNumber", value)
           }
         />
-
         <StyledButton>
           <StyledButtonTitle>Save Profile</StyledButtonTitle>
         </StyledButton>
