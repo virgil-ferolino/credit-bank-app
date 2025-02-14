@@ -2,14 +2,18 @@ import Container from "@/components/Container";
 import { promos } from "@/data/home";
 import { PromoType, usePromoStore } from "@/store/home/usePromo";
 import { useRouter } from "expo-router";
-import { Image, FlatList } from "react-native";
-import { Button, Card, Text } from "react-native-paper";
+import { FlatList, Image, TouchableOpacity } from "react-native";
+import { Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
+interface PromoCardType {
+    promo: PromoType;
+    onOpen: () => void;
+}
+
 const StyledCard = styled(Card)({
     width: 350,
-    height: 300,
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "white",
@@ -19,32 +23,21 @@ const StyledCard = styled(Card)({
 
 const StyledImage = styled(Image)({
     width: "100%",
-    height: 180,
+    height: 200,
     borderBottomLeftRadius:0,
     borderBottomRightRadius: 0
 })
 
-const StyledText = styled(Text)({
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#333",
-    fontSize: 15,
-    marginTop: 20,
-    marginBottom: 10
-})
-
-const StyledButton = styled(Button)({
+const StyledButton = styled(TouchableOpacity)({
     marginTop:10,
     backgroundColor: "#0265A1",
     width: 100,
+    height: 30,
+    borderRadius: 8,
+    justifyContent: "center", 
 })
 
-const ButtonText = styled(Text)({
-    color: "white",
-    fontSize: 14,
-})
-
-const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:() => void }) => {
+const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
     return(
         <StyledCard>
             <StyledImage source={promo.promoImage} />
@@ -52,13 +45,24 @@ const PromoCard = ({ promo, onOpen }: { promo:PromoType, onOpen:() => void }) =>
                 style={{
                     alignItems: "center"
                 }}>
-                <StyledText>
+                <Text style={{ 
+                    fontWeight: "bold", 
+                    textAlign: "center", 
+                    color: "#333", 
+                    fontSize: 15, 
+                    marginTop: 20, 
+                }}>
                     {promo.promoHeader}
-                </StyledText>
+                </Text>
                 <StyledButton onPress={onOpen}>
-                    <ButtonText>
+                    <Text style={{ 
+                        color: "white", 
+                        fontSize: 12,
+                        textAlign: "center",
+                        fontWeight: "light",
+                    }}>
                         Read more
-                    </ButtonText>
+                    </Text>
                 </StyledButton>
             </Card.Content>
         </StyledCard>
@@ -72,30 +76,28 @@ const Promos = () => {
         (state) => state.setSelectedPromo
     );
 
-    const handlePromoNav = (index: number, data: PromoType) => {
+    const handlePromoNav = (promoId: number, data: PromoType) => {
         setSelectedPromo(data);
 
         router.push({
-            pathname: "/promo-[id]",
-            params: { promoId: index },
+            pathname: "/promos/[promoId]",
+            params: { promoId: promoId },
         });
     }
 
     return (
         <Container>
-            <Animated.View style={{
-                flexGrow: 1,
-                alignItems: "center",
-            }}>
+            <Animated.View style={{ alignItems:"center" }}>
                 <FlatList
                     data={promos}
-                    nestedScrollEnabled={true}
-                    renderItem={({ item, index }) => (
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({item}) => (
                         <PromoCard
-                            key={index}
+                            key={item.promoId}
                             promo={item}
-                            onOpen={() => handlePromoNav(index, item)} />  
-                    )} />
+                            onOpen={() => handlePromoNav(item.promoId, item)} />  
+                        )}
+                />
             </Animated.View>
         </Container>
     );
