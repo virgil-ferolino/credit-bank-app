@@ -60,10 +60,12 @@ export default function SignUpScreen() {
             }) => (
               <>
                 <Title>Create your account</Title>
+                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                  Name
+                </Text>
 
                 <StyledTextInput
                   mode="outlined"
-                  label="Name"
                   value={values.name}
                   onChangeText={handleChange("name")}
                   onBlur={handleBlur("name")}
@@ -74,10 +76,11 @@ export default function SignUpScreen() {
                 {touched.name && errors.name && (
                   <ErrorText>{errors.name}</ErrorText>
                 )}
-
+                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                  Email
+                </Text>
                 <StyledTextInput
                   mode="outlined"
-                  label="Email"
                   value={values.email}
                   onChangeText={handleChange("email")}
                   onBlur={handleBlur("email")}
@@ -89,10 +92,11 @@ export default function SignUpScreen() {
                 {touched.email && errors.email && (
                   <ErrorText>{errors.email}</ErrorText>
                 )}
-
+                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                  Password
+                </Text>
                 <StyledTextInput
                   mode="outlined"
-                  label="Password"
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
@@ -102,10 +106,12 @@ export default function SignUpScreen() {
                 {touched.password && errors.password && (
                   <ErrorText>{errors.password}</ErrorText>
                 )}
+                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                  Confirm Password
+                </Text>
 
                 <StyledTextInput
                   mode="outlined"
-                  label="Confirm Password"
                   value={values.confirmPassword}
                   onChangeText={handleChange("confirmPassword")}
                   onBlur={handleBlur("confirmPassword")}
