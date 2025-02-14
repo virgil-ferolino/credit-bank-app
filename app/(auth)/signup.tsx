@@ -1,10 +1,10 @@
-import React from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
 import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import React from "react";
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
@@ -21,6 +21,21 @@ const validationSchema = Yup.object().shape({
 
 export default function SignUpScreen() {
   const router = useRouter();
+
+  const areAllFieldsFilled = (values: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    termsAccepted?: boolean;
+  }) => {
+    return (
+      values.name !== "" &&
+      values.email !== "" &&
+      values.password !== "" &&
+      values.confirmPassword !== ""
+    );
+  };
 
   return (
     <Container>
@@ -100,7 +115,7 @@ export default function SignUpScreen() {
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
-                  secureTextEntry
+                  // secureTextEntry
                   error={touched.password && errors.password ? true : false}
                 />
                 {touched.password && errors.password && (
@@ -115,7 +130,7 @@ export default function SignUpScreen() {
                   value={values.confirmPassword}
                   onChangeText={handleChange("confirmPassword")}
                   onBlur={handleBlur("confirmPassword")}
-                  secureTextEntry
+                  // secureTextEntry
                   error={
                     touched.confirmPassword && errors.confirmPassword
                       ? true
@@ -133,8 +148,11 @@ export default function SignUpScreen() {
                       setFieldValue("termsAccepted", !values.termsAccepted)
                     }
                     color="#006d77"
+                    disabled={!areAllFieldsFilled(values)}
                   />
-                  <TermsText>
+                  <TermsText
+                    style={{ opacity: areAllFieldsFilled(values) ? 1 : 0.5 }}
+                  >
                     I understood the <TermsLink>terms & policy</TermsLink>
                   </TermsText>
                 </TermsContainer>
