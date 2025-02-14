@@ -1,14 +1,14 @@
 import React from "react";
 import { RelativePathString, useRouter } from "expo-router";
 import { Image, TouchableOpacity, View } from "react-native";
-import { Avatar, Card, Text } from "react-native-paper";
+import { Avatar, Badge, Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
 
-import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
-import { menuList, transaction } from "@/data/home";
+import { initialNotifications, menuList, transaction } from "@/data/home";
 import theme from "@/theme";
 
 interface TransactionItem {
@@ -69,6 +69,10 @@ const RenderTransactionItem = (props: TransactionItem) => {
 export default function HomeScreen() {
   const router = useRouter();
 
+  const unreadCount = initialNotifications.filter(
+    (notification) => !notification.read
+  ).length;
+
   const handleNotification = () => {
     router.push("/(home)/notification");
   };
@@ -113,7 +117,13 @@ export default function HomeScreen() {
           </View>
 
           <TouchableOpacity onPress={handleNotification} hitSlop={20}>
-            <MaterialIcons name="notifications" size={40} color="#FFFFFF" />
+            <Badge
+              size={15}
+              style={{ position: "absolute", top: -5, right: 25 }}
+            >
+              {unreadCount}
+            </Badge>
+            <Ionicons name="notifications-circle" size={30} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
 
