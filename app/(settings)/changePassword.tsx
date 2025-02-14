@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
+const iconSize = Platform.OS === "ios" ? 28 : 25;
+const iconColor = "#0065A1";
 
 const StyledView = styled(ScrollView)({
   paddingTop: 20,
@@ -13,20 +15,10 @@ const StyledView = styled(ScrollView)({
   paddingRight: commonPadding,
 });
 
-const StyledTextInput = styled(TextInput)({
-  marginBottom: 12,
-  backgroundColor: "white",
-  borderRadius: 10,
-  height: 55,
-});
-
 const StyledButton = styled(Button)({
-  marginTop: 50,
-  backgroundColor: "#004068",
-  color: "black",
-  paddingLeft: commonPadding,
-  paddingRight: commonPadding,
-  height: 45,
+  borderRadius: 10,
+  marginTop: 40,
+  padding: 5,
 });
 
 const StyledButtonTitle = styled(Text)({
@@ -36,6 +28,7 @@ const StyledButtonTitle = styled(Text)({
 
 const StyledText = styled(Text)({
   color: "#6F6F6F",
+  marginTop: 10,
   marginBottom: 10,
   fontSize: 16,
 });
@@ -74,11 +67,16 @@ const ChangePassword = () => {
     <ParallaxScrollView>
       <StyledView>
         <StyledText>Password</StyledText>
-        <StyledTextInput
+        <TextInput
+          placeholder="Enter your current password"
+          mode="outlined"
+          placeholderTextColor="#9A9A9A"
+          activeOutlineColor="black"
           value={passwords.password}
           onChangeText={(value: string) =>
             handlePasswordChange("password", value)
           }
+          secureTextEntry={!visibility.password}
           right={
             <TextInput.Icon
               icon={() => (
@@ -87,8 +85,8 @@ const ChangePassword = () => {
                 >
                   <MaterialIcons
                     name={visibility.password ? "visibility-off" : "visibility"}
-                    size={20}
-                    color="#004068"
+                    size={iconSize}
+                    color={iconColor}
                   />
                 </TouchableOpacity>
               )}
@@ -96,7 +94,11 @@ const ChangePassword = () => {
           }
         />
         <StyledText>New Password</StyledText>
-        <StyledTextInput
+        <TextInput
+          placeholder="Enter your new password"
+          mode="outlined"
+          placeholderTextColor="#9A9A9A"
+          activeOutlineColor="black"
           value={passwords.newPassword}
           onChangeText={(value: string) =>
             handlePasswordChange("newPassword", value)
@@ -112,8 +114,8 @@ const ChangePassword = () => {
                     name={
                       visibility.newPassword ? "visibility-off" : "visibility"
                     }
-                    size={20}
-                    color="#004068"
+                    size={iconSize}
+                    color={iconColor}
                   />
                 </TouchableOpacity>
               )}
@@ -121,7 +123,11 @@ const ChangePassword = () => {
           }
         />
         <StyledText>Confirm Password</StyledText>
-        <StyledTextInput
+        <TextInput
+          placeholder="Confirm new password"
+          mode="outlined"
+          placeholderTextColor="#9A9A9A"
+          activeOutlineColor="black"
           value={passwords.confirmPassword}
           onChangeText={(value: string) =>
             handlePasswordChange("confirmPassword", value)
@@ -139,15 +145,19 @@ const ChangePassword = () => {
                         ? "visibility-off"
                         : "visibility"
                     }
-                    size={20}
-                    color="#004068"
+                    size={iconSize}
+                    color={iconColor}
                   />
                 </TouchableOpacity>
               )}
             />
           }
         />
-        <StyledButton>
+        <StyledButton
+          buttonColor="#0265A1"
+          textColor="white"
+          labelStyle={{ fontSize: 17 }}
+        >
           <StyledButtonTitle>SET PASSWORD</StyledButtonTitle>
         </StyledButton>
       </StyledView>
