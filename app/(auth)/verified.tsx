@@ -15,7 +15,7 @@ export default function VerificationScreen() {
           <IconContainer source={require("@/assets/images/verifiedlogo.png")} />
           <Title>Verified!</Title>
           <Subtitle>Your account has been created successfully.</Subtitle>
-          <StyledButton onPress={() => router.push("/(auth)/")}>
+          <StyledButton onPress={() => router.push("/(auth)")}>
             SIGN IN
           </StyledButton>
         </Content>

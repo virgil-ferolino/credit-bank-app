@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-import { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
 import {
@@ -10,23 +8,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 
-interface FormValues {
-  email: string;
-  password: string;
-}
-
 export default function LoginScreen() {
   const router = useRouter();
-  const initialValues: FormValues = {
-    email: "",
-    password: "",
-  };
-
-  const [formValue, setFormValue] = useState<FormValues>(initialValues);
-
-  const handleInputChange = (field: keyof FormValues) => (text: string) => {
-    setFormValue({ ...formValue, [field]: text });
-  };
 
   return (
     <Container>
@@ -48,21 +31,24 @@ export default function LoginScreen() {
         >
           <StyledSurface>
             <Title>Sign in your account</Title>
+            <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+              Email
+            </Text>
 
             <StyledTextInput
               mode="outlined"
-              label="Email"
-              value={formValue.email}
-              onChangeText={handleInputChange("email")}
               keyboardType="email-address"
               autoCapitalize="none"
+              placeholder="ex: jon.smith@email.com"
             />
+
+            <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+              Password
+            </Text>
 
             <StyledTextInput
               mode="outlined"
-              label="Password"
-              value={formValue.password}
-              onChangeText={handleInputChange("password")}
+              placeholder="********"
               secureTextEntry
             />
 
