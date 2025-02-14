@@ -9,6 +9,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { SFSymbol } from "expo-symbols";
+import theme from "@/theme";
 
 const tabBarStyle: StyleProp<ViewStyle> = {
   maxWidth: 480,
@@ -41,6 +42,7 @@ export default function TabLayout() {
         tabBarLabelStyle: tabBarLabelStyle,
         tabBarAllowFontScaling: true,
         headerShown: false,
+        tabBarActiveTintColor: theme.colors.primary,
       }}
     >
       <Tabs.Screen
