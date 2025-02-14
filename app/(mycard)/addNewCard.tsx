@@ -116,7 +116,6 @@ const AddNewCard = () => {
               mode="outlined"
               value={data.value}
               outlineStyle={{ borderRadius: 10 }}
-              activeOutlineColor="black"
               placeholder={data.placeHolder ?? ""}
               placeholderTextColor={data.placeHolder ? "#9A9A9A" : ""}
               editable={data.editable ?? true}
@@ -140,7 +139,6 @@ const AddNewCard = () => {
                   placeholder={placeHolder}
                   outlineStyle={{ borderRadius: 10 }}
                   placeholderTextColor="#9A9A9A"
-                  activeOutlineColor="black"
                   onChangeText={onChangeText}
                   maxLength={maxLength}
                 />
