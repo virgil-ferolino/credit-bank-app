@@ -38,7 +38,9 @@ const Overlay = styled(View)({
   flex:1,
   backgroundColor: "rgba(0,0,0,0.5)",
   justifyContent: "center",
-  pointerEvents: "auto"
+  pointerEvents: "auto",
+  width: 480,
+  alignSelf: "center"
 })
 
 const ModalContainer = styled(View)({
@@ -167,6 +169,21 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
   )
 }
 
+const CustomOverlay = ({ closeBottomSheet }: { closeBottomSheet: () => void}) => {
+  return (
+    <TouchableOpacity
+      onPress={closeBottomSheet}
+      activeOpacity={1}
+      style={{
+        flex:1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        width: 480,
+        alignSelf: "center"
+      }} />
+  )
+}
+
 export default function ActivateCard() {
   const [isLockCard, setIsLockCard] = useState<boolean>(false);
   const [isLockVisible, setIsLockVisible] = useState<boolean>(false);
@@ -184,8 +201,10 @@ export default function ActivateCard() {
         ref={sheetRef}
         animationType={"slide"}
         height={"75%"}
-        backdropMaskColor={"#00000090"}
-        disableBodyPanning = {isLockVisible === true}
+        customBackdropComponent={() => (
+          <CustomOverlay closeBottomSheet={() => sheetRef.current?.close()} />
+        )}
+        disableBodyPanning={isLockVisible === true}
         style={{
           width: "100%",
           alignSelf: "center",
