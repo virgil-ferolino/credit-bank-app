@@ -122,7 +122,7 @@ const StyledSurface = styled(Surface)`
 
 const Title = styled(Text)`
   font-size: 27px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 20px;
   text-align: center;
   color: #333;
