@@ -44,7 +44,7 @@ const StyledPointContent = styled(Text)({
   backgroundColor: "white",
   borderBottomRightRadius: 7,
   borderBottomLeftRadius: 7,
-  fontWeight: "bold",
+  fontWeight: "600",
 });
 
 const StyledAccountView = styled(View)({
@@ -61,7 +61,7 @@ const StyledTransactionCard = styled(Card.Content)({
   gap: 20,
 });
 const TextBold = styled(Text)({
-  fontWeight: "bold",
+  fontWeight: "600",
 });
 
 const TransactionLabel = styled(View)({
@@ -130,7 +130,7 @@ const renderCardDetails = (
           >
             <Text
               variant="bodySmall"
-              style={{ fontWeight: 700, color: theme.colors.primary }}
+              style={{ fontWeight: 600, color: theme.colors.primary }}
             >
               View more
             </Text>

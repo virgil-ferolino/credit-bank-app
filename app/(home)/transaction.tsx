@@ -33,7 +33,7 @@ export default function Transaction() {
                 <View style={{ flexDirection: "row", columnGap: 4 }}>
                   <Avatar.Text label="AP" size={30} />
                   <View>
-                    <Text variant="labelLarge" style={{ fontWeight: 700 }}>
+                    <Text variant="labelLarge" style={{ fontWeight: 600 }}>
                       {item.title}
                     </Text>
                     <Text variant="labelSmall" style={{ flexWrap: "wrap" }}>

@@ -46,7 +46,7 @@ const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
                     alignItems: "center"
                 }}>
                 <Text style={{ 
-                    fontWeight: "bold", 
+                    fontWeight: "600", 
                     textAlign: "center", 
                     color: "#333", 
                     fontSize: 15, 

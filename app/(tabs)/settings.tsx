@@ -28,7 +28,7 @@ const Section = styled(View)(() => ({
 
 const SectionTitle = styled(Text)(() => ({
   fontSize: 17,
-  fontWeight: "bold",
+  fontWeight: "600",
   padding: commonPadding,
   marginBottom: 26,
 }));
@@ -96,7 +96,7 @@ const ModalButton = styled(TouchableOpacity)(() => ({
 
 const ModalButtonText = styled(Text)(() => ({
   fontSize: 16,
-  fontWeight: "bold",
+  fontWeight: "600",
 }));
 
 const Separator = styled(View)(() => ({
@@ -166,7 +166,7 @@ export default function SettingsScreen() {
                 style={{
                   fontSize: 19,
                   marginBottom: 25,
-                  fontWeight: "bold",
+                  fontWeight: "600",
                   padding: commonPadding,
                 }}
               >

@@ -23,7 +23,7 @@ export default function GetNotification() {
       <Animated.View style={{ paddingVertical: 16, paddingHorizontal: 16 }}>
         {selectedNotification ? (
           <Animated.View>
-            <Text variant="bodyLarge" style={{ fontWeight: "bold" }}>
+            <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
               {selectedNotification.title}
             </Text>
             <Text variant="bodyMedium">{selectedNotification.description}</Text>

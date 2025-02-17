@@ -42,7 +42,7 @@ export default function RecentTransactions() {
                   }}
                 >
                   <Avatar.Text label="AP" size={30} />
-                  <Text variant="labelLarge" style={{ fontWeight: 700 }}>
+                  <Text variant="labelLarge" style={{ fontWeight: 600 }}>
                     {item.label}
                   </Text>
                 </View>

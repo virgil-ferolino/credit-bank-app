@@ -47,7 +47,7 @@ const WhiteText = styled(Text)({
 });
 
 const TextBold = styled(Text)({
-  fontWeight: 700,
+  fontWeight: 600,
 });
 
 const RenderTransactionItem = (props: TransactionItem) => {
@@ -57,7 +57,14 @@ const RenderTransactionItem = (props: TransactionItem) => {
         <Avatar.Text size={30} label="AP" />
         <View>
           <TextBold variant="bodyLarge">{props.title}</TextBold>
-          <Text variant="labelSmall">{props.category}</Text>
+          <Text
+            variant="labelSmall"
+            style={{
+              fontFamily: "Poppins",
+            }}
+          >
+            {props.category}
+          </Text>
         </View>
       </TransactionAvatar>
 
@@ -182,7 +189,7 @@ export default function HomeScreen() {
           <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
             <Text
               variant="bodySmall"
-              style={{ fontWeight: 700, color: theme.colors.primary }}
+              style={{ fontWeight: 600, color: theme.colors.primary }}
             >
               View more
             </Text>

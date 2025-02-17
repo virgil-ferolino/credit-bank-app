@@ -36,7 +36,7 @@ const StyledInfo = styled(Text)(() => ({
   fontSize: 16,
   color: "#0265A1",
   marginBottom: 20,
-  fontWeight: "bold",
+  fontWeight: "600",
   textAlign: "center",
 }));
 
