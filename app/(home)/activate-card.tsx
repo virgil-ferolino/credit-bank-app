@@ -145,7 +145,7 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
                 style={{
                   marginTop:15,
                   fontSize: 19, 
-                  color: "red", 
+                  color: isLocked ? "#0094F1" : "red", 
                   fontWeight: "bold", }}>
                 {!isLocked ? "Lock" : "Unlock"}
               </ButtonText>
