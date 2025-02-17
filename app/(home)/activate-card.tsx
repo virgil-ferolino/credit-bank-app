@@ -18,7 +18,7 @@ import CreditCard from "@/components/credit-carousel/CreditCard";
 import { Ionicons } from "@expo/vector-icons";
 
 const TextBold = styled(Text)({
-  fontWeight: 700,
+  fontWeight: 600,
 });
 
 const ContainerOpacity = styled(View)({
@@ -58,7 +58,7 @@ const CardSetting: React.FC<CardSettingProps> = ({
         paddingVertical: 8,
       }}
     >
-      <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+      <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
         {label}
       </Text>
       <Switch value={value} onValueChange={onToggle} />
@@ -118,7 +118,7 @@ export default function ActivateCard() {
           )}
 
           <View style={{ flexDirection: "column", rowGap: 8 }}>
-            <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+            <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
               Card Settings
             </Text>
 

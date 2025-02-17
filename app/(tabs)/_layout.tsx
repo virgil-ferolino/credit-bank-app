@@ -19,7 +19,7 @@ const tabBarStyle: StyleProp<ViewStyle> = {
 
 const tabBarLabelStyle: StyleProp<TextStyle> = {
   fontSize: 10,
-  fontWeight: 900,
+  fontWeight: 600,
   paddingBottom: 15,
 };
 

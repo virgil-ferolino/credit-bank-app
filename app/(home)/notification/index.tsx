@@ -41,7 +41,7 @@ const RenderNotificationItem = (props: NotificationItemProps) => {
         <View style={{ flexDirection: "row", columnGap: 4 }}>
           <Avatar.Text label="XD" size={30} />
           <View>
-            <Text variant="labelLarge" style={{ fontWeight: 700 }}>
+            <Text variant="labelLarge" style={{ fontWeight: 600 }}>
               {props.title}
             </Text>
             <Text variant="labelSmall" style={{ flexWrap: "wrap" }}>

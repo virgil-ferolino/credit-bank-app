@@ -13,7 +13,7 @@ import Container from "@/components/Container";
 const { width } = Dimensions.get("window")
 
 const StyledText = styled(Text)({
-    fontWeight: "bold",
+    fontWeight: "600",
     textAlign: "center",
     color: "#333",
     fontSize: 15,
