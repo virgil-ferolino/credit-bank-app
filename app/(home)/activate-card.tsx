@@ -61,7 +61,7 @@ const CardSetting: React.FC<CardSettingProps> = ({
       <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
         {label}
       </Text>
-      <Switch value={value} onValueChange={onToggle} />
+      <Switch hitSlop={20} value={value} onValueChange={onToggle} />
     </Card.Content>
   </Card>
 );
