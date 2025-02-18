@@ -116,6 +116,7 @@ const AddNewCard = () => {
               mode="outlined"
               value={data.value}
               outlineStyle={{ borderRadius: 10 }}
+              activeOutlineColor="#0265A1"
               placeholder={data.placeHolder ?? ""}
               placeholderTextColor={data.placeHolder ? "#9A9A9A" : ""}
               editable={data.editable ?? true}

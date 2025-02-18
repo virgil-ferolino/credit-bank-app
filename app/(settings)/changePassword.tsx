@@ -1,4 +1,4 @@
-import { Text, TextInput, Button } from "react-native-paper";
+import { Text, Button, TextInput } from "react-native-paper";
 import { ScrollView, Platform, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
@@ -33,14 +33,64 @@ const StyledText = styled(Text)({
   fontSize: 16,
 });
 
+type PasswordFieldProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  visibility: boolean;
+  toggleVisibility: () => void;
+};
+
+const PasswordField = ({
+  label,
+  value,
+  onChange,
+  visibility,
+  toggleVisibility,
+}: PasswordFieldProps) => (
+  <>
+    <StyledText>{label}</StyledText>
+    <TextInput
+      placeholder={`Enter your ${label.toLowerCase()}`}
+      mode="outlined"
+      placeholderTextColor="#9A9A9A"
+      activeOutlineColor="#0265A1"
+      value={value}
+      onChangeText={onChange}
+      secureTextEntry={!visibility}
+      right={
+        <TextInput.Icon
+          icon={() => (
+            <TouchableOpacity onPress={toggleVisibility}>
+              <MaterialIcons
+                name={visibility ? "visibility-off" : "visibility"}
+                size={iconSize}
+                color={iconColor}
+              />
+            </TouchableOpacity>
+          )}
+        />
+      }
+    />
+  </>
+);
+
 const ChangePassword = () => {
-  const [passwords, setPasswords] = useState({
-    password: "",
+  const [passwords, setPasswords] = useState<{
+    password: string;
+    newPassword: string;
+    confirmPassword: string;
+  }>({
+    password: "Static Password",
     newPassword: "",
     confirmPassword: "",
   });
 
-  const [visibility, setVisibility] = useState({
+  const [visibility, setVisibility] = useState<{
+    password: boolean;
+    newPassword: boolean;
+    confirmPassword: boolean;
+  }>({
     password: false,
     newPassword: false,
     confirmPassword: false,
@@ -66,92 +116,30 @@ const ChangePassword = () => {
   return (
     <ParallaxScrollView>
       <StyledView>
-        <StyledText>Password</StyledText>
-        <TextInput
-          placeholder="Enter your current password"
-          mode="outlined"
-          placeholderTextColor="#9A9A9A"
-          activeOutlineColor="black"
+        <PasswordField
+          label="Password"
           value={passwords.password}
-          onChangeText={(value: string) =>
-            handlePasswordChange("password", value)
-          }
-          secureTextEntry={!visibility.password}
-          right={
-            <TextInput.Icon
-              icon={() => (
-                <TouchableOpacity
-                  onPress={() => togglePasswordVisibility("password")}
-                >
-                  <MaterialIcons
-                    name={visibility.password ? "visibility-off" : "visibility"}
-                    size={iconSize}
-                    color={iconColor}
-                  />
-                </TouchableOpacity>
-              )}
-            />
-          }
+          onChange={(value: string) => handlePasswordChange("password", value)}
+          visibility={visibility.password}
+          toggleVisibility={() => togglePasswordVisibility("password")}
         />
-        <StyledText>New Password</StyledText>
-        <TextInput
-          placeholder="Enter your new password"
-          mode="outlined"
-          placeholderTextColor="#9A9A9A"
-          activeOutlineColor="black"
+        <PasswordField
+          label="New Password"
           value={passwords.newPassword}
-          onChangeText={(value: string) =>
+          onChange={(value: string) =>
             handlePasswordChange("newPassword", value)
           }
-          secureTextEntry={!visibility.newPassword}
-          right={
-            <TextInput.Icon
-              icon={() => (
-                <TouchableOpacity
-                  onPress={() => togglePasswordVisibility("newPassword")}
-                >
-                  <MaterialIcons
-                    name={
-                      visibility.newPassword ? "visibility-off" : "visibility"
-                    }
-                    size={iconSize}
-                    color={iconColor}
-                  />
-                </TouchableOpacity>
-              )}
-            />
-          }
+          visibility={visibility.newPassword}
+          toggleVisibility={() => togglePasswordVisibility("newPassword")}
         />
-        <StyledText>Confirm Password</StyledText>
-        <TextInput
-          placeholder="Confirm new password"
-          mode="outlined"
-          placeholderTextColor="#9A9A9A"
-          activeOutlineColor="black"
+        <PasswordField
+          label="Confirm Password"
           value={passwords.confirmPassword}
-          onChangeText={(value: string) =>
+          onChange={(value: string) =>
             handlePasswordChange("confirmPassword", value)
           }
-          secureTextEntry={!visibility.confirmPassword}
-          right={
-            <TextInput.Icon
-              icon={() => (
-                <TouchableOpacity
-                  onPress={() => togglePasswordVisibility("confirmPassword")}
-                >
-                  <MaterialIcons
-                    name={
-                      visibility.confirmPassword
-                        ? "visibility-off"
-                        : "visibility"
-                    }
-                    size={iconSize}
-                    color={iconColor}
-                  />
-                </TouchableOpacity>
-              )}
-            />
-          }
+          visibility={visibility.confirmPassword}
+          toggleVisibility={() => togglePasswordVisibility("confirmPassword")}
         />
         <StyledButton
           buttonColor="#0265A1"

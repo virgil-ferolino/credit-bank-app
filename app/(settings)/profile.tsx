@@ -27,7 +27,7 @@ const StyledButton = styled(Button)({
 });
 
 const StyledButtonChangePhoto = styled(Button)({
-  marginBottom: 15,
+  marginBottom: 10,
   backgroundColor: "#0265A1",
   color: "black",
   paddingLeft: commonPadding,
@@ -220,7 +220,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="black"
+          activeOutlineColor="#0265A1"
           value={fields.name}
           onChangeText={(value: string) => handleFieldChange("name", value)}
         />
@@ -229,7 +229,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="black"
+          activeOutlineColor="#0265A1"
           value={fields.email}
           onChangeText={(value: string) => handleFieldChange("email", value)}
         />
@@ -237,7 +237,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="black"
+          activeOutlineColor="#0265A1"
           value={fields.phoneNumber}
           onChangeText={(value: string) =>
             handleFieldChange("phoneNumber", value)
