@@ -1,20 +1,12 @@
-import IosBackButton from "@/components/IosBackButton";
+import StackLayout from "@/components/StackLayout";
 import { Stack } from "expo-router";
 const MyCardsLayout = () => {
   return (
-    <Stack
-      screenOptions={{
-        headerRight: () => <IosBackButton />,
-        headerTitleStyle: {
-          fontFamily: "Poppins",
-        },
-      }}
-    >
+    <StackLayout>
       <Stack.Screen
         name="addNewCard"
         options={{
           title: "Add New Card",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
@@ -22,11 +14,10 @@ const MyCardsLayout = () => {
         name="recentTransactions"
         options={{
           title: "Recent Transactions",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
-    </Stack>
+    </StackLayout>
   );
 };
 

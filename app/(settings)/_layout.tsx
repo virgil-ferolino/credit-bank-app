@@ -1,7 +1,7 @@
-import IosBackButton from "@/components/IosBackButton";
 import { Stack } from "expo-router";
 import styled from "styled-components/native";
 import { View } from "react-native";
+import StackLayout from "@/components/StackLayout";
 const SettingsLayout = () => {
   const ContainedView = styled(View)({
     maxWidth: 480,
@@ -11,21 +11,13 @@ const SettingsLayout = () => {
   });
   return (
     <ContainedView>
-      <Stack
-        screenOptions={{
-          headerRight: () => <IosBackButton />,
-          headerTitleStyle: {
-            fontFamily: "Poppins",
-          },
-        }}
-      >
+      <StackLayout>
         <Stack.Screen
           name="changePassword"
           options={{
             headerShown: true,
             headerTitle: "Change Password",
             headerTitleAlign: "center",
-            headerBackVisible: true,
           }}
         />
         <Stack.Screen
@@ -34,7 +26,6 @@ const SettingsLayout = () => {
             headerShown: true,
             headerTitle: "Contact Us",
             headerTitleAlign: "center",
-            headerBackVisible: true,
           }}
         />
         <Stack.Screen
@@ -43,10 +34,9 @@ const SettingsLayout = () => {
             headerShown: true,
             headerTitle: "My Profile",
             headerTitleAlign: "center",
-            headerBackVisible: true,
           }}
         />
-      </Stack>
+      </StackLayout>
     </ContainedView>
   );
 };
