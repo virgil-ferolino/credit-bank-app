@@ -42,7 +42,7 @@ const HeaderType = styled(Text)({
 // Card Number
 const CardNumber = styled(Text)({
   color: "#fff",
-  fontSize: 17,
+  fontSize: 15,
   letterSpacing: 2,
 });
 // Card Details
@@ -165,7 +165,10 @@ const CreditCard = ({
           </HeaderView>
           <HeaderView>
             <CardNumber>{renderNumbers(cardNumber, "cn")}</CardNumber>
-            <ToggleHide onPress={() => setToggleHidden((prev) => !prev)}>
+            <ToggleHide
+              hitSlop={20}
+              onPress={() => setToggleHidden((prev) => !prev)}
+            >
               <Ionicons
                 name={toggleHidden ? "eye-off-outline" : "eye-outline"}
                 size={20}

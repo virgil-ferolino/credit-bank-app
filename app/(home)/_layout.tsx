@@ -6,6 +6,9 @@ const HomeLayout = () => {
     <Stack
       screenOptions={{
         headerRight: () => <IosBackButton />,
+        headerTitleStyle: {
+          fontFamily: "Poppins",
+        },
       }}
     >
       <Stack.Screen
