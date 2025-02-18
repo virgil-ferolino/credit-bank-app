@@ -1,28 +1,21 @@
 import React from "react";
-import IosBackButton from "@/components/IosBackButton";
+
 import { Stack } from "expo-router";
+
+import StackLayout from "@/components/StackLayout";
 const HomeLayout = () => {
   return (
-    <Stack
-      screenOptions={{
-        headerRight: () => <IosBackButton />,
-        headerTitleStyle: {
-          fontFamily: "Poppins",
-        },
-      }}
-    >
+    <StackLayout>
       <Stack.Screen
         name="notification/index"
         options={{
           title: "Notifications",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
       <Stack.Screen
         name="notification/[id]"
         options={{
-          headerBackVisible: true,
           headerTitleAlign: "left",
         }}
       />
@@ -30,7 +23,6 @@ const HomeLayout = () => {
         name="transaction"
         options={{
           title: "Recent Transaction",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
@@ -38,7 +30,6 @@ const HomeLayout = () => {
         name="activate-card"
         options={{
           title: "Select Card",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
@@ -47,10 +38,9 @@ const HomeLayout = () => {
         options={{
           headerTitle: "",
           headerShown: true,
-          headerBackVisible: true,
         }}
       />
-    </Stack>
+    </StackLayout>
   );
 };
 
