@@ -29,7 +29,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="promos/index"
+        name="promos"
         options={{
           headerTitle: "",
           headerShown: true,
