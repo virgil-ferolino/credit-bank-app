@@ -13,12 +13,7 @@ const HomeLayout = () => {
           headerTitleAlign: "center",
         }}
       />
-      <Stack.Screen
-        name="notification/[id]"
-        options={{
-          headerTitleAlign: "left",
-        }}
-      />
+      <Stack.Screen name="notification/[id]" />
       <Stack.Screen
         name="transaction"
         options={{

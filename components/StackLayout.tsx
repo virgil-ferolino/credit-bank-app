@@ -23,6 +23,7 @@ export default function StackLayout({ children }: PropsWithChildren) {
   return (
     <Stack
       screenOptions={{
+        headerBackVisible: false,
         animation: "slide_from_left",
         headerLeft: () => {
           return Platform.select({

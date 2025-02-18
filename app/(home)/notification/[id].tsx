@@ -15,7 +15,7 @@ export default function GetNotification() {
       <Stack.Screen
         options={{
           title: selectedNotification?.title || "Notification",
-          headerTitleAlign: "left",
+          headerTitleAlign: "center",
         }}
       />
       <Animated.View style={{ paddingVertical: 16, paddingHorizontal: 16 }}>
