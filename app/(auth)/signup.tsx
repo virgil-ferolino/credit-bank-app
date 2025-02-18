@@ -9,14 +9,37 @@ import { Ionicons } from "@expo/vector-icons";
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
+  name: Yup.string()
+    .test(
+      "name",
+      "Name is required",
+      (value) => value === undefined || value.trim() !== ""
+    )
+    .nullable(),
+  email: Yup.string()
+    .email("Invalid email")
+    .test(
+      "email",
+      "Email is required",
+      (value) => value === undefined || value.trim() !== ""
+    )
+    .nullable(),
   password: Yup.string()
     .min(6, "Minimum 6 characters")
-    .required("Password is required"),
+    .test(
+      "password",
+      "Password is required",
+      (value) => value === undefined || value.trim() !== ""
+    )
+    .nullable(),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm your password"),
+    .test(
+      "confirmPassword",
+      "Confirm your password",
+      (value) => value === undefined || value.trim() !== ""
+    )
+    .nullable(),
   termsAccepted: Yup.boolean().oneOf([true], "Accept terms and conditions"),
 });
 
