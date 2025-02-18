@@ -15,6 +15,7 @@ import {
 import Container from "@/components/Container";
 
 const ReadAll = styled(Text)({
+  fontFamily: "Poppins",
   color: "#656565",
   paddingHorizontal: 15,
   paddingVertical: 8,
@@ -41,16 +42,25 @@ const RenderNotificationItem = (props: NotificationItemProps) => {
         <View style={{ flexDirection: "row", columnGap: 4 }}>
           <Avatar.Text label="XD" size={30} />
           <View>
-            <Text variant="labelLarge" style={{ fontWeight: 600 }}>
+            <Text
+              variant="labelLarge"
+              style={{ fontFamily: "PoppinsSemiBold" }}
+            >
               {props.title}
             </Text>
-            <Text variant="labelSmall" style={{ flexWrap: "wrap" }}>
+            <Text
+              variant="labelSmall"
+              style={{ flexWrap: "wrap", fontFamily: "Poppins" }}
+            >
               {`${props.description.slice(0, 40)}...`}
             </Text>
           </View>
         </View>
 
-        <Text variant="labelSmall" style={{ color: "#A0A0A0" }}>
+        <Text
+          variant="labelSmall"
+          style={{ color: "#A0A0A0", fontFamily: "Poppins" }}
+        >
           {props.timespan}
         </Text>
       </Animated.View>

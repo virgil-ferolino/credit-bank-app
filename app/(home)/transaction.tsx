@@ -33,16 +33,28 @@ export default function Transaction() {
                 <View style={{ flexDirection: "row", columnGap: 4 }}>
                   <Avatar.Text label="AP" size={30} />
                   <View>
-                    <Text variant="labelLarge" style={{ fontWeight: 600 }}>
+                    <Text
+                      variant="labelLarge"
+                      style={{ fontFamily: "PoppinsSemiBold" }}
+                    >
                       {item.title}
                     </Text>
-                    <Text variant="labelSmall" style={{ flexWrap: "wrap" }}>
+                    <Text
+                      variant="labelSmall"
+                      style={{
+                        flexWrap: "wrap",
+                        fontFamily: "Poppins",
+                      }}
+                    >
                       {item.category}
                     </Text>
                   </View>
                 </View>
 
-                <Text variant="labelSmall" style={{ color: "#A0A0A0" }}>
+                <Text
+                  variant="labelSmall"
+                  style={{ color: "#A0A0A0", fontFamily: "Poppins" }}
+                >
                   {item.price}
                 </Text>
               </Animated.View>

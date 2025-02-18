@@ -19,7 +19,8 @@ import CreditCard from "@/components/credit-carousel/CreditCard";
 import { Ionicons } from "@expo/vector-icons";
 
 const TextBold = styled(Text)({
-  fontWeight: 600,
+  fontFamily: "PoppinsBold",
+  color: "#FFFFFF",
 });
 
 const ContainerOpacity = styled(View)({
@@ -35,29 +36,29 @@ const ContainerOpacity = styled(View)({
 });
 
 const Overlay = styled(View)({
-  flex:1,
+  flex: 1,
   backgroundColor: "rgba(0,0,0,0.5)",
   justifyContent: "center",
   pointerEvents: "auto",
   width: 480,
-  alignSelf: "center"
-})
+  alignSelf: "center",
+});
 
 const ModalContainer = styled(View)({
-  backgroundColor: '#fff',
+  backgroundColor: "#fff",
   borderRadius: 20,
   width: 350,
   padding: 25,
   alignSelf: "center",
   overflow: "hidden",
   position: "absolute",
-})
+});
 
 const ButtonContainer = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
   width: "100%",
-})
+});
 
 const ModalButton = styled(TouchableOpacity)({
   backgroundColor: "white",
@@ -66,19 +67,24 @@ const ModalButton = styled(TouchableOpacity)({
   alignItems: "center",
   borderTopWidth: 2,
   borderTopColor: "#D3D3D3",
-})
+});
 
 const ButtonText = styled(Text)({
   fontSize: 16,
   fontWeight: 600,
   fontFamily: "PoppinsBold",
-})
+});
 
 const Separator = styled(View)({
   borderLeftWidth: 2,
   borderLeftColor: "#D3D3D3",
   height: "100%",
-})
+});
+
+const TextWhite = styled(Text)({
+  fontFamily: "PoppinsSemiBold",
+  color: "#FFFFFF",
+});
 
 interface CardSettingProps {
   label: string;
@@ -105,7 +111,7 @@ const CardSetting: React.FC<CardSettingProps> = ({
         paddingVertical: 8,
       }}
     >
-      <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
+      <Text variant="bodyLarge" style={{ fontFamily: "PoppinsSemiBold" }}>
         {label}
       </Text>
       <Switch hitSlop={20} value={value} onValueChange={onToggle} />
@@ -113,43 +119,58 @@ const CardSetting: React.FC<CardSettingProps> = ({
   </Card>
 );
 
-const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:boolean, isLocked: boolean, onClose:() => void, onConfirm: () => void }) => {
+const CardLockModal = ({
+  isVisible,
+  isLocked,
+  onClose,
+  onConfirm,
+}: {
+  isVisible: boolean;
+  isLocked: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}) => {
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={isVisible}
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <Overlay>
         <ModalContainer>
           <View>
             <Text
-              style={{ 
-                marginTop: 20, 
-                fontWeight: 600, 
+              style={{
+                marginTop: 20,
                 fontFamily: "PoppinsBold",
-                textAlign: "center", 
-                fontSize: 25, }}>
+                textAlign: "center",
+                fontSize: 25,
+              }}
+            >
               {!isLocked ? "Lock card?" : "Unlock card?"}
             </Text>
             <Text
               style={{
-                marginTop: 15, 
-                textAlign: "center", 
-                marginBottom: 30, }}>
+                marginTop: 15,
+                textAlign: "center",
+                marginBottom: 30,
+              }}
+            >
               {!isLocked
-              ? "You will no longer be able to make new purchases or pay for them using your digital wallet."
-              : "You will be able to make new purchases or pay for them using your digital wallet again."
-              }
+                ? "You will no longer be able to make new purchases or pay for them using your digital wallet."
+                : "You will be able to make new purchases or pay for them using your digital wallet again."}
             </Text>
           </View>
           <ButtonContainer>
             <ModalButton onPress={onConfirm}>
               <ButtonText
                 style={{
-                  marginTop:15,
-                  fontSize: 19, 
-                  color: isLocked ? "#0094F1" : "red",  }}>
+                  marginTop: 15,
+                  fontSize: 19,
+                  color: isLocked ? "#0094F1" : "red",
+                }}
+              >
                 {!isLocked ? "Lock" : "Unlock"}
               </ButtonText>
             </ModalButton>
@@ -157,10 +178,11 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
             <ModalButton onPress={onClose}>
               <ButtonText
                 style={{
-                  marginTop:15,
+                  marginTop: 15,
                   fontSize: 19,
-                  fontWeight: 600,
-                  fontFamily: "PoppinsBold" }}>
+                  fontFamily: "PoppinsBold",
+                }}
+              >
                 Cancel
               </ButtonText>
             </ModalButton>
@@ -168,23 +190,28 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
         </ModalContainer>
       </Overlay>
     </Modal>
-  )
-}
+  );
+};
 
-const CustomOverlay = ({ closeBottomSheet }: { closeBottomSheet: () => void}) => {
+const CustomOverlay = ({
+  closeBottomSheet,
+}: {
+  closeBottomSheet: () => void;
+}) => {
   return (
     <TouchableOpacity
       onPress={closeBottomSheet}
       activeOpacity={1}
       style={{
-        flex:1,
+        flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
         width: 480,
-        alignSelf: "center"
-      }} />
-  )
-}
+        alignSelf: "center",
+      }}
+    />
+  );
+};
 
 export default function ActivateCard() {
   const [isLockCard, setIsLockCard] = useState<boolean>(false);
@@ -242,7 +269,7 @@ export default function ActivateCard() {
           )}
 
           <View style={{ flexDirection: "column", rowGap: 8 }}>
-            <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
+            <Text variant="bodyLarge" style={{ fontFamily: "PoppinsBold" }}>
               Card Settings
             </Text>
 
@@ -253,7 +280,7 @@ export default function ActivateCard() {
             />
 
             <CardSetting
-              label={"Lock Card"}
+              label={"Set Home Card"}
               value={isHome}
               onToggle={() => setIsHome(!isHome)}
             />
@@ -263,11 +290,11 @@ export default function ActivateCard() {
           isVisible={isLockVisible}
           isLocked={isLockCard}
           onConfirm={() => {
-            setIsLockCard(!isLockCard)
-            setIsLockVisible(false)
-            }
-          }
-          onClose={() => setIsLockVisible(false)} />
+            setIsLockCard(!isLockCard);
+            setIsLockVisible(false);
+          }}
+          onClose={() => setIsLockVisible(false)}
+        />
       </BottomSheet>
     );
   };
@@ -294,6 +321,8 @@ export default function ActivateCard() {
                 <Card.Content
                   style={{
                     padding: 20,
+                    flexDirection: "column",
+                    rowGap: 5,
                   }}
                 >
                   <View
@@ -302,11 +331,13 @@ export default function ActivateCard() {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Text variant="bodyMedium">Credit Card</Text>
-                    <Text variant="bodyMedium">1234 1234 1234 1234</Text>
+                    <TextWhite variant="bodyMedium">Credit Card</TextWhite>
+                    <TextWhite variant="bodyMedium">
+                      1234 1234 1234 1234
+                    </TextWhite>
                   </View>
 
-                  <TextBold variant="bodyLarge">Personal Savings</TextBold>
+                  <TextBold variant="bodyMedium">Personal Savings</TextBold>
 
                   <View
                     style={{
