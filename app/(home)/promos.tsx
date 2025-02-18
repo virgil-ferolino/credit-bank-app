@@ -98,26 +98,6 @@ const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
     )
 }
 
-const CustomOverlay = ({
-    closeBottomSheet,
-}: {
-    closeBottomSheet: () => void;
-}) => {
-    return (
-        <TouchableOpacity
-            onPress={closeBottomSheet}
-            activeOpacity={1}
-            style={{
-                flex: 1,
-                backgroundColor: "rgba(0,0,0,0.5)",
-                justifyContent: "center",
-                width: 480,
-                alignSelf: "center",
-            }}
-        />
-    );
-};
-
 const Promos = () => {
     const [selectedPromo, setSelectedPromo] = useState<PromoType | null>(null);
 
@@ -140,9 +120,6 @@ const Promos = () => {
                     maxWidth: 480,
                     backgroundColor: "white",
                 }}
-                customBackdropComponent={() => (
-                    <CustomOverlay closeBottomSheet={() => sheetRef.current?.close()} />
-                )}
                 disableBodyPanning={true}
                 >
                 <Animated.ScrollView
