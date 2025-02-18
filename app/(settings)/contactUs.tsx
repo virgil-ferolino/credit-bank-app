@@ -16,12 +16,11 @@ const StyledView = styled(ScrollView)({
 
 const StyledText = styled(Text)(() => ({
   color: "#0265A1",
-  fontSize: 16,
+  fontSize: 18,
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
-  marginBottom: 12,
   textAlign: "center",
 }));
 
@@ -33,7 +32,7 @@ const StyledIcon = styled(MaterialIcons)(() => ({
 }));
 
 const StyledInfo = styled(Text)(() => ({
-  fontSize: 16,
+  fontSize: 20,
   color: "#0265A1",
   marginBottom: 20,
   fontWeight: "600",
