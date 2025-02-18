@@ -73,13 +73,22 @@ const CardLogo = styled(View)({
   alignItems: "center",
   marginHorizontal: -20,
 });
-const WhiteCircle = styled(View)({
+
+{/*const WhiteCircle = styled(View)({
   width: 30,
   height: 30,
   borderRadius: 15,
   marginHorizontal: 5,
   backgroundColor: "#ffffff",
-});
+});*/}
+
+const BankLogo = styled(Image)({
+  width: 30,
+  height: 30,
+  borderRadius: 15,
+  marginHorizontal: 5,
+})
+
 const ToggleHide = styled(TouchableOpacity)({
   width: 25,
   height: 25,
@@ -152,7 +161,7 @@ const CreditCard = ({
           <HeaderView>
             <HeaderName>ADRBank</HeaderName>
             <HeaderType>Credit Card</HeaderType>
-            <WhiteCircle />
+            <BankLogo source={require("@/assets/images/Bank-icon-large.png")} />
           </HeaderView>
           <HeaderView>
             <CardNumber>{renderNumbers(cardNumber, "cn")}</CardNumber>
