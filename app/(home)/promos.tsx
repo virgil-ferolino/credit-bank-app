@@ -133,12 +133,12 @@ const Promos = () => {
             <BottomSheet
                 ref={sheetRef}
                 animationType={"slide"}
-                height={"80%"}
+                height={"85%"}
                 style={{
                     width: "100%",
                     alignSelf: "center",
                     maxWidth: 480,
-                    backgroundColor: "white"
+                    backgroundColor: "white",
                 }}
                 customBackdropComponent={() => (
                     <CustomOverlay closeBottomSheet={() => sheetRef.current?.close()} />

@@ -32,7 +32,6 @@ const HomeLayout = () => {
         name="promos"
         options={{
           headerTitle: "Promos & Discounts",
-          headerBackVisible: true,
           headerTitleAlign: "center",
         }}
       />
