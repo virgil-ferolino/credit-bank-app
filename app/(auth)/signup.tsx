@@ -8,7 +8,6 @@ import * as Yup from "yup";
 
 import { useAppTheme } from "@/hooks/useTheme";
 
-// Validation Schema
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .test(
@@ -298,7 +297,6 @@ export default function SignUpScreen() {
   );
 }
 
-// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;

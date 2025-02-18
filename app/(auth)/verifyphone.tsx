@@ -49,7 +49,6 @@ export default function VerifyPhoneScreen() {
                     onPress={() => setModalVisible(true)}
                   />
                 }
-                // Make the input non-interactive, Pressable will handle the touch
               />
             </Pressable>
 
@@ -76,7 +75,6 @@ export default function VerifyPhoneScreen() {
         </Card>
       </ScrollView>
 
-      {/* Country Code Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -122,7 +120,6 @@ export default function VerifyPhoneScreen() {
   );
 }
 
-// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;

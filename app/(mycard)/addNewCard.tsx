@@ -5,7 +5,6 @@ import { Text, TextInput, Button } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
-// Define styled components outside the component
 const StyledView = styled(View)({
   paddingHorizontal: 16,
   paddingVertical: 8,

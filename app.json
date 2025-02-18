@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vergilferolino.creditbankappV2"
     },
     "web": {
       "bundler": "metro",

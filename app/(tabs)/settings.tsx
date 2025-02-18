@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Text } from "react-native-paper";
 import {
-  // Switch,
   Modal,
   TouchableOpacity,
   View,
@@ -114,7 +113,6 @@ const ButtonsContainer = styled(View)(() => ({
 export default function SettingsScreen() {
   const router = useRouter();
   const reroute = useRouter();
-  // const [isBiometricEnabled, setBiometricEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogout = () => {

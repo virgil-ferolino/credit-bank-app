@@ -25,7 +25,9 @@ export default function LoginScreen() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (values: { email: string; password: string }) => {
+  const handleSubmit = (
+    // values: { email: string; password: string }
+  ) => {
     // if (values.email || values.password) {
     router.push("/(tabs)");
     // } else {
@@ -98,7 +100,7 @@ export default function LoginScreen() {
                       error={errors.email && touched.email}
                     />
 
-                    {/* Removed error display */}
+
                   </View>
 
                   <View>

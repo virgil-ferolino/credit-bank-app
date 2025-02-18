@@ -11,13 +11,13 @@ const WebView = styled(View)({
   width: "100%",
 });
 const StyledScrollView = styled(ScrollView)({
-  scrollbarWidth: "none", // For Firefox
-  msOverflowStyle: "none", // For IE/Edge
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
   maxWidth: 480,
   width: "100%",
   alignSelf: "center",
-  WebkitOverflowScrolling: "touch", // For iOS smooth scrolling
-  overflow: "hidden", // Hide the scrollbars
+  WebkitOverflowScrolling: "touch",
+  overflow: "hidden",
 });
 
 export default function ParallaxScrollView({ children }: PropsWithChildren) {
