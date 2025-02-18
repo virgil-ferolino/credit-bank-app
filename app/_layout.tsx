@@ -6,8 +6,17 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/theme";
+import styled from "styled-components/native";
+import { View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
+
+const ContainedView = styled(View)({
+  maxWidth: 480,
+  width: "100%",
+  height: "100%",
+  alignSelf: "center",
+});
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -33,15 +42,17 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
-        <Stack.Screen name="(mycard)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(settings)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" backgroundColor={"#004068"} />
+      <ContainedView>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(home)" options={{ headerShown: false }} />
+          <Stack.Screen name="(mycard)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(settings)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" backgroundColor={"#004068"} />
+      </ContainedView>
     </PaperProvider>
   );
 }
