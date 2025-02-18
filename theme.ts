@@ -4,109 +4,80 @@ import {
 } from "react-native-paper";
 import { MD3Type } from "react-native-paper/lib/typescript/types";
 
+const defaultFont = configureFonts();
+
 const displayFont: Record<string, Partial<MD3Type>> = {
   displaySmall: {
+    ...defaultFont.displaySmall,
     fontFamily: "Poppins",
-    fontSize: 36,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
   displayMedium: {
+    ...defaultFont.displayMedium,
     fontFamily: "Poppins",
-    fontSize: 45,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
   displayLarge: {
+    ...defaultFont.displayMedium,
     fontFamily: "Poppins",
-    fontSize: 57,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
 };
 const headerFont: Record<string, Partial<MD3Type>> = {
   headlineSmall: {
+    ...defaultFont.headlineSmall,
     fontFamily: "Poppins",
-    fontSize: 24,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
   headlineMedium: {
+    ...defaultFont.headlineMedium,
     fontFamily: "Poppins",
-    fontSize: 28,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
   headlineLarge: {
+    ...defaultFont.headlineLarge,
     fontFamily: "Poppins",
-    fontSize: 32,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
 };
 const titleFont: Record<string, Partial<MD3Type>> = {
   titleSmall: {
+    ...defaultFont.titleSmall,
     fontFamily: "Poppins",
-    fontSize: 14,
-    fontWeight: "500",
-    letterSpacing: 0.1,
   },
   titleMedium: {
+    ...defaultFont.titleMedium,
     fontFamily: "Poppins",
-    fontSize: 16,
-    fontWeight: "500",
-    letterSpacing: 0.15,
   },
   titleLarge: {
+    ...defaultFont.titleLarge,
     fontFamily: "Poppins",
-    fontSize: 22,
-    fontWeight: "400",
-    letterSpacing: 0,
   },
 };
 const labelFont: Record<string, Partial<MD3Type>> = {
   labelSmall: {
+    ...defaultFont.labelSmall,
     fontFamily: "Poppins",
-    fontSize: 11,
-    fontWeight: "500",
-    letterSpacing: 0.5,
   },
   labelMedium: {
+    ...defaultFont.labelMedium,
     fontFamily: "Poppins",
-    fontSize: 12,
-    fontWeight: "500",
-    letterSpacing: 0.5,
   },
   labelLarge: {
+    ...defaultFont.labelLarge,
     fontFamily: "Poppins",
-    fontSize: 14,
-    fontWeight: "500",
-    letterSpacing: 0.1,
   },
 };
 const bodyFont: Record<string, Partial<MD3Type>> = {
   bodySmall: {
+    ...defaultFont.bodySmall,
     fontFamily: "Poppins",
-    fontSize: 12,
-    fontWeight: "400",
-    letterSpacing: 0.4,
   },
   bodyMedium: {
+    ...defaultFont.bodyMedium,
     fontFamily: "Poppins",
-    fontSize: 14,
-    fontWeight: "400",
-    letterSpacing: 0.25,
   },
   bodyLarge: {
+    ...defaultFont.bodyLarge,
     fontFamily: "Poppins",
-    fontSize: 16,
-    fontWeight: "400",
-    letterSpacing: 0.15,
   },
   default: {
+    ...defaultFont.default,
     fontFamily: "Poppins",
-    fontSize: 12,
-    fontWeight: "400",
   },
 };
 
