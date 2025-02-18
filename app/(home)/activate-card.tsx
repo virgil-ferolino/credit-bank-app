@@ -70,7 +70,8 @@ const ModalButton = styled(TouchableOpacity)({
 
 const ButtonText = styled(Text)({
   fontSize: 16,
-  fontWeight: "bold",
+  fontWeight: 600,
+  fontFamily: "PoppinsBold",
 })
 
 const Separator = styled(View)({
@@ -125,7 +126,8 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
             <Text
               style={{ 
                 marginTop: 20, 
-                fontWeight: "bold", 
+                fontWeight: 600, 
+                fontFamily: "PoppinsBold",
                 textAlign: "center", 
                 fontSize: 25, }}>
               {!isLocked ? "Lock card?" : "Unlock card?"}
@@ -147,8 +149,7 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
                 style={{
                   marginTop:15,
                   fontSize: 19, 
-                  color: isLocked ? "#0094F1" : "red", 
-                  fontWeight: "bold", }}>
+                  color: isLocked ? "#0094F1" : "red",  }}>
                 {!isLocked ? "Lock" : "Unlock"}
               </ButtonText>
             </ModalButton>
@@ -158,7 +159,8 @@ const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:
                 style={{
                   marginTop:15,
                   fontSize: 19,
-                  fontWeight: "bold", }}>
+                  fontWeight: 600,
+                  fontFamily: "PoppinsBold" }}>
                 Cancel
               </ButtonText>
             </ModalButton>
