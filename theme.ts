@@ -10,21 +10,18 @@ const displayFont: Record<string, Partial<MD3Type>> = {
     fontSize: 36,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 44,
   },
   displayMedium: {
     fontFamily: "Poppins",
     fontSize: 45,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 52,
   },
   displayLarge: {
     fontFamily: "Poppins",
     fontSize: 57,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 64,
   },
 };
 const headerFont: Record<string, Partial<MD3Type>> = {
@@ -33,21 +30,18 @@ const headerFont: Record<string, Partial<MD3Type>> = {
     fontSize: 24,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 32,
   },
   headlineMedium: {
     fontFamily: "Poppins",
     fontSize: 28,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 36,
   },
   headlineLarge: {
     fontFamily: "Poppins",
     fontSize: 32,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 40,
   },
 };
 const titleFont: Record<string, Partial<MD3Type>> = {
@@ -56,21 +50,18 @@ const titleFont: Record<string, Partial<MD3Type>> = {
     fontSize: 14,
     fontWeight: "500",
     letterSpacing: 0.1,
-    // lineHeight: 20,
   },
   titleMedium: {
     fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: "500",
     letterSpacing: 0.15,
-    // lineHeight: 24,
   },
   titleLarge: {
     fontFamily: "Poppins",
     fontSize: 22,
     fontWeight: "400",
     letterSpacing: 0,
-    // lineHeight: 28,
   },
 };
 const labelFont: Record<string, Partial<MD3Type>> = {
@@ -79,21 +70,18 @@ const labelFont: Record<string, Partial<MD3Type>> = {
     fontSize: 11,
     fontWeight: "500",
     letterSpacing: 0.5,
-    // lineHeight: 16,
   },
   labelMedium: {
     fontFamily: "Poppins",
     fontSize: 12,
     fontWeight: "500",
     letterSpacing: 0.5,
-    // lineHeight: 16,
   },
   labelLarge: {
     fontFamily: "Poppins",
     fontSize: 14,
     fontWeight: "500",
     letterSpacing: 0.1,
-    // lineHeight: 20,
   },
 };
 const bodyFont: Record<string, Partial<MD3Type>> = {
@@ -102,21 +90,18 @@ const bodyFont: Record<string, Partial<MD3Type>> = {
     fontSize: 12,
     fontWeight: "400",
     letterSpacing: 0.4,
-    // lineHeight: 16,
   },
   bodyMedium: {
     fontFamily: "Poppins",
     fontSize: 14,
     fontWeight: "400",
     letterSpacing: 0.25,
-    // lineHeight: 20,
   },
   bodyLarge: {
     fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: "400",
     letterSpacing: 0.15,
-    // lineHeight: 24,
   },
   default: {
     fontFamily: "Poppins",
