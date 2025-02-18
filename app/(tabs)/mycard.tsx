@@ -36,6 +36,7 @@ const StyledPointTitle = styled(Text)({
   color: "white",
   textAlign: "center",
   padding: 10,
+  fontFamily: "PoppinsBold",
 });
 const StyledPointContent = styled(Text)({
   textAlign: "center",
@@ -54,6 +55,7 @@ const StyledAccountView = styled(View)({
   gap: 10,
 });
 const StyledAccountText = styled(Text)({
+  fontFamily: "PoppinsBold",
   color: "white",
 });
 //
@@ -61,7 +63,7 @@ const StyledTransactionCard = styled(Card.Content)({
   gap: 20,
 });
 const TextBold = styled(Text)({
-  fontWeight: "600",
+  fontFamily: "PoppinsBold",
 });
 
 const TransactionLabel = styled(View)({
@@ -83,6 +85,7 @@ const renderViewMore = (item: LabelValue[]) => {
             variant="bodyLarge"
             style={{
               color: value.toString().includes("-") ? "red" : "black",
+              fontFamily: "PoppinsSemiBold",
             }}
           >
             {value}
@@ -130,7 +133,10 @@ const renderCardDetails = (
           >
             <Text
               variant="bodySmall"
-              style={{ fontWeight: 600, color: theme.colors.primary }}
+              style={{
+                fontFamily: "PoppinsSemiBold",
+                color: theme.colors.primary,
+              }}
             >
               View more
             </Text>
@@ -170,11 +176,13 @@ const MyCards = () => {
     <ParallaxScrollView>
       <ParentView>
         <HeaderView>
-          <Text variant="titleMedium">My Cards</Text>
+          <Text variant="titleMedium" style={{ fontFamily: "PoppinsSemiBold" }}>
+            My Cards
+          </Text>
 
           <Chip
             compact
-            textStyle={{ color: "white" }}
+            textStyle={{ color: "white", fontFamily: "PoppinsSemiBold" }}
             style={{ backgroundColor: theme.colors.primary }}
             icon={() => (
               <Ionicons name="add-outline" color={"white"} size={24} />

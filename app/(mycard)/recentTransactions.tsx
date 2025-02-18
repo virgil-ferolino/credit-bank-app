@@ -42,12 +42,18 @@ export default function RecentTransactions() {
                   }}
                 >
                   <Avatar.Text label="AP" size={30} />
-                  <Text variant="labelLarge" style={{ fontWeight: 600 }}>
+                  <Text
+                    variant="labelLarge"
+                    style={{ fontFamily: "PoppinsSemiBold" }}
+                  >
                     {item.label}
                   </Text>
                 </View>
 
-                <Text variant="labelSmall" style={{ color: "#A0A0A0" }}>
+                <Text
+                  variant="labelSmall"
+                  style={{ color: "#A0A0A0", fontFamily: "Poppins" }}
+                >
                   {item.value}
                 </Text>
               </Animated.View>

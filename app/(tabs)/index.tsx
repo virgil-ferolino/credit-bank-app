@@ -44,6 +44,7 @@ const StyledWhiteCard = styled(Card)({
 
 const WhiteText = styled(Text)({
   color: "#FFFFFF",
+  fontFamily: "Poppins",
 });
 
 const TextBold = styled(Text)({
@@ -169,7 +170,7 @@ export default function HomeScreen() {
                     variant="labelMedium"
                     style={{
                       textAlign: "center",
-                      fontWeight: 600,
+                      fontFamily: "PoppinsSemiBold",
                       fontSize: 12,
                     }}
                   >
@@ -192,7 +193,10 @@ export default function HomeScreen() {
           <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
             <Text
               variant="bodySmall"
-              style={{ fontWeight: 600, color: theme.colors.primary }}
+              style={{
+                fontFamily: "PoppinsSemiBold",
+                color: theme.colors.primary,
+              }}
             >
               View more
             </Text>
