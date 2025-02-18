@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import { Image, ScrollView } from "react-native";
+import { Image, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
@@ -21,6 +22,8 @@ const validationSchema = Yup.object().shape({
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const areAllFieldsFilled = (values: {
     name: string;
@@ -35,6 +38,14 @@ export default function SignUpScreen() {
       values.password !== "" &&
       values.confirmPassword !== ""
     );
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -75,7 +86,13 @@ export default function SignUpScreen() {
             }) => (
               <>
                 <Title>Create your account</Title>
-                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                <Text
+                  variant="bodyLarge"
+                  style={{
+                    paddingBottom: "5px",
+                    color: touched.name && errors.name ? "red" : "black", // Change text color to red if there's an error
+                  }}
+                >
                   Name
                 </Text>
 
@@ -91,7 +108,13 @@ export default function SignUpScreen() {
                 {touched.name && errors.name && (
                   <ErrorText>{errors.name}</ErrorText>
                 )}
-                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                <Text
+                  variant="bodyLarge"
+                  style={{
+                    paddingBottom: "5px",
+                    color: touched.email && errors.email ? "red" : "black", // Change text color to red if there's an error
+                  }}
+                >
                   Email
                 </Text>
                 <StyledTextInput
@@ -107,36 +130,88 @@ export default function SignUpScreen() {
                 {touched.email && errors.email && (
                   <ErrorText>{errors.email}</ErrorText>
                 )}
-                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+                <Text
+                  variant="bodyLarge"
+                  style={{
+                    paddingBottom: "5px",
+                    color:
+                      touched.password && errors.password ? "red" : "black",
+                  }}
+                >
                   Password
                 </Text>
-                <StyledTextInput
-                  mode="outlined"
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  // secureTextEntry
-                  error={touched.password && errors.password ? true : false}
-                />
+                <PasswordInputContainer>
+                  <StyledTextInput
+                    mode="outlined"
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    secureTextEntry={!showPassword}
+                    error={
+                      touched.confirmPassword && errors.confirmPassword
+                        ? true
+                        : false
+                    }
+                    right={
+                      <TextInput.Icon
+                        icon={() => (
+                          <PasswordToggle onPress={togglePasswordVisibility}>
+                            <Ionicons
+                              name={showPassword ? "eye-off" : "eye"}
+                              size={24}
+                              color="#006d77"
+                            />
+                          </PasswordToggle>
+                        )}
+                      />
+                    }
+                  />
+                </PasswordInputContainer>
                 {touched.password && errors.password && (
                   <ErrorText>{errors.password}</ErrorText>
                 )}
-                <Text variant="bodyLarge" style={{ paddingBottom: "5px" }}>
+
+                <Text
+                  variant="bodyLarge"
+                  style={{
+                    paddingBottom: "5px",
+                    color:
+                      touched.confirmPassword && errors.confirmPassword
+                        ? "red"
+                        : "black",
+                  }}
+                >
                   Confirm Password
                 </Text>
-
-                <StyledTextInput
-                  mode="outlined"
-                  value={values.confirmPassword}
-                  onChangeText={handleChange("confirmPassword")}
-                  onBlur={handleBlur("confirmPassword")}
-                  // secureTextEntry
-                  error={
-                    touched.confirmPassword && errors.confirmPassword
-                      ? true
-                      : false
-                  }
-                />
+                <PasswordInputContainer>
+                  <StyledTextInput
+                    mode="outlined"
+                    value={values.confirmPassword}
+                    onChangeText={handleChange("confirmPassword")}
+                    onBlur={handleBlur("confirmPassword")}
+                    secureTextEntry={!showConfirmPassword}
+                    error={
+                      touched.confirmPassword && errors.confirmPassword
+                        ? true
+                        : false
+                    }
+                    right={
+                      <TextInput.Icon
+                        icon={() => (
+                          <PasswordToggle
+                            onPress={toggleConfirmPasswordVisibility}
+                          >
+                            <Ionicons
+                              name={showConfirmPassword ? "eye-off" : "eye"}
+                              size={24}
+                              color="#006d77"
+                            />
+                          </PasswordToggle>
+                        )}
+                      />
+                    }
+                  />
+                </PasswordInputContainer>
                 {touched.confirmPassword && errors.confirmPassword && (
                   <ErrorText>{errors.confirmPassword}</ErrorText>
                 )}
@@ -311,4 +386,14 @@ const SignInButton = styled(Button)`
   padding: 0;
   color: #006d77;
   font-weight: bold;
+`;
+
+const PasswordInputContainer = styled.View`
+  margin-bottom: 12px;
+`;
+
+const PasswordToggle = styled(TouchableOpacity)`
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;

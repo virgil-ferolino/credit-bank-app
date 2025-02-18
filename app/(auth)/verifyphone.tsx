@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  ScrollView,
-  View,
-  Modal,
-  Pressable,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { ScrollView, View, Modal, Pressable } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
@@ -32,103 +25,99 @@ export default function VerifyPhoneScreen() {
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1 }}
+
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
-        >
-          <Card>
-            <Title>Verify your phone number</Title>
-            <Subtitle>
-              We will send you a One-Time-Password (OTP){"\n"}
-              on this mobile number.
-            </Subtitle>
+        <Card>
+          <Title>Verify your phone number</Title>
+          <Subtitle>
+            We will send you a One-Time-Password (OTP){"\n"}
+            on this mobile number.
+          </Subtitle>
 
-            <PhoneInputContainer>
-              <Pressable onPress={() => setModalVisible(true)}>
-                <CountryCodeInput
-                  mode="outlined"
-                  value={countryCode.value}
-                  editable={false}
-                  pointerEvents="none"
-                  right={
-                    <TextInput.Icon
-                      icon="chevron-down"
-                      onPress={() => setModalVisible(true)}
-                    />
-                  }
-                  // Make the input non-interactive, Pressable will handle the touch
-                />
-              </Pressable>
-
-              <PhoneInput
+          <PhoneInputContainer>
+            <Pressable onPress={() => setModalVisible(true)}>
+              <CountryCodeInput
                 mode="outlined"
-                value={phoneNumber}
-                onChangeText={(text: string) =>
-                  setPhoneNumber(text.replace(/[^0-9]/g, "").slice(0, 10))
+                value={countryCode.value}
+                editable={false}
+                pointerEvents="none"
+                right={
+                  <TextInput.Icon
+                    icon="chevron-down"
+                    onPress={() => setModalVisible(true)}
+                  />
                 }
-                keyboardType="phone-pad"
-                placeholder="Enter phone number"
-                maxLength={10}
+                // Make the input non-interactive, Pressable will handle the touch
               />
-            </PhoneInputContainer>
+            </Pressable>
 
-            <Button
-              mode="contained"
-              onPress={() => router.push("/(auth)/otpverify")}
-              disabled={phoneNumber.length < 10}
-              contentStyle={{ height: 45 }}
-            >
-              SEND CODE
-            </Button>
-          </Card>
-        </ScrollView>
+            <PhoneInput
+              mode="outlined"
+              value={phoneNumber}
+              onChangeText={(text: string) =>
+                setPhoneNumber(text.replace(/[^0-9]/g, "").slice(0, 10))
+              }
+              keyboardType="phone-pad"
+              placeholder="Enter phone number"
+              maxLength={10}
+            />
+          </PhoneInputContainer>
 
-        {/* Country Code Modal */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <ModalOverlay onPress={() => setModalVisible(false)} />
-          <ModalContainer>
-            <ModalHeader>
-              <ModalTitle>Select Country Code</ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-              {countryCodes.map((code) => (
-                <Pressable
-                  key={code.value}
-                  onPress={() => {
-                    setCountryCode(code);
-                    setModalVisible(false);
-                  }}
-                  style={{
-                    paddingVertical: 15,
-                    paddingHorizontal: 20,
-                    borderBottomWidth: 1,
-                    borderBottomColor: "#f0f0f0",
-                  }}
-                >
-                  <Text style={{ fontSize: 16 }}>{code.label}</Text>
-                </Pressable>
-              ))}
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                mode="outlined"
-                onPress={() => setModalVisible(false)}
-                style={{ borderRadius: 20 }}
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/otpverify")}
+            disabled={phoneNumber.length < 10}
+            contentStyle={{ height: 45 }}
+          >
+            SEND CODE
+          </Button>
+        </Card>
+      </ScrollView>
+
+      {/* Country Code Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <ModalOverlay onPress={() => setModalVisible(false)} />
+        <ModalContainer>
+          <ModalHeader>
+            <ModalTitle>Select Country Code</ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            {countryCodes.map((code) => (
+              <Pressable
+                key={code.value}
+                onPress={() => {
+                  setCountryCode(code);
+                  setModalVisible(false);
+                }}
+                style={{
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#f0f0f0",
+                }}
               >
-                CANCEL
-              </Button>
-            </ModalFooter>
-          </ModalContainer>
-        </Modal>
-      </KeyboardAvoidingView>
+                <Text style={{ fontSize: 16 }}>{code.label}</Text>
+              </Pressable>
+            ))}
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              mode="outlined"
+              onPress={() => setModalVisible(false)}
+              style={{ borderRadius: 20 }}
+            >
+              CANCEL
+            </Button>
+          </ModalFooter>
+        </ModalContainer>
+      </Modal>
     </Container>
   );
 }
@@ -174,6 +163,7 @@ const Subtitle = styled(Text)`
 `;
 
 const PhoneInputContainer = styled(View)`
+  padding-bottom: 300px;
   flex-direction: row;
   gap: 8px;
   margin-bottom: 30px;
