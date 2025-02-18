@@ -7,13 +7,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   View,
-  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 
-// import * as Yup from "yup";  // Removed validation import
-// import { Formik } from "formik";  // Removed Formik import
+// import * as Yup from "yup";
+import { Formik } from "formik";
+import theme from "@/theme";
 
 // const validationSchema = Yup.object().shape({
 //   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -27,7 +26,7 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (values: { email: string; password: string }) => {
-    // if (values.email && values.password) {
+    // if (values.email || values.password) {
     router.push("/(tabs)");
     // } else {
     //   alert("Please enter both email and password.");
@@ -59,69 +58,90 @@ export default function LoginScreen() {
           <StyledSurface>
             <Title>Sign in to your account</Title>
 
-            {/* Removed Formik validation and used basic state handling */}
-            <View>
-              <View>
-                <Text
-                  variant="bodyLarge"
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              // validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <View
                   style={{
-                    paddingBottom: 5,
-                    color: "#333",
+                    flexDirection: "column",
+                    rowGap: 5,
                   }}
                 >
-                  Email
-                </Text>
-                <StyledTextInput
-                  mode="outlined"
-                  keyboardType="email-address"
-                  placeholder="ex: jon.smith@email.com"
-                  // value={values.email} // No longer using Formik's value
-                  // onChangeText={handleChange("email")} // No longer using Formik's handleChange
-                  // onBlur={handleBlur("email")} // No longer using Formik's handleBlur
-                  // error={errors.email && touched.email} // No longer using validation error
-                />
-                {/* Removed error display */}
-              </View>
-
-              <View>
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    paddingBottom: 5,
-                    color: "#333",
-                  }}
-                >
-                  Password
-                </Text>
-                <PasswordInputContainer>
-                  <StyledTextInput
-                    mode="outlined"
-                    placeholder="••••••"
-                    secureTextEntry={!showPassword}
-                    // value={values.password} // No longer using Formik's value
-                    // onChangeText={handleChange("password")} // No longer using Formik's handleChange
-                    // onBlur={handleBlur("password")} // No longer using Formik's handleBlur
-                    // error={errors.password && touched.password} // No longer using validation error
-                    style={{ flex: 1 }}
-                  />
-                  <PasswordToggle onPress={togglePasswordVisibility}>
-                    <Ionicons
-                      name={showPassword ? "eye-off" : "eye"}
-                      size={24}
-                      color="#006d77"
+                  <View>
+                    <Text
+                      variant="bodyLarge"
+                      style={{
+                        paddingBottom: 5,
+                        color: errors.email && touched.email ? "red" : "#333",
+                      }}
+                    >
+                      Email
+                    </Text>
+                    <StyledTextInput
+                      mode="outlined"
+                      keyboardType="email-address"
+                      placeholder="ex: jon.smith@email.com"
+                      placeholderTextColor="#9A9A9A"
+                      value={values.email}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      error={errors.email && touched.email}
                     />
-                  </PasswordToggle>
-                </PasswordInputContainer>
-                {/* Removed error display */}
-              </View>
 
-              <Button
-                mode="contained"
-                onPress={() => handleSubmit({ email: "", password: "" })}
-              >
-                SIGN IN
-              </Button>
-            </View>
+                    {/* Removed error display */}
+                  </View>
+
+                  <View>
+                    <Text
+                      variant="bodyLarge"
+                      style={{
+                        paddingBottom: 5,
+                        color:
+                          errors.password && touched.password ? "red" : "#333",
+                      }}
+                    >
+                      Password
+                    </Text>
+
+                    <StyledTextInput
+                      mode="outlined"
+                      placeholder="********"
+                      secureTextEntry={!showPassword}
+                      value={values.password}
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      error={errors.password && touched.password}
+                      right={
+                        <TextInput.Icon
+                          onPress={togglePasswordVisibility}
+                          icon={showPassword ? "eye-off" : "eye"}
+                          size={24}
+                          color={theme.colors.primary}
+                        />
+                      }
+                    />
+
+                    {errors.password && touched.password && (
+                      <ErrorText>{errors.password}</ErrorText>
+                    )}
+                  </View>
+
+                  <Button mode="contained" onPress={() => handleSubmit()}>
+                    SIGN IN
+                  </Button>
+                </View>
+              )}
+            </Formik>
 
             <OrText>or sign in with</OrText>
 
@@ -242,17 +262,8 @@ const SignUpButton = styled(Button)`
   font-weight: bold;
 `;
 
-const PasswordInputContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 12px;
-`;
-
-const PasswordToggle = styled(TouchableOpacity)`
-  position: absolute;
-  right: 10px;
-  padding: 4px;
-  top: 11px;
-  justify-content: center;
-  align-items: center;
+const ErrorText = styled(Text)`
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
 `;

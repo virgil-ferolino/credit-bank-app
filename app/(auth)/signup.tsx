@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
-import { Image, ScrollView, TouchableOpacity } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Ionicons } from "@expo/vector-icons";
+
+import { useAppTheme } from "@/hooks/useTheme";
 
 // Validation Schema
 const validationSchema = Yup.object().shape({
@@ -45,6 +46,8 @@ const validationSchema = Yup.object().shape({
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const theme = useAppTheme();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -113,7 +116,7 @@ export default function SignUpScreen() {
                   variant="bodyLarge"
                   style={{
                     paddingBottom: "5px",
-                    color: touched.name && errors.name ? "red" : "black", // Change text color to red if there's an error
+                    color: touched.name && errors.name ? "red" : "black",
                   }}
                 >
                   Name
@@ -135,7 +138,7 @@ export default function SignUpScreen() {
                   variant="bodyLarge"
                   style={{
                     paddingBottom: "5px",
-                    color: touched.email && errors.email ? "red" : "black", // Change text color to red if there's an error
+                    color: touched.email && errors.email ? "red" : "black",
                   }}
                 >
                   Email
@@ -163,33 +166,28 @@ export default function SignUpScreen() {
                 >
                   Password
                 </Text>
-                <PasswordInputContainer>
-                  <StyledTextInput
-                    mode="outlined"
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    secureTextEntry={!showPassword}
-                    error={
-                      touched.confirmPassword && errors.confirmPassword
-                        ? true
-                        : false
-                    }
-                    right={
-                      <TextInput.Icon
-                        icon={() => (
-                          <PasswordToggle onPress={togglePasswordVisibility}>
-                            <Ionicons
-                              name={showPassword ? "eye-off" : "eye"}
-                              size={24}
-                              color="#006d77"
-                            />
-                          </PasswordToggle>
-                        )}
-                      />
-                    }
-                  />
-                </PasswordInputContainer>
+
+                <StyledTextInput
+                  mode="outlined"
+                  value={values.password}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  secureTextEntry={!showPassword}
+                  error={
+                    touched.confirmPassword && errors.confirmPassword
+                      ? true
+                      : false
+                  }
+                  right={
+                    <TextInput.Icon
+                      onPress={togglePasswordVisibility}
+                      icon={showPassword ? "eye-off" : "eye"}
+                      size={24}
+                      color={theme.colors.primary}
+                    />
+                  }
+                />
+
                 {touched.password && errors.password && (
                   <ErrorText>{errors.password}</ErrorText>
                 )}
@@ -206,35 +204,28 @@ export default function SignUpScreen() {
                 >
                   Confirm Password
                 </Text>
-                <PasswordInputContainer>
-                  <StyledTextInput
-                    mode="outlined"
-                    value={values.confirmPassword}
-                    onChangeText={handleChange("confirmPassword")}
-                    onBlur={handleBlur("confirmPassword")}
-                    secureTextEntry={!showConfirmPassword}
-                    error={
-                      touched.confirmPassword && errors.confirmPassword
-                        ? true
-                        : false
-                    }
-                    right={
-                      <TextInput.Icon
-                        icon={() => (
-                          <PasswordToggle
-                            onPress={toggleConfirmPasswordVisibility}
-                          >
-                            <Ionicons
-                              name={showConfirmPassword ? "eye-off" : "eye"}
-                              size={24}
-                              color="#006d77"
-                            />
-                          </PasswordToggle>
-                        )}
-                      />
-                    }
-                  />
-                </PasswordInputContainer>
+
+                <StyledTextInput
+                  mode="outlined"
+                  value={values.confirmPassword}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={handleBlur("confirmPassword")}
+                  secureTextEntry={!showConfirmPassword}
+                  error={
+                    touched.confirmPassword && errors.confirmPassword
+                      ? true
+                      : false
+                  }
+                  right={
+                    <TextInput.Icon
+                      onPress={toggleConfirmPasswordVisibility}
+                      icon={showConfirmPassword ? "eye-off" : "eye"}
+                      size={24}
+                      color={theme.colors.primary}
+                    />
+                  }
+                />
+
                 {touched.confirmPassword && errors.confirmPassword && (
                   <ErrorText>{errors.confirmPassword}</ErrorText>
                 )}
@@ -409,14 +400,4 @@ const SignInButton = styled(Button)`
   padding: 0;
   color: #006d77;
   font-weight: bold;
-`;
-
-const PasswordInputContainer = styled.View`
-  margin-bottom: 12px;
-`;
-
-const PasswordToggle = styled(TouchableOpacity)`
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 `;

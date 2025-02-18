@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { initialNotifications, menuList, transaction } from "@/data/home";
-import theme from "@/theme";
+import { useAppTheme } from "@/hooks/useTheme";
 
 interface TransactionItem {
   title: string;
@@ -47,7 +47,7 @@ const WhiteText = styled(Text)({
 });
 
 const TextBold = styled(Text)({
-  fontWeight: 600,
+  fontFamily: "PoppinsBold",
 });
 
 const RenderTransactionItem = (props: TransactionItem) => {
@@ -56,7 +56,7 @@ const RenderTransactionItem = (props: TransactionItem) => {
       <TransactionAvatar>
         <Avatar.Text size={30} label={props.title.slice(0, 2).toUpperCase()} />
         <View>
-          <TextBold variant="bodyLarge">{props.title}</TextBold>
+          <TextBold>{props.title}</TextBold>
           <Text
             variant="labelSmall"
             style={{
@@ -75,6 +75,8 @@ const RenderTransactionItem = (props: TransactionItem) => {
 
 export default function HomeScreen() {
   const router = useRouter();
+
+  const theme = useAppTheme();
 
   const unreadCount = initialNotifications.filter(
     (notification) => !notification.read
