@@ -5,6 +5,7 @@ import Animated from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ImageBackground,
+  Modal,
   Platform,
   TouchableOpacity,
   View,
@@ -32,6 +33,52 @@ const ContainerOpacity = styled(View)({
   justifyContent: "center",
   alignItems: "center",
 });
+
+const Overlay = styled(View)({
+  flex:1,
+  backgroundColor: "rgba(0,0,0,0.5)",
+  justifyContent: "center",
+  pointerEvents: "auto",
+  width: 480,
+  alignSelf: "center"
+})
+
+const ModalContainer = styled(View)({
+  backgroundColor: '#fff',
+  borderRadius: 20,
+  width: 350,
+  padding: 25,
+  alignSelf: "center",
+  overflow: "hidden",
+  position: "absolute",
+})
+
+const ButtonContainer = styled(View)({
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%",
+})
+
+const ModalButton = styled(TouchableOpacity)({
+  backgroundColor: "white",
+  padding: 6,
+  width: "50%",
+  alignItems: "center",
+  borderTopWidth: 2,
+  borderTopColor: "#D3D3D3",
+})
+
+const ButtonText = styled(Text)({
+  fontSize: 16,
+  fontWeight: 600,
+  fontFamily: "PoppinsBold",
+})
+
+const Separator = styled(View)({
+  borderLeftWidth: 2,
+  borderLeftColor: "#D3D3D3",
+  height: "100%",
+})
 
 interface CardSettingProps {
   label: string;
@@ -61,13 +108,87 @@ const CardSetting: React.FC<CardSettingProps> = ({
       <Text variant="bodyLarge" style={{ fontWeight: "600" }}>
         {label}
       </Text>
-      <Switch value={value} onValueChange={onToggle} />
+      <Switch hitSlop={20} value={value} onValueChange={onToggle} />
     </Card.Content>
   </Card>
 );
 
+const CardLockModal = ({ isVisible, isLocked, onClose, onConfirm }: { isVisible:boolean, isLocked: boolean, onClose:() => void, onConfirm: () => void }) => {
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={onClose}>
+      <Overlay>
+        <ModalContainer>
+          <View>
+            <Text
+              style={{ 
+                marginTop: 20, 
+                fontWeight: 600, 
+                fontFamily: "PoppinsBold",
+                textAlign: "center", 
+                fontSize: 25, }}>
+              {!isLocked ? "Lock card?" : "Unlock card?"}
+            </Text>
+            <Text
+              style={{
+                marginTop: 15, 
+                textAlign: "center", 
+                marginBottom: 30, }}>
+              {!isLocked
+              ? "You will no longer be able to make new purchases or pay for them using your digital wallet."
+              : "You will be able to make new purchases or pay for them using your digital wallet again."
+              }
+            </Text>
+          </View>
+          <ButtonContainer>
+            <ModalButton onPress={onConfirm}>
+              <ButtonText
+                style={{
+                  marginTop:15,
+                  fontSize: 19, 
+                  color: isLocked ? "#0094F1" : "red",  }}>
+                {!isLocked ? "Lock" : "Unlock"}
+              </ButtonText>
+            </ModalButton>
+            <Separator />
+            <ModalButton onPress={onClose}>
+              <ButtonText
+                style={{
+                  marginTop:15,
+                  fontSize: 19,
+                  fontWeight: 600,
+                  fontFamily: "PoppinsBold" }}>
+                Cancel
+              </ButtonText>
+            </ModalButton>
+          </ButtonContainer>
+        </ModalContainer>
+      </Overlay>
+    </Modal>
+  )
+}
+
+const CustomOverlay = ({ closeBottomSheet }: { closeBottomSheet: () => void}) => {
+  return (
+    <TouchableOpacity
+      onPress={closeBottomSheet}
+      activeOpacity={1}
+      style={{
+        flex:1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        width: 480,
+        alignSelf: "center"
+      }} />
+  )
+}
+
 export default function ActivateCard() {
   const [isLockCard, setIsLockCard] = useState<boolean>(false);
+  const [isLockVisible, setIsLockVisible] = useState<boolean>(false);
   const [isHome, setIsHome] = useState<boolean>(false);
 
   const sheetRef = useRef<BottomSheetMethods>(null);
@@ -82,7 +203,10 @@ export default function ActivateCard() {
         ref={sheetRef}
         animationType={"slide"}
         height={"75%"}
-        backdropMaskColor={"#00000090"}
+        customBackdropComponent={() => (
+          <CustomOverlay closeBottomSheet={() => sheetRef.current?.close()} />
+        )}
+        disableBodyPanning={isLockVisible === true}
         style={{
           width: "100%",
           alignSelf: "center",
@@ -125,7 +249,7 @@ export default function ActivateCard() {
             <CardSetting
               label={"Lock Card"}
               value={isLockCard}
-              onToggle={() => setIsLockCard(!isLockCard)}
+              onToggle={() => setIsLockVisible(true)}
             />
 
             <CardSetting
@@ -135,6 +259,15 @@ export default function ActivateCard() {
             />
           </View>
         </View>
+        <CardLockModal
+          isVisible={isLockVisible}
+          isLocked={isLockCard}
+          onConfirm={() => {
+            setIsLockCard(!isLockCard)
+            setIsLockVisible(false)
+            }
+          }
+          onClose={() => setIsLockVisible(false)} />
       </BottomSheet>
     );
   };

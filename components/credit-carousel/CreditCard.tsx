@@ -42,7 +42,7 @@ const HeaderType = styled(Text)({
 // Card Number
 const CardNumber = styled(Text)({
   color: "#fff",
-  fontSize: 17,
+  fontSize: 15,
   letterSpacing: 2,
 });
 // Card Details
@@ -73,13 +73,22 @@ const CardLogo = styled(View)({
   alignItems: "center",
   marginHorizontal: -20,
 });
-const WhiteCircle = styled(View)({
+
+{/*const WhiteCircle = styled(View)({
   width: 30,
   height: 30,
   borderRadius: 15,
   marginHorizontal: 5,
   backgroundColor: "#ffffff",
-});
+});*/}
+
+const BankLogo = styled(Image)({
+  width: 30,
+  height: 30,
+  borderRadius: 15,
+  marginHorizontal: 5,
+})
+
 const ToggleHide = styled(TouchableOpacity)({
   width: 25,
   height: 25,
@@ -152,11 +161,14 @@ const CreditCard = ({
           <HeaderView>
             <HeaderName>ADRBank</HeaderName>
             <HeaderType>Credit Card</HeaderType>
-            <WhiteCircle />
+            <BankLogo source={require("@/assets/images/Bank-icon-large.png")} />
           </HeaderView>
           <HeaderView>
             <CardNumber>{renderNumbers(cardNumber, "cn")}</CardNumber>
-            <ToggleHide onPress={() => setToggleHidden((prev) => !prev)}>
+            <ToggleHide
+              hitSlop={20}
+              onPress={() => setToggleHidden((prev) => !prev)}
+            >
               <Ionicons
                 name={toggleHidden ? "eye-off-outline" : "eye-outline"}
                 size={20}

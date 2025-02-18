@@ -22,8 +22,8 @@ const BlueBackground = styled(View)({
   height: 250,
   backgroundColor: "#004068",
   position: "absolute",
-  borderBottomLeftRadius: 35,
-  borderBottomRightRadius: 35,
+  borderBottomLeftRadius: 24,
+  borderBottomRightRadius: 24,
 });
 
 const TransactionContainer = styled(View)({
@@ -54,7 +54,7 @@ const RenderTransactionItem = (props: TransactionItem) => {
   return (
     <TransactionContainer>
       <TransactionAvatar>
-        <Avatar.Text size={30} label="AP" />
+        <Avatar.Text size={30} label={props.title.slice(0, 2).toUpperCase()} />
         <View>
           <TextBold variant="bodyLarge">{props.title}</TextBold>
           <Text
@@ -123,14 +123,15 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          <TouchableOpacity onPress={handleNotification} hitSlop={20}>
-            <Badge
-              size={15}
-              style={{ position: "absolute", top: -5, right: 25 }}
-            >
+          <TouchableOpacity
+            onPress={handleNotification}
+            hitSlop={20}
+            style={{ backgroundColor: "transparent" }}
+          >
+            <Badge style={{ position: "absolute", top: -5, right: 23 }}>
               {unreadCount}
             </Badge>
-            <Ionicons name="notifications-circle" size={30} color="#FFFFFF" />
+            <Ionicons name="notifications" size={30} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
 
