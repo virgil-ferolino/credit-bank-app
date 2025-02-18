@@ -28,6 +28,14 @@ const SettingsLayout = () => {
           headerTitleAlign: "center",
         }}
       />
+      <Stack.Screen
+        name="termsAndConditons"
+        options={{
+          headerShown: true,
+          headerTitle: "Terms and Conditions",
+          headerTitleAlign: "center",
+        }}
+      />
     </StackLayout>
   );
 };
