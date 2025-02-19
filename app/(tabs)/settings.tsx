@@ -147,6 +147,10 @@ export default function SettingsScreen() {
         </MenuItem>
 
         <Description>Security</Description>
+        <MenuItem onPress={() => reroute.push("/termsAndConditons")}>
+          <MenuText>Terms and Conditions</MenuText>
+          <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
+        </MenuItem>
         <MenuItem onPress={() => reroute.push("/changePassword")}>
           <MenuText>Change Password</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
