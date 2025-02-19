@@ -72,7 +72,10 @@ const ImageDetail = styled(Image)({
     height: Math.min(700, (1000 /667) * (width * 0.90)),
 })
 
-const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
+const PromoCard = ({ 
+    promo, 
+    onOpen, 
+}: PromoCardType) => {
     return(
         <StyledCard>
             <StyledImage source={promo.promoImage} />
@@ -99,7 +102,8 @@ const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
 }
 
 const Promos = () => {
-    const [selectedPromo, setSelectedPromo] = useState<PromoType | null>(null);
+    const [selectedPromo, 
+        setSelectedPromo] = useState<PromoType | null>(null);
 
     const sheetRef = useRef<BottomSheetMethods>(null);
 
