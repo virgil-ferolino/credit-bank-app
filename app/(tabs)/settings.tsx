@@ -34,9 +34,10 @@ const SectionTitle = styled(Text)(() => ({
 
 const Description = styled(Text)(() => ({
   fontSize: 16,
-  color: "#525252",
+  color: "#0265A1",
   padding: commonPadding,
   paddingBottom: 7,
+  fontWeight: "bold",
 }));
 
 const MenuItem = styled(TouchableOpacity)(() => ({
@@ -48,6 +49,8 @@ const MenuItem = styled(TouchableOpacity)(() => ({
   borderBottomColor: "white",
   backgroundColor: "white",
   borderRadius: 10,
+  shadowColor: "#d8e1eb",
+  shadowRadius: 8,
 }));
 
 const MenuText = styled(Text)(() => ({
@@ -60,11 +63,13 @@ const LogoutItem = styled(MenuItem)(() => ({
   gap: 100,
   borderBottomWidth: 1,
   borderBottomColor: "white",
+  marginTop: 20,
 }));
 
 const LogoutText = styled(Text)(() => ({
   color: "#FF0000",
-  fontSize: 16,
+  fontSize: 17,
+  fontWeight: "bold",
 }));
 
 const ModalContainer = styled(View)(() => ({
@@ -158,7 +163,7 @@ export default function SettingsScreen() {
 
         <LogoutItem onPress={handleLogout}>
           <LogoutText>Log out</LogoutText>
-          <MaterialIcons name="chevron-right" size={24} color="#FF0000" />
+          <MaterialIcons name="exit-to-app" size={24} color="#FF0000" />
         </LogoutItem>
 
         <Modal visible={modalVisible} transparent animationType="fade">
