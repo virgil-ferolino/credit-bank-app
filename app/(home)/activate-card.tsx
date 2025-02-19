@@ -47,7 +47,7 @@ const Overlay = styled(View)({
 const ModalContainer = styled(View)({
   backgroundColor: "#fff",
   borderRadius: 20,
-  width: 360,
+  width: 350,
   padding: 25,
   alignSelf: "center",
   overflow: "hidden",
@@ -140,26 +140,6 @@ const CardLockModal = ({
       <Overlay>
         <ModalContainer>
           <View>
-            {isLocked ? (
-              <Fragment>
-                <ImageBackground
-                  source={{ uri: "https://legacy.reactjs.org/logo-og.png" }}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: 10,
-                    overflow: "hidden",
-                  }}
-                >
-                  <CreditCard />
-
-                  <ContainerOpacity>
-                    <Ionicons name="lock-closed" size={62} color="gray" />
-                  </ContainerOpacity>
-                </ImageBackground>
-              </Fragment>
-            ) : (
-              <CreditCard />
-            )}
             <Text
               style={{
                 marginTop: 20,
@@ -226,7 +206,7 @@ const CustomOverlay = ({
         flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
-        width: 480,
+        width: "100%",
         alignSelf: "center",
       }}
     />
