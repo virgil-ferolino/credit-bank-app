@@ -6,7 +6,6 @@ import { CreditCardProps } from "./types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppTheme } from "@/hooks/useTheme";
 import { useState } from "react";
-// Standard credit card ratio
 
 type OffNumber = "cn" | "cvv" | "exp";
 
@@ -22,7 +21,7 @@ const StyledContent = styled(Card.Content)({
   padding: 20,
 });
 
-// Card Header
+
 const HeaderView = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
@@ -39,13 +38,13 @@ const HeaderType = styled(Text)({
   color: "#fff",
   fontSize: 11,
 });
-// Card Number
+
 const CardNumber = styled(Text)({
   color: "#fff",
   fontSize: 15,
   letterSpacing: 2,
 });
-// Card Details
+
 const CardDetailsView = styled(View)({
   marginRight: 24,
 });
@@ -67,20 +66,13 @@ const CardDetailRow = styled(View)({
   justifyContent: "space-between",
   marginTop: 16,
 });
-// Circles
+
 const CardLogo = styled(View)({
   flexDirection: "row",
   alignItems: "center",
   marginHorizontal: -20,
 });
 
-{/*const WhiteCircle = styled(View)({
-  width: 30,
-  height: 30,
-  borderRadius: 15,
-  marginHorizontal: 5,
-  backgroundColor: "#ffffff",
-});*/}
 
 const BankLogo = styled(Image)({
   width: 30,

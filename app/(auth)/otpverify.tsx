@@ -34,7 +34,6 @@ export default function VerifyPhoneScreen() {
   };
 
   useEffect(() => {
-    // Check if all OTP fields are filled
     const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
     setIsButtonDisabled(!allFieldsFilled);
   }, [formValue.otp]);
