@@ -34,27 +34,35 @@ export default function RecentTransactions() {
                   backgroundColor: "#FFFFFF",
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    columnGap: 10,
-                    alignItems: "center",
-                  }}
-                >
-                  <Avatar.Text label="AP" size={30} />
-                  <Text
-                    variant="labelLarge"
-                    style={{ fontFamily: "PoppinsSemiBold" }}
-                  >
-                    {item.label}
-                  </Text>
+                <View style={{ flexDirection: "row", columnGap: 4 }}>
+                  <Avatar.Text
+                    label={item.title.slice(0, 2).toUpperCase()}
+                    size={30}
+                  />
+                  <View>
+                    <Text
+                      variant="labelLarge"
+                      style={{ fontFamily: "PoppinsSemiBold" }}
+                    >
+                      {item.title}
+                    </Text>
+                    <Text
+                      variant="labelSmall"
+                      style={{
+                        flexWrap: "wrap",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      {item.category}
+                    </Text>
+                  </View>
                 </View>
 
                 <Text
                   variant="labelSmall"
                   style={{ color: "#A0A0A0", fontFamily: "Poppins" }}
                 >
-                  {item.value}
+                  {item.price}
                 </Text>
               </Animated.View>
             </TouchableOpacity>
