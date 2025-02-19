@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import { promos } from "@/data/home";
 import { Fragment, useCallback, useRef, useState } from "react";
-import { Dimensions, FlatList, Image, TouchableOpacity, View } from "react-native";
+import { Dimensions, FlatList, Image, Modal, Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -27,7 +27,7 @@ interface PromoContentType {
     promoDetailImage: string,
 }
 
-const { width } = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
 const StyledCard = styled(Card)({
     width: 350,
@@ -72,6 +72,21 @@ const ImageDetail = styled(Image)({
     height: Math.min(700, (1000 /667) * (width * 0.90)),
 })
 
+const Overlay = styled(TouchableOpacity)({
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    maxWidth: 480,
+    alignSelf: "center"
+})
+
+const ModalContainer = styled(Animated.View)({
+    height: height * 0.85,
+    backgroundColor: "white",
+    maxWidth: 480,
+    width: "100%",
+})
+
 const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
     return(
         <StyledCard>
@@ -100,6 +115,7 @@ const PromoCard = ({ promo, onOpen, }: PromoCardType) => {
 
 const Promos = () => {
     const [selectedPromo, setSelectedPromo] = useState<PromoType | null>(null);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     const sheetRef = useRef<BottomSheetMethods>(null);
 
@@ -108,12 +124,17 @@ const Promos = () => {
         sheetRef.current?.open();
     }, []);
 
+    const handleCloseModal = () => {
+        setModalVisible(false)
+        setSelectedPromo(null);
+    }
+
     const renderPromoBottomSheet = () => {
         return (
             <BottomSheet
                 ref={sheetRef}
                 animationType={"slide"}
-                height={"85%"}
+                height={height * 0.85}
                 style={{
                     width: "100%",
                     alignSelf: "center",
@@ -122,7 +143,7 @@ const Promos = () => {
                 }}
                 disableBodyPanning={true}
                 >
-                <Animated.ScrollView
+                <ScrollView
                     scrollEventThrottle={16}
                     contentContainerStyle={{
                         alignContent: "center",
@@ -150,15 +171,69 @@ const Promos = () => {
                                     {selectedPromo.promoContent.promoDetail}
                                 </StyledText>
                                 {selectedPromo.promoContent.promoDetailImage &&
-                                    <ImageDetail source={selectedPromo.promoContent.promoDetailImage} resizeMode="contain" />
+                                    <ImageDetail 
+                                        source={selectedPromo.promoContent.promoDetailImage} 
+                                        resizeMode="contain" />
                                 }
                             </View>
                         </View>
                     )}
-                </Animated.ScrollView>
+                </ScrollView>
             </BottomSheet>
         )
     }
+
+    const webPromoBottomSheet = () => {
+        return (
+            <Modal
+                visible={modalVisible}
+                transparent={true}
+                animationType="slide"
+                onRequestClose={handleCloseModal}
+            >
+                <Overlay
+                    activeOpacity={1}
+                    onPress={handleCloseModal}
+                >
+                    <ModalContainer>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                alignItems: "center",
+                            }}>
+                            {selectedPromo && (
+                                <View style={{ alignItems: "center" }}>
+                                    <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
+                                    <View style={{ padding: 20 }} >
+                                    <StyledText>
+                                        {selectedPromo.promoContent.promoTitle}
+                                    </StyledText>
+                                    <Text
+                                        style={{
+                                            margin: 10,
+                                            textAlign: "left",
+                                        }}
+                                    >
+                                        {selectedPromo.promoContent.promoDesc}
+                                    </Text>
+                                    <StyledText>
+                                        {selectedPromo.promoContent.promoDetail}
+                                    </StyledText>
+                                    {selectedPromo.promoContent.promoDetailImage &&
+                                        <ImageDetail
+                                            source={selectedPromo.promoContent.promoDetailImage}
+                                            resizeMode="contain"
+                                        />
+                                    }
+                                    </View>
+                                </View>
+                            )}
+                        </ScrollView>
+                    </ModalContainer>
+                </Overlay>
+            </Modal>
+        );
+    };
 
     return (
         <Fragment>
@@ -171,12 +246,22 @@ const Promos = () => {
                             <PromoCard
                                 key={item.promoId}
                                 promo={item}
-                                onOpen={() => handleSnapPress(item)} />  
+                                onOpen={() => {
+                                    if (Platform.OS === 'web') {
+                                        setSelectedPromo(item)
+                                        setModalVisible(true)
+                                    }
+                                    else {
+                                        handleSnapPress(item)
+                                    }
+                                }} />  
                             )}
                     />
                 </Animated.View>
             </Container>
-            {renderPromoBottomSheet()}
+            {Platform.OS === "web"
+            ? webPromoBottomSheet()
+            : renderPromoBottomSheet()}
         </Fragment>
     );
 }
