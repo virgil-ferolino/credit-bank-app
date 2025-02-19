@@ -1,3 +1,4 @@
+import { transaction } from "@/data/home";
 import { create } from "zustand";
 
 export interface LabelValue {
@@ -5,11 +6,16 @@ export interface LabelValue {
   value: string | number;
   iconName?: string;
 }
+export interface TransactionProsps {
+  title: string;
+  category: string;
+  price: string;
+}
 
 export interface CardDataProps {
   pointBalance: number;
   account: LabelValue[];
-  transaction: LabelValue[];
+  transaction: TransactionProsps[];
 }
 
 const accountDetailsArray: LabelValue[] = [
@@ -22,49 +28,22 @@ const accountDetailsArray: LabelValue[] = [
     value: "PHP 60,530.00",
   },
 ];
-export const transactionsArray: LabelValue[] = [
-  {
-    label: "YOUTUBE",
-    value: "-$5.00",
-    iconName: "YT",
-  },
-  {
-    label: "SPOTIFY",
-    value: "-$12.00",
-    iconName: "ST",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-  {
-    label: "MOBILE LEGENDS",
-    value: "$12.00",
-    iconName: "ML",
-  },
-];
 
 const cardDataArray: CardDataProps[] = [
   {
     pointBalance: 10000,
     account: accountDetailsArray,
-    transaction: transactionsArray,
+    transaction: transaction,
   },
   {
     pointBalance: 17000,
     account: accountDetailsArray,
-    transaction: transactionsArray,
+    transaction: transaction,
   },
   {
     pointBalance: 20000,
     account: accountDetailsArray,
-    transaction: transactionsArray,
+    transaction: transaction,
   },
 ];
 
