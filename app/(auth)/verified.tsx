@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { Button, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
+import theme from "@/theme";
 
 export default function VerificationScreen() {
   const router = useRouter();
@@ -15,7 +16,11 @@ export default function VerificationScreen() {
           <IconContainer source={require("@/assets/images/verifiedlogo.png")} />
           <Title>Verified!</Title>
           <Subtitle>Your account has been created successfully.</Subtitle>
-          <StyledButton onPress={() => router.push("/(auth)")}>
+          <StyledButton
+            onPress={() => router.push("/(auth)")}
+            buttonColor={theme.colors.primary}
+            style={{ borderRadius: 10 }}
+          >
             SIGN IN
           </StyledButton>
         </Content>

@@ -71,10 +71,10 @@ const bodyFont: Record<string, Partial<MD3Type>> = {
   //   ...defaultFont.bodyMedium,
   //   fontFamily: "Poppins",
   // },
-  // bodyLarge: {
-  //   ...defaultFont.bodyLarge,
-  //   fontFamily: "Poppins",
-  // },
+  bodyLarge: {
+    ...defaultFont.bodyLarge,
+    fontFamily: "Poppins",
+  },
   default: {
     ...defaultFont.default,
     fontFamily: "Poppins",
@@ -96,8 +96,9 @@ const theme = {
 
   colors: {
     ...DefaultTheme.colors,
-    primary: "#0061A7",
+    primary: "#004068",
     secondary: "#00718A",
+    tertiary: "#00718A",
     error: "#E33A24",
     default: "#000000",
     gradientStart: "#3B5EB9",

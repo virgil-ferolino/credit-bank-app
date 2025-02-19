@@ -25,15 +25,15 @@ export default function LoginScreen() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (
+  const handleSubmit = () =>
     // values: { email: string; password: string }
-  ) => {
-    // if (values.email || values.password) {
-    router.push("/(tabs)");
-    // } else {
-    //   alert("Please enter both email and password.");
-    // }
-  };
+    {
+      // if (values.email || values.password) {
+      router.push("/(tabs)");
+      // } else {
+      //   alert("Please enter both email and password.");
+      // }
+    };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -85,6 +85,7 @@ export default function LoginScreen() {
                       style={{
                         paddingBottom: 5,
                         color: errors.email && touched.email ? "red" : "#333",
+                        fontFamily: "Poppins",
                       }}
                     >
                       Email
@@ -99,8 +100,6 @@ export default function LoginScreen() {
                       onBlur={handleBlur("email")}
                       error={errors.email && touched.email}
                     />
-
-
                   </View>
 
                   <View>
@@ -110,6 +109,7 @@ export default function LoginScreen() {
                         paddingBottom: 5,
                         color:
                           errors.password && touched.password ? "red" : "#333",
+                        fontFamily: "Poppins",
                       }}
                     >
                       Password
@@ -138,7 +138,12 @@ export default function LoginScreen() {
                     )}
                   </View>
 
-                  <Button mode="contained" onPress={() => handleSubmit()}>
+                  <Button
+                    mode="contained"
+                    onPress={() => handleSubmit()}
+                    buttonColor={theme.colors.primary}
+                    style={{ borderRadius: 10 }}
+                  >
                     SIGN IN
                   </Button>
                 </View>

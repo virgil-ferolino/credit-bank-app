@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParralaxView";
+import theme from "@/theme";
 import { useState } from "react";
 import { View } from "react-native";
 import { Text, TextInput, Button } from "react-native-paper";
@@ -147,9 +148,10 @@ const AddNewCard = () => {
           )}
         </StyledCardInfoContainer>
         <StyledButton
-          buttonColor="#0265A1"
-          textColor="white"
+          mode="contained"
           labelStyle={{ fontSize: 17 }}
+          buttonColor={theme.colors.primary}
+          style={{ borderRadius: 10 }}
           onPress={() => {
             setFormValue(initialValues);
           }}
