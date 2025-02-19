@@ -83,7 +83,7 @@ const renderViewMore = (item: TransactionProsps[]) => {
   return item.map(({ title, category, price }, index) => {
     if (index <= 3) {
       return (
-        <TransactionContainer>
+        <TransactionContainer key={index}>
           <TransactionAvatar>
             <Avatar.Text size={30} label={title.slice(0, 2).toUpperCase()} />
             <View>
