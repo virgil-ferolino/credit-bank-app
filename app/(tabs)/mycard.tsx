@@ -6,11 +6,12 @@ import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
 import {
   CardDataProps,
-  LabelValue,
+  TransactionProsps,
   useCardData,
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { transaction } from "@/data/home";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -66,31 +67,40 @@ const TextBold = styled(Text)({
   fontFamily: "PoppinsBold",
 });
 
-const TransactionLabel = styled(View)({
+const TransactionContainer = styled(View)({
   flexDirection: "row",
-  gap: 10,
+  justifyContent: "space-between",
   alignItems: "center",
 });
 
-const renderViewMore = (item: LabelValue[]) => {
-  return item.map(({ label, iconName, value }, index) => {
-    if (index <= 2) {
+const TransactionAvatar = styled(View)({
+  flexDirection: "row",
+  gap: 5,
+  alignItems: "center",
+});
+
+const renderViewMore = (item: TransactionProsps[]) => {
+  return item.map(({ title, category, price }, index) => {
+    if (index <= 3) {
       return (
-        <HeaderView key={index}>
-          <TransactionLabel>
-            <Avatar.Text label={iconName ?? ""} size={30} />
-            <TextBold variant="bodyLarge">{label}</TextBold>
-          </TransactionLabel>
-          <Text
-            variant="bodyLarge"
-            style={{
-              color: value.toString().includes("-") ? "red" : "black",
-              fontFamily: "PoppinsSemiBold",
-            }}
-          >
-            {value}
-          </Text>
-        </HeaderView>
+        <TransactionContainer>
+          <TransactionAvatar>
+            <Avatar.Text size={30} label={title.slice(0, 2).toUpperCase()} />
+            <View>
+              <TextBold>{title}</TextBold>
+              <Text
+                variant="labelSmall"
+                style={{
+                  fontFamily: "Poppins",
+                }}
+              >
+                {category}
+              </Text>
+            </View>
+          </TransactionAvatar>
+
+          <Text>{price}</Text>
+        </TransactionContainer>
       );
     } else return null;
   });
@@ -114,10 +124,10 @@ const renderCardDetails = (
         <StyledAccountView>
           {data.account.map(({ label, value }, index) => (
             <HeaderView key={index}>
-              <StyledAccountText variant="titleMedium">
+              <StyledAccountText variant="labelSmall">
                 {label}
               </StyledAccountText>
-              <StyledAccountText variant="titleMedium">
+              <StyledAccountText variant="labelSmall">
                 {value}
               </StyledAccountText>
             </HeaderView>
@@ -143,9 +153,9 @@ const renderCardDetails = (
           </TouchableOpacity>
         </HeaderView>
 
-        <Card style={{ boxShadow: "none" }}>
+        <Card style={{ backgroundColor: "white" }}>
           <StyledTransactionCard>
-            {renderViewMore(data.transaction)}
+            {renderViewMore(transaction)}
           </StyledTransactionCard>
         </Card>
       </CategoryView>
