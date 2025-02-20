@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 30;
 
@@ -15,7 +16,7 @@ const StyledView = styled(ScrollView)({
 });
 
 const StyledText = styled(Text)(() => ({
-  color: "#0265A1",
+  color: theme.colors.primary,
   fontSize: 18,
   display: "flex",
   flexDirection: "row",
@@ -28,12 +29,12 @@ const StyledIcon = styled(MaterialIcons)(() => ({
   marginRight: 10,
   fontSize: 30,
   alignSelf: "center",
-  color: "#0265A1",
+  color: theme.colors.primary,
 }));
 
 const StyledInfo = styled(Text)(() => ({
   fontSize: 20,
-  color: "#0265A1",
+  color: theme.colors.primary,
   marginBottom: 20,
   fontWeight: "600",
   textAlign: "center",
