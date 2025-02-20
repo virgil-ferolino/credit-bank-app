@@ -3,6 +3,7 @@ import { ScrollView, Platform } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React from "react";
+import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 30;
 
@@ -32,14 +33,14 @@ const TermsAndConditions = () => {
   return (
     <ParallaxScrollView>
       <StyledView>
-        <Text variant="headlineMedium" style={{ color: "#0265A1" }}>
+        <Text variant="headlineMedium" style={{ color: theme.colors.primary }}>
           {policyContent.policyTitle}
         </Text>
         <Text style={{ marginBottom: 20 }}>
           {policyContent.policyText.content}
         </Text>
 
-        <Text variant="headlineMedium" style={{ color: "#0265A1" }}>
+        <Text variant="headlineMedium" style={{ color: theme.colors.primary }}>
           {policyContent.termsTitle}
         </Text>
         <Text>{policyContent.termsText.content}</Text>

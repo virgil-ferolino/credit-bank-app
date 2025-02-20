@@ -11,11 +11,10 @@ import {
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { transaction } from "@/data/home";
 
 const ParentView = styled(View)({
   padding: 15,
-  gap: 20,
+  gap: 15,
 });
 const CategoryView = styled(View)({
   gap: 10,
@@ -29,7 +28,7 @@ const HeaderView = styled(View)({
 });
 //
 const PointView = styled(View)({
-  backgroundColor: "#02708D",
+  backgroundColor: theme.colors.tertiary,
   borderRadius: 10,
   padding: 5,
 });
@@ -51,7 +50,7 @@ const StyledPointContent = styled(Text)({
 
 const StyledAccountView = styled(View)({
   padding: "10px 15px 10px 15px",
-  backgroundColor: "#02708D",
+  backgroundColor: "#004068",
   borderRadius: 10,
   gap: 10,
 });
@@ -81,6 +80,7 @@ const TransactionAvatar = styled(View)({
 
 const renderViewMore = (item: TransactionProsps[]) => {
   return item.map(({ title, category, price }, index) => {
+    const newPrice = price.replace(/[^0-9]/g, "");
     if (index <= 3) {
       return (
         <TransactionContainer key={index}>
@@ -99,7 +99,7 @@ const renderViewMore = (item: TransactionProsps[]) => {
             </View>
           </TransactionAvatar>
 
-          <Text>{price}</Text>
+          <Text>{`$ ${newPrice}`}</Text>
         </TransactionContainer>
       );
     } else return null;
@@ -155,7 +155,11 @@ const renderCardDetails = (
 
         <Card style={{ backgroundColor: "white" }}>
           <StyledTransactionCard>
-            {renderViewMore(transaction)}
+            {data.transaction.length <= 0 ? (
+              <Text>No Transaction Available</Text>
+            ) : (
+              renderViewMore(data.transaction)
+            )}
           </StyledTransactionCard>
         </Card>
       </CategoryView>

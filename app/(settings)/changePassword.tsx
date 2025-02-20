@@ -4,10 +4,11 @@ import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 const iconSize = Platform.OS === "ios" ? 28 : 25;
-const iconColor = "#0065A1";
+const iconColor = theme.colors.primary;
 
 const StyledView = styled(ScrollView)({
   paddingTop: 20,
@@ -54,7 +55,7 @@ const PasswordField = ({
       placeholder={`Enter your ${label.toLowerCase()}`}
       mode="outlined"
       placeholderTextColor="#9A9A9A"
-      activeOutlineColor="#0265A1"
+      activeOutlineColor={theme.colors.primary}
       value={value}
       onChangeText={onChange}
       secureTextEntry={!visibility}
@@ -142,7 +143,7 @@ const ChangePassword = () => {
           toggleVisibility={() => togglePasswordVisibility("confirmPassword")}
         />
         <StyledButton
-          buttonColor="#0265A1"
+          buttonColor={theme.colors.primary}
           textColor="white"
           labelStyle={{ fontSize: 17 }}
         >

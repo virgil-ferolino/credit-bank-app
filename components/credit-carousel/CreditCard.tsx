@@ -2,12 +2,11 @@ import { Image, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
-import { CreditCardProps } from "./types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppTheme } from "@/hooks/useTheme";
 import { useState } from "react";
-
-type OffNumber = "cn" | "cvv" | "exp";
+import { CardProperty } from "./types";
+import { renderNumbers } from "./utils";
 
 const ParentView = styled(Card)({
   boxShadow: "none",
@@ -20,7 +19,6 @@ const ParentImage = styled(Image)({
 const StyledContent = styled(Card.Content)({
   padding: 20,
 });
-
 
 const HeaderView = styled(View)({
   flexDirection: "row",
@@ -73,13 +71,12 @@ const CardLogo = styled(View)({
   marginHorizontal: -20,
 });
 
-
 const BankLogo = styled(Image)({
   width: 30,
   height: 30,
   borderRadius: 15,
   marginHorizontal: 5,
-})
+});
 
 const ToggleHide = styled(TouchableOpacity)({
   width: 25,
@@ -105,38 +102,18 @@ const OrangeCircle = styled(View)({
   backgroundColor: "#F79E1B",
 });
 
-const CreditCard = ({
-  cardNumber = "1234123412341234",
-  cardHolder = "JAMES CHARLES",
-  expiryDate = "12/12",
-  cvv = "123",
-}: CreditCardProps) => {
+const CreditCard = ({ creditCard }: CardProperty) => {
+  const {
+    cardNumber = "1234123412341234",
+    cardHolder = "JAMES CHARLES",
+    expiryDate = "12/12",
+    cvv = "123",
+  } = creditCard;
   const {
     colors: { gradientStart, gradientEnd },
   } = useAppTheme();
   const [toggleHidden, setToggleHidden] = useState(true);
 
-  const renderNumbers = (a: string, card: OffNumber) => {
-    const format = a.replace(/\s+/g, "");
-    const digits = (x: number, y: number, z: string) => {
-      if (toggleHidden) {
-        return z.slice(x, y).replace(/\d/g, "*");
-      } else return z.slice(x, y);
-    };
-    switch (card) {
-      case "cn":
-        return `${digits(0, 4, a)} ${digits(4, 8, a)} ${digits(
-          8,
-          12,
-          a
-        )} ${format.slice(12, 16)}`;
-      case "cvv":
-        return digits(0, 3, a);
-      case "exp":
-        const exp = a.replace(/[^0-9]/g, "");
-        return `${digits(0, 2, exp)}/${digits(2, 4, exp)}`;
-    }
-  };
   return (
     <ParentView>
       <LinearGradient
@@ -151,12 +128,14 @@ const CreditCard = ({
         />
         <StyledContent>
           <HeaderView>
-            <HeaderName>ADRBank</HeaderName>
+            <HeaderName>VAFBank</HeaderName>
             <HeaderType>Credit Card</HeaderType>
             <BankLogo source={require("@/assets/images/Bank-icon-large.png")} />
           </HeaderView>
           <HeaderView>
-            <CardNumber>{renderNumbers(cardNumber, "cn")}</CardNumber>
+            <CardNumber>
+              {renderNumbers(cardNumber, "cn", toggleHidden)}
+            </CardNumber>
             <ToggleHide
               hitSlop={20}
               onPress={() => setToggleHidden((prev) => !prev)}
@@ -178,13 +157,15 @@ const CreditCard = ({
               <CardDetailSection>
                 <CardDetailsLabel>Expired Date</CardDetailsLabel>
                 <CardDetailsValue>
-                  {renderNumbers(expiryDate, "exp")}
+                  {renderNumbers(expiryDate, "exp", toggleHidden)}
                 </CardDetailsValue>
               </CardDetailSection>
 
               <CardDetailSection>
                 <CardDetailsLabel>CVV</CardDetailsLabel>
-                <CardDetailsValue>{renderNumbers(cvv, "cvv")}</CardDetailsValue>
+                <CardDetailsValue>
+                  {renderNumbers(cvv, "cvv", toggleHidden)}
+                </CardDetailsValue>
               </CardDetailSection>
 
               <CardLogo>

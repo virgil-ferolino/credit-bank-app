@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Text } from "react-native-paper";
-import {
-  Modal,
-  TouchableOpacity,
-  View,
-  Platform,
-} from "react-native";
+import { Modal, TouchableOpacity, View, Platform } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ParallaxScrollView from "@/components/ParralaxView";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
+import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
@@ -34,7 +30,7 @@ const SectionTitle = styled(Text)(() => ({
 
 const Description = styled(Text)(() => ({
   fontSize: 16,
-  color: "#0265A1",
+  color: theme.colors.primary,
   padding: commonPadding,
   paddingBottom: 7,
   fontWeight: "bold",
