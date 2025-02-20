@@ -1,15 +1,34 @@
 import Container from "@/components/Container";
 import { promos } from "@/data/home";
-import { Fragment, useCallback, useRef, useState } from "react";
-import { Dimensions, FlatList, Image, ScrollView, TouchableOpacity, View } from "react-native";
-import { Card, Text } from "react-native-paper";
-import Animated from "react-native-reanimated";
+import theme from "@/theme";
+import { 
+    Fragment, 
+    useEffect, 
+    useRef, 
+    useState 
+} from "react";
+import { 
+    Dimensions, 
+    FlatList, 
+    Image, 
+    ScrollView, 
+    TouchableOpacity, 
+    View, 
+    Animated, 
+    PanResponder,
+    Platform,
+} from "react-native";
+import { 
+    Card, 
+    Text
+} from "react-native-paper";
 import styled from "styled-components/native";
-import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet"
+
+const { width, height } = Dimensions.get("window");
 
 interface PromoCardType {
     promo: PromoType;
-    onOpen: () => void;
+    onOpen?: () => void;
 }
 
 interface PromoType {
@@ -27,7 +46,35 @@ interface PromoContentType {
     promoDetailImage: string,
 }
 
-const { width, height } = Dimensions.get("window")
+const BottomSheetContainer = styled(Animated.View)({
+    position: Platform.OS === "web" ? "fixed" : "absolute",
+    bottom: 0,
+    width: "100%",
+    height: height * 0.80,
+    maxWidth: 480,
+    backgroundColor: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+})
+
+const DragHandle = styled(View)({
+    width: 40,
+    height: 5,
+    backgroundColor: "gray",
+    borderRadius: 10,
+    alignSelf: "center",
+    marginVertical: 20,
+})
+
+const Overlay = styled(TouchableOpacity)({
+    position: Platform.OS === "web" ? "fixed" : "absolute",
+    top: 0,
+    left: "50%",
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    opacity: 0,
+    width: 480,
+})
 
 const StyledCard = styled(Card)({
     width: 350,
@@ -47,7 +94,7 @@ const StyledImage = styled(Image)({
 
 const StyledButton = styled(TouchableOpacity)({
     marginTop:10,
-    backgroundColor: "#0265A1",
+    backgroundColor: theme.colors.primary,
     width: 100,
     height: 30,
     borderRadius: 8,
@@ -68,14 +115,113 @@ const ImageHeader = styled(Image)({
 })
 
 const ImageDetail = styled(Image)({
-    width: Math.min(500, width),
-    height: Math.min(700, (1000 /667) * (width * 0.90)),
+    width: Math.min(700, width),
+    height: Math.min(700, (1000 /667) * (width * 0.95)),
 })
+
+const CustomBottomSheet = ({
+    visible,
+    onClose,
+    children,
+    sheetHeight = Platform.OS === "web" ?  height : height * 1,
+}: {
+    visible: boolean,
+    onClose: () => void,
+    children: React.ReactNode,
+    sheetHeight?: number
+}) => {
+    const translateY = useRef(new Animated.Value(height)).current;
+
+    useEffect(() => {
+        if (visible) {
+            translateY.setValue(height);
+            Animated.timing(translateY, {
+                toValue: height - sheetHeight,
+                duration: 300,
+                useNativeDriver: false,
+            }).start();
+        }
+        else {
+            Animated.timing (translateY, {
+                toValue: height,
+                duration: 200,
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [visible, sheetHeight, translateY])
+
+    const handleClose = () => {
+        Animated.timing(translateY, {
+            toValue: height,
+            duration: 200,
+            useNativeDriver: false,
+        }).start(() => {
+            onClose()
+        })
+    }
+
+    const panResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: (_, gestureState) => {
+                return gestureState.dy > 5
+            },
+            onPanResponderMove: (_, gestureState) => {
+                if (gestureState.dy > 0) {
+                    translateY.setValue(
+                        Math.min(
+                            height, height - sheetHeight + gestureState.dy
+                        )
+                    );
+                }
+            },
+            onPanResponderRelease: (_, gestureState) => {
+                if (gestureState.dy > 50) {
+                    handleClose();
+                }
+                else {
+                    Animated.timing(translateY, {
+                        toValue: height - sheetHeight,
+                        duration: 200,
+                        useNativeDriver: false,
+                    }).start();
+                }
+            },
+        })
+    ).current;
+
+    return (
+        <Fragment>
+            <Overlay
+                style={{
+                    opacity: translateY.interpolate({
+                        inputRange: [height - sheetHeight, height],
+                        outputRange: [1, 0],
+                        extrapolate: "clamp"
+                    }),
+                    transform: [{ translateX: -240 }],
+                }}
+                activeOpacity={1}
+                onPress={handleClose}
+            />
+            <BottomSheetContainer
+                sheetHeight={sheetHeight}
+                style={{ transform: [{ translateY }]}}
+                {...panResponder.panHandlers}
+            >
+                <DragHandle />
+                <View style={{flex: 1}}>
+                    {children}
+                </View>
+            </BottomSheetContainer>
+        </Fragment>
+    );
+};
 
 const PromoCard = ({ 
     promo, 
     onOpen, 
 }: PromoCardType) => {
+
     return(
         <StyledCard>
             <StyledImage source={promo.promoImage} />
@@ -102,91 +248,88 @@ const PromoCard = ({
 }
 
 const Promos = () => {
-    const [selectedPromo, 
-        setSelectedPromo] = useState<PromoType | null>(null);
-
-    const sheetRef = useRef<BottomSheetMethods>(null);
-
-    const handleSnapPress = useCallback((promo:PromoType) => {
-        setSelectedPromo(promo)
-        sheetRef.current?.open();
-    }, []);
-
-    const renderPromoBottomSheet = () => {
-        return (
-            <BottomSheet
-                ref={sheetRef}
-                animationType={"slide"}
-                height={height * 0.85}
-                maxHeight={"100%"}
-                style={{
-                    width: "100%",
-                    alignSelf: "center",
-                    maxWidth: 480,
-                    backgroundColor: "white",
-                    overflowY: "scroll",
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                }}
-                >
-                <ScrollView
-                    scrollEventThrottle={16}
-                    contentContainerStyle={{
-                        alignContent: "center",
-                        paddingBottom: 30,
-                        flexGrow: 1,
-                    }}
-                    showsVerticalScrollIndicator={false}>
-                    {selectedPromo && (
-                        <View style={{ alignItems: "center",}}>
-                            <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                            <View style={{ alignItems: "center", paddingBottom: 15, }}>
-                                <StyledText>
-                                    {selectedPromo.promoContent.promoTitle}
-                                </StyledText>
-                                <Text
-                                    style={{
-                                        marginTop: 15,
-                                        marginLeft: 10,
-                                        marginRight: 10,
-                                        paddingHorizontal: 15,
-                                        textAlign: "left",
-                                    }}>
-                                    {selectedPromo.promoContent.promoDesc}
-                                </Text>
-                                <StyledText>
-                                    {selectedPromo.promoContent.promoDetail}
-                                </StyledText>
-                                {selectedPromo.promoContent.promoDetailImage &&
-                                    <ImageDetail 
-                                        source={selectedPromo.promoContent.promoDetailImage} 
-                                        resizeMode="contain" />
-                                }
-                            </View>
-                        </View>
-                    )}
-                </ScrollView>
-            </BottomSheet>
-        )
-    }
+    const [selectedPromo, setSelectedPromo] = useState<PromoType | null>(null);
+    const [isVisible, showIsVisible] = useState<boolean>(false);
 
     return (
         <Fragment>
             <Container>
-                <Animated.View style={{ alignItems:"center" }}>
+                <Animated.View
+                    style={{ alignItems:"center" }}
+                    pointerEvents={ isVisible ? "none" : "auto" }
+                >
                     <FlatList
                         data={promos}
                         showsVerticalScrollIndicator={false}
+                        scrollEnabled={!isVisible}
                         renderItem={({item}) => (
                             <PromoCard
                                 key={item.promoId}
                                 promo={item}
-                                onOpen={() => handleSnapPress(item)} />  
+                                onOpen={() => {
+                                    setSelectedPromo(item)
+                                    showIsVisible(true)
+                                }} 
+                            />  
                             )}
                     />
                 </Animated.View>
+                {isVisible && (
+                    <CustomBottomSheet
+                        visible={isVisible}
+                        onClose={() => {
+                            showIsVisible(false);
+                            setSelectedPromo(null);
+                        }}
+                    >
+                        <ScrollView
+                            scrollEventThrottle={16}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                flexGrow: 1,
+                                paddingBottom: 10,
+                            }}
+                        >
+                        {selectedPromo && (
+                            <View style={{ alignItems: "center", }}>
+                                <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
+                                <View 
+                                    style={{ 
+                                        alignItems: "center", 
+                                        paddingBottom: 15, 
+                                        width: "100%",
+                                        }}
+                                >
+                                    <StyledText>
+                                        {selectedPromo.promoContent.promoTitle}
+                                    </StyledText>
+                                    <Text
+                                        style={{
+                                            marginTop: 15,
+                                            marginLeft: 10,
+                                            marginRight: 10,
+                                            paddingHorizontal: 15,
+                                            textAlign: "left",
+                                        }}
+                                    >
+                                        {selectedPromo.promoContent.promoDesc}
+                                    </Text>
+                                    <StyledText>
+                                        {selectedPromo.promoContent.promoDetail}
+                                    </StyledText>
+                                    {selectedPromo.promoContent.promoDetailImage &&
+                                        <ImageDetail
+                                            source={selectedPromo.promoContent.promoDetailImage}
+                                            resizeMode="contain" 
+                                        />
+                                    }
+                                </View>
+                            </View>
+                        )}
+                        </ScrollView>
+                    </CustomBottomSheet>
+                )}
             </Container>
-            {renderPromoBottomSheet()}
         </Fragment>
     );
 }
