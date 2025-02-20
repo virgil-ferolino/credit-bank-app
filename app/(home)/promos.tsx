@@ -206,9 +206,10 @@ const CustomBottomSheet = ({
             <BottomSheetContainer
                 sheetHeight={sheetHeight}
                 style={{ transform: [{ translateY }]}}
-                {...panResponder.panHandlers}
             >
-                <DragHandle />
+                <View style={{ width: "100%", }} {...panResponder.panHandlers}>
+                    <DragHandle />
+                </View>
                 <View style={{flex: 1}}>
                     {children}
                 </View>
