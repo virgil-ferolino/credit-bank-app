@@ -1,4 +1,5 @@
 import { transaction } from "@/data/home";
+import { transaction2, transaction3 } from "@/data/mycard";
 import { create } from "zustand";
 
 export interface LabelValue {
@@ -17,6 +18,8 @@ export interface CardDataProps {
   account: LabelValue[];
   transaction: TransactionProsps[];
 }
+
+
 
 const accountDetailsArray: LabelValue[] = [
   {
@@ -38,12 +41,12 @@ const cardDataArray: CardDataProps[] = [
   {
     pointBalance: 17000,
     account: accountDetailsArray,
-    transaction: transaction,
+    transaction: transaction2,
   },
   {
     pointBalance: 20000,
     account: accountDetailsArray,
-    transaction: transaction,
+    transaction: transaction3,
   },
 ];
 
