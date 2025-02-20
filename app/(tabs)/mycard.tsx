@@ -29,7 +29,7 @@ const HeaderView = styled(View)({
 });
 //
 const PointView = styled(View)({
-  backgroundColor: "#02708D",
+  backgroundColor: theme.colors.tertiary,
   borderRadius: 10,
   padding: 5,
 });
@@ -51,7 +51,7 @@ const StyledPointContent = styled(Text)({
 
 const StyledAccountView = styled(View)({
   padding: "10px 15px 10px 15px",
-  backgroundColor: "#02708D",
+  backgroundColor: "#004068",
   borderRadius: 10,
   gap: 10,
 });
