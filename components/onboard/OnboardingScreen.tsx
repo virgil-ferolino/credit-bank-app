@@ -130,7 +130,6 @@ export default function OnboardingScreen() {
             <PaginationDot key={index} isActive={currentIndex === index} />
           ))}
         </PaginationContainer>
-
         <Button
           mode="contained"
           onPress={handleNext}
@@ -139,11 +138,14 @@ export default function OnboardingScreen() {
             height: 50,
             backgroundColor: "white",
             borderRadius: 8,
+            justifyContent: "center",
+            alignItems: "center",
           }}
           labelStyle={{
             color: "#006d84",
             fontSize: 16,
             fontWeight: "bold",
+            textAlign: "center",
           }}
         >
           {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
