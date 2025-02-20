@@ -93,8 +93,7 @@ export default function SignUpScreen() {
               termsAccepted: false,
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log("Form Values: ", values);
+            onSubmit={() => {
               router.push("/(auth)/verifyphone");
             }}
           >
@@ -105,8 +104,6 @@ export default function SignUpScreen() {
               values,
               errors,
               touched,
-              isValid,
-              dirty,
               setFieldValue,
             }) => (
               <>
@@ -251,7 +248,8 @@ export default function SignUpScreen() {
                 <Button
                   mode="contained"
                   onPress={() => handleSubmit()}
-                  disabled={!(isValid && dirty)}
+                  buttonColor={theme.colors.primary}
+                  style={{ borderRadius: 10 }}
                 >
                   SIGN UP
                 </Button>

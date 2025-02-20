@@ -3,6 +3,7 @@ import { ScrollView, View, Modal, Pressable } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
+import theme from "@/theme";
 
 const countryCodes = [
   { label: "Philippines (+63)", value: "+63" },
@@ -69,6 +70,8 @@ export default function VerifyPhoneScreen() {
             onPress={() => router.push("/(auth)/otpverify")}
             disabled={phoneNumber.length < 10}
             contentStyle={{ height: 45 }}
+            buttonColor={theme.colors.primary}
+            style={{ borderRadius: 10 }}
           >
             SEND CODE
           </Button>
@@ -167,7 +170,7 @@ const PhoneInputContainer = styled(View)`
 `;
 
 const CountryCodeInput = styled(TextInput)`
-  width: 80px;
+  width: 90px;
   background-color: white;
 `;
 

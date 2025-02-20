@@ -1,3 +1,4 @@
+import theme from "@/theme";
 import { useRouter } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { TextInput as RNTextInput, ScrollView } from "react-native";
@@ -54,12 +55,10 @@ export default function VerifyPhoneScreen() {
       >
         <Card>
           <Title>Verify your phone number</Title>
-
           <Subtitle>
             We will send you a One-Time-Password (OTP){"\n"}on this mobile
             number.
           </Subtitle>
-
           <PhoneInputContainer>
             {formValue.otp.map((digit, index) => (
               <OtpInput
@@ -73,10 +72,11 @@ export default function VerifyPhoneScreen() {
               />
             ))}
           </PhoneInputContainer>
-
           <Button
             mode="contained"
             onPress={() => router.push("/(auth)/verified")}
+            buttonColor={theme.colors.primary}
+            style={{ borderRadius: 10 }}
             contentStyle={{ height: 45 }}
             disabled={isButtonDisabled}
           >
