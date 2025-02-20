@@ -140,26 +140,6 @@ const CardLockModal = ({
       <Overlay>
         <ModalContainer>
           <View>
-            {isLocked ? (
-              <Fragment>
-                <ImageBackground
-                  source={{ uri: "https://legacy.reactjs.org/logo-og.png" }}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: 10,
-                    overflow: "hidden",
-                  }}
-                >
-                  <CreditCard />
-
-                  <ContainerOpacity>
-                    <Ionicons name="lock-closed" size={62} color="gray" />
-                  </ContainerOpacity>
-                </ImageBackground>
-              </Fragment>
-            ) : (
-              <CreditCard />
-            )}
             <Text
               style={{
                 marginTop: 20,
