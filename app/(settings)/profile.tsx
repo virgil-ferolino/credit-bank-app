@@ -10,6 +10,7 @@ import {
 } from "@expo/vector-icons";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 
@@ -22,13 +23,13 @@ const StyledView = styled(ScrollView)({
 
 const StyledButton = styled(Button)({
   marginTop: 35,
-  backgroundColor: "#0265A1",
+  backgroundColor: theme.colors.primary,
   color: "black",
 });
 
 const StyledButtonChangePhoto = styled(Button)({
   marginBottom: 10,
-  backgroundColor: "#0265A1",
+  backgroundColor: theme.colors.primary,
   color: "black",
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
@@ -66,7 +67,7 @@ const OverlayButton = styled(TouchableOpacity)({
   position: "absolute",
   bottom: 0,
   right: 0,
-  backgroundColor: "#0265A1",
+  backgroundColor: theme.colors.primary,
   borderRadius: 30,
   padding: 8,
 });
@@ -220,7 +221,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="#0265A1"
+          activeOutlineColor={theme.colors.primary}
           value={fields.name}
           onChangeText={(value: string) => handleFieldChange("name", value)}
         />
@@ -229,7 +230,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="#0265A1"
+          activeOutlineColor={theme.colors.primary}
           value={fields.email}
           onChangeText={(value: string) => handleFieldChange("email", value)}
         />
@@ -237,7 +238,7 @@ const Profile = () => {
         <TextInput
           mode="outlined"
           outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor="#0265A1"
+          activeOutlineColor={theme.colors.primary}
           value={fields.phoneNumber}
           onChangeText={(value: string) =>
             handleFieldChange("phoneNumber", value)
