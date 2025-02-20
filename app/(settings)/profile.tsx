@@ -53,7 +53,7 @@ const StyledText = styled(Text)({
 const AvatarFrame = styled(View)({
   alignSelf: "center",
   borderWidth: 6,
-  borderColor: "#0265A1",
+  borderColor: theme.colors.primary,
   borderRadius: 70,
   marginBottom: 20,
   width: 132,

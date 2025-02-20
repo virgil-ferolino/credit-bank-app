@@ -8,7 +8,7 @@ import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 const iconSize = Platform.OS === "ios" ? 28 : 25;
-const iconColor = "#0065A1";
+const iconColor = theme.colors.primary;
 
 const StyledView = styled(ScrollView)({
   paddingTop: 20,
