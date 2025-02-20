@@ -12,6 +12,7 @@ import {
 import CreditCard from "./CreditCard";
 import styled from "styled-components/native";
 import { useCardData } from "@/store/mycard/useCardData";
+import { creditCardArray } from "@/data/mycard";
 
 export default function CreditCardList() {
   const { activeIndex, setActiveIndex } = useCardData((state) => state);
@@ -48,30 +49,6 @@ export default function CreditCardList() {
     alignItems: "center",
     marginTop: 20,
   });
-
-  const creditCardArray = [
-    {
-      cardNumber: "**** **** **** 1234",
-      cardHolder: "JAMES CHARLES",
-      expiryDate: "**/**",
-      cvv: "***",
-      key: 1,
-    },
-    {
-      cardNumber: "**** **** **** 1234",
-      cardHolder: "JAMES CHARLES",
-      expiryDate: "**/**",
-      cvv: "***",
-      key: 2,
-    },
-    {
-      cardNumber: "**** **** **** 1234",
-      cardHolder: "JAMES CHARLES",
-      expiryDate: "**/**",
-      cvv: "***",
-      key: 3,
-    },
-  ];
 
   const onViewableItemsChanged = ({
     viewableItems,
@@ -152,10 +129,7 @@ export default function CreditCardList() {
       />
       <CarouselPagination>
         {creditCardArray.map((_, index) => (
-          <PaginationDot
-            key={index}
-            active={index === activeIndex.mobile}
-          />
+          <PaginationDot key={index} active={index === activeIndex.mobile} />
         ))}
       </CarouselPagination>
     </View>

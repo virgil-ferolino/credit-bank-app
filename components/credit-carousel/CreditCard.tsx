@@ -21,7 +21,6 @@ const StyledContent = styled(Card.Content)({
   padding: 20,
 });
 
-
 const HeaderView = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
@@ -73,13 +72,12 @@ const CardLogo = styled(View)({
   marginHorizontal: -20,
 });
 
-
 const BankLogo = styled(Image)({
   width: 30,
   height: 30,
   borderRadius: 15,
   marginHorizontal: 5,
-})
+});
 
 const ToggleHide = styled(TouchableOpacity)({
   width: 25,
@@ -151,7 +149,7 @@ const CreditCard = ({
         />
         <StyledContent>
           <HeaderView>
-            <HeaderName>ADRBank</HeaderName>
+            <HeaderName>VAFBank</HeaderName>
             <HeaderType>Credit Card</HeaderType>
             <BankLogo source={require("@/assets/images/Bank-icon-large.png")} />
           </HeaderView>

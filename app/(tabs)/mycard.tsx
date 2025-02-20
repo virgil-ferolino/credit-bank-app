@@ -11,7 +11,6 @@ import {
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { transaction } from "@/data/home";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -81,6 +80,7 @@ const TransactionAvatar = styled(View)({
 
 const renderViewMore = (item: TransactionProsps[]) => {
   return item.map(({ title, category, price }, index) => {
+    const newPrice = price.replace(/[^0-9]/g, "");
     if (index <= 3) {
       return (
         <TransactionContainer key={index}>
@@ -99,7 +99,7 @@ const renderViewMore = (item: TransactionProsps[]) => {
             </View>
           </TransactionAvatar>
 
-          <Text>{price}</Text>
+          <Text>{`$ ${newPrice}`}</Text>
         </TransactionContainer>
       );
     } else return null;
@@ -155,7 +155,11 @@ const renderCardDetails = (
 
         <Card style={{ backgroundColor: "white" }}>
           <StyledTransactionCard>
-            {renderViewMore(transaction)}
+            {data.transaction.length <= 0 ? (
+              <Text>No Transaction Available</Text>
+            ) : (
+              renderViewMore(data.transaction)
+            )}
           </StyledTransactionCard>
         </Card>
       </CategoryView>
