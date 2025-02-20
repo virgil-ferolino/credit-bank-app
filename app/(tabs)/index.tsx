@@ -10,6 +10,7 @@ import CreditCard from "@/components/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { initialNotifications, menuList, transaction } from "@/data/home";
 import { useAppTheme } from "@/hooks/useTheme";
+import { creditCardArray } from "@/data/mycard";
 
 interface TransactionItem {
   title: string;
@@ -138,7 +139,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        <CreditCard />
+        <CreditCard creditCard={creditCardArray[0]} />
 
         <View
           style={{
