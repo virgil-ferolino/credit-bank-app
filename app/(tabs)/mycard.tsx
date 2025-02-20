@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const ParentView = styled(View)({
   padding: 15,
-  gap: 20,
+  gap: 15,
 });
 const CategoryView = styled(View)({
   gap: 10,

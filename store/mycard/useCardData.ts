@@ -19,6 +19,8 @@ export interface CardDataProps {
   transaction: TransactionProsps[];
 }
 
+
+
 const accountDetailsArray: LabelValue[] = [
   {
     label: "Outstanding Balance",

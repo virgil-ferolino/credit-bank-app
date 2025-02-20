@@ -5,7 +5,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
-  StyleSheet,
   View,
   ViewToken,
 } from "react-native";
@@ -13,6 +12,14 @@ import CreditCard from "./CreditCard";
 import styled from "styled-components/native";
 import { useCardData } from "@/store/mycard/useCardData";
 import { creditCardArray } from "@/data/mycard";
+import { CarouselProperty } from "./types";
+import { CARD_WIDTH, viewableConfig } from "./utils";
+
+const CarouselPagination = styled(View)({
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+});
 
 export default function CreditCardList() {
   const { activeIndex, setActiveIndex } = useCardData((state) => state);
@@ -35,20 +42,13 @@ export default function CreditCardList() {
     return () => subscription?.remove();
   });
 
-  const CARD_WIDTH =
-    windowDimensions.width > 480 ? 480 : windowDimensions.width;
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.floor(contentOffsetX / (CARD_WIDTH - 20));
+  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const contentOffsetX = e.nativeEvent.contentOffset.x;
+    const newIndex = Math.floor(
+      contentOffsetX / (CARD_WIDTH(windowDimensions.width) - 20)
+    );
     setActiveIndex({ ...activeIndex, web: newIndex });
   };
-
-  const CarouselPagination = styled(View)({
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  });
 
   const onViewableItemsChanged = ({
     viewableItems,
@@ -63,91 +63,65 @@ export default function CreditCardList() {
     }
   };
 
-  const PaginationDot = ({ active }: { active: boolean }) => (
-    <View
-      style={[styles.dot, active ? styles.activeDot : styles.inactiveDot]}
-    />
-  );
+  const properties = {
+    web: {
+      width: CARD_WIDTH(windowDimensions.width),
+      activeIndex: activeIndex.web,
+      onScroll: (e: NativeSyntheticEvent<NativeScrollEvent>) => handleScroll(e),
+    },
+    mobile: {
+      width: dimensions.screen.width,
+      paddingHorizontal: 15,
+      activeIndex: activeIndex.mobile,
+      onViewableItemsChanged: onViewableItemsChanged,
+      viewableConfig: viewableConfig,
+    },
+  };
 
-  return Platform.OS === "web" ? (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={creditCardArray}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              width: CARD_WIDTH,
-              padding: 15,
-            }}
-          >
-            <CreditCard
-              cardHolder={item.cardHolder}
-              cardNumber={item.cardNumber}
-              cvv={item.cvv}
-              expiryDate={item.expiryDate}
-            />
-          </View>
-        )}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleScroll}
-      />
-      <CarouselPagination>
-        {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === activeIndex.web} />
-        ))}
-      </CarouselPagination>
-    </View>
-  ) : (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={creditCardArray}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              padding: 15,
-              width: dimensions.screen.width,
-              paddingHorizontal: 15,
-            }}
-          >
-            <CreditCard
-              cardHolder={item.cardHolder}
-              cardNumber={item.cardNumber}
-              cvv={item.cvv}
-              expiryDate={item.expiryDate}
-            />
-          </View>
-        )}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 50,
-        }}
-      />
-      <CarouselPagination>
-        {creditCardArray.map((_, index) => (
-          <PaginationDot key={index} active={index === activeIndex.mobile} />
-        ))}
-      </CarouselPagination>
-    </View>
-  );
+  const renderCarousel = (props: CarouselProperty) => {
+    return (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={creditCardArray}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                width: props.width,
+                padding: 15,
+                paddingHorizontal: props.paddingHorizontal,
+              }}
+            >
+              <CreditCard creditCard={item} />
+            </View>
+          )}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={props?.onScroll}
+          onViewableItemsChanged={props.onViewableItemsChanged}
+          viewabilityConfig={props.viewableConfig}
+        />
+        <CarouselPagination>
+          {creditCardArray.map((_, index) => (
+            <PaginationDot key={index} active={index === props.activeIndex} />
+          ))}
+        </CarouselPagination>
+      </View>
+    );
+  };
+
+  const PaginationDot = ({ active }: { active: boolean }) => {
+    const Dot = styled(View)({
+      height: 8,
+      borderRadius: 4,
+      marginHorizontal: 4,
+      backgroundColor: active ? "#2196F3" : "#BDBDBD",
+      width: active ? 20 : 8,
+    });
+    return <Dot />;
+  };
+
+  return Platform.OS === "web"
+    ? renderCarousel(properties.web)
+    : renderCarousel(properties.mobile);
 }
-
-const styles = StyleSheet.create({
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
-  },
-  activeDot: {
-    backgroundColor: "#2196F3",
-    width: 20,
-  },
-  inactiveDot: {
-    backgroundColor: "#BDBDBD",
-  },
-});
