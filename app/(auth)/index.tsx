@@ -1,194 +1,156 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
 import {
-  Image,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   View,
+  Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-
-// import * as Yup from "yup";
 import { Formik } from "formik";
-import theme from "@/theme";
-
-// const validationSchema = Yup.object().shape({
-//   email: Yup.string().email("Invalid email").required("Email is required"),
-//   password: Yup.string()
-//     .min(6, "Minimum 6 characters")
-//     .required("Password is required"),
-// });
+import OnboardingScreen from "@/components/onboard/OnboardingScreen";
+import { useOnboard } from "@/store/onboard/onBoard";
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
+  const { isOnboarded = false, completeOnboarding } = useOnboard(
+    (state) => state
+  ); // Added fallback
 
-  const handleSubmit = () =>
-    // values: { email: string; password: string }
-    {
-      // if (values.email || values.password) {
-      router.push("/(tabs)");
-      // } else {
-      //   alert("Please enter both email and password.");
-      // }
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const value = await AsyncStorage.getItem("hasLaunched");
+        if (value === null) {
+          completeOnboarding(true);
+          await AsyncStorage.setItem("hasLaunched", "true");
+        } else {
+          completeOnboarding(false);
+        }
+      } catch (error) {
+        console.error("Error checking first launch", error);
+      }
     };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    checkFirstLaunch();
+  }, [completeOnboarding]);
+
+  const handleSubmit = () => {
+    router.push("/(tabs)");
   };
 
+  if (isOnboarded === null) {
+    return <View />;
+  }
+
   return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
+    <>
+      {isOnboarded ? (
+        <OnboardingScreen />
+      ) : (
+        <Container>
+          <BackgroundImage
+            source={require("@/assets/images/bgworld.png")}
+            resizeMode="cover"
+          />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1 }}
-      >
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: "flex-end",
-          }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <StyledSurface>
-            <Title>Sign in to your account</Title>
-
-            <Formik
-              initialValues={{ email: "", password: "" }}
-              // validationSchema={validationSchema}
-              onSubmit={handleSubmit}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            style={{ flex: 1 }}
+          >
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                justifyContent: "flex-end",
+              }}
+              keyboardShouldPersistTaps="handled"
             >
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-              }) => (
-                <View
-                  style={{
-                    flexDirection: "column",
-                    rowGap: 5,
-                  }}
+              <StyledSurface>
+                <Title>Sign in to your account</Title>
+
+                <Formik
+                  initialValues={{ email: "", password: "" }}
+                  onSubmit={handleSubmit}
                 >
-                  <View>
-                    <Text
-                      variant="bodyLarge"
-                      style={{
-                        paddingBottom: 5,
-                        color: errors.email && touched.email ? "red" : "#333",
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <StyledTextInput
-                      mode="outlined"
-                      keyboardType="email-address"
-                      placeholder="ex: jon.smith@email.com"
-                      placeholderTextColor="#9A9A9A"
-                      value={values.email}
-                      onChangeText={handleChange("email")}
-                      onBlur={handleBlur("email")}
-                      error={errors.email && touched.email}
-                    />
-                  </View>
-
-                  <View>
-                    <Text
-                      variant="bodyLarge"
-                      style={{
-                        paddingBottom: 5,
-                        color:
-                          errors.password && touched.password ? "red" : "#333",
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      Password
-                    </Text>
-
-                    <StyledTextInput
-                      mode="outlined"
-                      placeholder="********"
-                      secureTextEntry={!showPassword}
-                      value={values.password}
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      error={errors.password && touched.password}
-                      right={
-                        <TextInput.Icon
-                          onPress={togglePasswordVisibility}
-                          icon={showPassword ? "eye-off" : "eye"}
-                          size={24}
-                          color={theme.colors.primary}
+                  {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    <View style={{ flexDirection: "column", rowGap: 5 }}>
+                      <InputGroup>
+                        <StyledLabel>Email</StyledLabel>
+                        <StyledTextInput
+                          mode="outlined"
+                          keyboardType="email-address"
+                          placeholder="ex: jon.smith@email.com"
+                          placeholderTextColor="#9A9A9A"
+                          value={values.email}
+                          onChangeText={handleChange("email")}
+                          onBlur={handleBlur("email")}
                         />
-                      }
+                      </InputGroup>
+
+                      <InputGroup>
+                        <StyledLabel>Password</StyledLabel>
+                        <StyledTextInput
+                          mode="outlined"
+                          placeholder="********"
+                          secureTextEntry
+                          value={values.password}
+                          onChangeText={handleChange("password")}
+                          onBlur={handleBlur("password")}
+                        />
+                      </InputGroup>
+
+                      <Button mode="contained" onPress={() => handleSubmit()}>
+                        SIGN IN
+                      </Button>
+                    </View>
+                  )}
+                </Formik>
+
+                <OrText>or sign in with</OrText>
+
+                <SocialButtons>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/google.png")}
+                      resizeMode="contain"
                     />
+                  </SocialButton>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/fb.png")}
+                      resizeMode="contain"
+                    />
+                  </SocialButton>
+                  <SocialButton onPress={() => {}}>
+                    <SocialIcon
+                      source={require("@/assets/images/twitter.png")}
+                      resizeMode="contain"
+                    />
+                  </SocialButton>
+                </SocialButtons>
 
-                    {errors.password && touched.password && (
-                      <ErrorText>{errors.password}</ErrorText>
-                    )}
-                  </View>
-
-                  <Button
-                    mode="contained"
-                    onPress={() => handleSubmit()}
-                    buttonColor={theme.colors.primary}
-                    style={{ borderRadius: 10 }}
+                <SignUpContainer>
+                  <SignUpText>Don't have an account? </SignUpText>
+                  <SignUpButton
+                    mode="text"
+                    onPress={() => router.push("/(auth)/signup")}
                   >
-                    SIGN IN
-                  </Button>
-                </View>
-              )}
-            </Formik>
-
-            <OrText>or sign in with</OrText>
-
-            <SocialButtons>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/google.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/fb.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-              <SocialButton onPress={() => {}}>
-                <SocialIcon
-                  source={require("@/assets/images/twitter.png")}
-                  resizeMode="contain"
-                />
-              </SocialButton>
-            </SocialButtons>
-
-            <SignUpContainer>
-              <SignUpText>Don't have an account? </SignUpText>
-              <SignUpButton
-                mode="text"
-                onPress={() => router.push("/(auth)/signup")}
-              >
-                SIGN UP
-              </SignUpButton>
-            </SignUpContainer>
-          </StyledSurface>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </Container>
+                    SIGN UP
+                  </SignUpButton>
+                </SignUpContainer>
+              </StyledSurface>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </Container>
+      )}
+    </>
   );
 }
 
+// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;
@@ -222,15 +184,17 @@ const Title = styled(Text)`
   color: #333;
 `;
 
-const StyledTextInput = styled(TextInput)<{ error?: boolean }>`
+const InputGroup = styled.View`
   margin-bottom: 12px;
-  background-color: white;
 `;
 
-const OrText = styled(Text)`
-  text-align: center;
-  margin-vertical: 15px;
-  color: #666;
+const StyledLabel = styled(Text)`
+  padding-bottom: 5px;
+  color: #333;
+`;
+
+const StyledTextInput = styled(TextInput)`
+  background-color: white;
 `;
 
 const SocialButtons = styled.View`
@@ -249,11 +213,6 @@ const SocialButton = styled(Button)`
   padding: 0px;
 `;
 
-const SocialIcon = styled(Image)`
-  width: 30px;
-  height: 30px;
-`;
-
 const SignUpContainer = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -269,8 +228,13 @@ const SignUpButton = styled(Button)`
   font-weight: bold;
 `;
 
-const ErrorText = styled(Text)`
-  color: red;
-  font-size: 12px;
-  margin-bottom: 10px;
+const SocialIcon = styled(Image)`
+  width: 30px;
+  height: 30px;
+`;
+
+const OrText = styled(Text)`
+  text-align: center;
+  margin-vertical: 15px;
+  color: #666;
 `;
