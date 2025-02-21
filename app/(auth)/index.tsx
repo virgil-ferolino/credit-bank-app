@@ -8,11 +8,9 @@ import {
   Platform,
   View,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
-import theme from "@/theme";
 import OnboardingScreen from "@/components/onboard/OnboardingScreen";
 
 export default function LoginScreen() {
@@ -42,11 +40,7 @@ export default function LoginScreen() {
   };
 
   if (firstLaunch === null) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
-    );
+    return <View></View>;
   }
 
   return (

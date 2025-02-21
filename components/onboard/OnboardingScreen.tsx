@@ -120,8 +120,15 @@ export default function OnboardingScreen() {
           </AnimationContainer>
         ) : null}
 
-        <TitleText>{screens[currentIndex].title}</TitleText>
-        <DescriptionText>{screens[currentIndex].description}</DescriptionText>
+        <TitleText
+          variant="bodyLarge"
+          style={{ fontFamily: "PoppinsSemiBold" }}
+        >
+          {screens[currentIndex].title}
+        </TitleText>
+        <DescriptionText style={{ fontFamily: "PoppinsSemiBold" }}>
+          {screens[currentIndex].description}
+        </DescriptionText>
       </ContentWrapper>
 
       <BottomSection>
@@ -133,19 +140,15 @@ export default function OnboardingScreen() {
         <Button
           mode="contained"
           onPress={handleNext}
+          contentStyle={{ height: 50 }}
           style={{
             width: 320,
-            height: 50,
             backgroundColor: "white",
-            borderRadius: 8,
-            justifyContent: "center",
-            alignItems: "center",
+            borderRadius: 10,
           }}
           labelStyle={{
+            fontFamily: "PoppinsSemiBold",
             color: "#006d84",
-            fontSize: 16,
-            fontWeight: "bold",
-            textAlign: "center",
           }}
         >
           {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
