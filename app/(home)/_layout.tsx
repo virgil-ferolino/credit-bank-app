@@ -29,10 +29,10 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="promos/index"
+        name="promos"
         options={{
-          headerTitle: "",
-          headerShown: true,
+          headerTitle: "Promos & Discounts",
+          headerTitleAlign: "center",
         }}
       />
     </StackLayout>

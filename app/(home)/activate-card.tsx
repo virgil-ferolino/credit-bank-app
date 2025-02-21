@@ -206,7 +206,7 @@ const CustomOverlay = ({
         flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
-        width: 480,
+        width: "100%",
         alignSelf: "center",
       }}
     />
