@@ -7,11 +7,11 @@ import {
 import { SharedValue } from "react-native-reanimated";
 
 export interface CreditCardProps {
-  cardNumber?: string;
-  cardHolder?: string;
-  expiryDate?: string;
-  cvv?: string;
-  key?: number;
+  cardNumber: string;
+  cardHolder: string;
+  expiryDate: string;
+  cvv: string;
+  key: number;
 }
 
 export interface CreditCarousel {
@@ -47,5 +47,5 @@ export interface CarouselProperty {
 
 export type OffNumber = "cn" | "cvv" | "exp";
 export interface CardProperty {
-  creditCard: CreditCardProps;
+  creditCard?: CreditCardProps;
 }
