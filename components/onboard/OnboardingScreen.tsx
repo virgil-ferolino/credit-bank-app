@@ -1,12 +1,11 @@
 import { useState } from "react";
-
 import { Button } from "react-native-paper";
 import LottieView from "lottie-react-native";
 import styled from "styled-components/native";
-import { useRouter } from "expo-router";
 import realTimeAnimation from "@/assets/images/real-time.json";
 import notifAnimation from "@/assets/images/notif.json";
 import securityAnimation from "@/assets/images/security.json";
+import { useOnboard } from "@/store/onboard/onBoard"; // Import Zustand store
 
 const Container = styled.View`
   flex: 1;
@@ -57,7 +56,7 @@ const BottomSection = styled.View`
 const PaginationContainer = styled.View`
   flex-direction: row;
   gap: 8px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 `;
 
 const PaginationDot = styled.View<{ isActive: boolean }>`
@@ -90,16 +89,16 @@ const screens = [
 ];
 
 export default function OnboardingScreen() {
-  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mountLottie, setMountLottie] = useState(true);
+  const { completeOnboarding } = useOnboard();
 
   const handleNext = () => {
     if (currentIndex < screens.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setMountLottie(false);
-      router.push("/(auth)");
+      completeOnboarding();
     }
   };
 

@@ -12,9 +12,11 @@ import {
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import OnboardingScreen from "@/components/onboard/OnboardingScreen";
+import { useOnboard } from "@/store/onboard/onBoard";
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { isOnboarded = false } = useOnboard(); // Added fallback
   const [firstLaunch, setFirstLaunch] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -40,12 +42,12 @@ export default function LoginScreen() {
   };
 
   if (firstLaunch === null) {
-    return <View></View>;
+    return <View />;
   }
 
   return (
     <>
-      {firstLaunch ? (
+      {firstLaunch && !isOnboarded ? (
         <OnboardingScreen />
       ) : (
         <Container>
