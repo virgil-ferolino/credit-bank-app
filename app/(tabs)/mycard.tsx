@@ -1,4 +1,4 @@
-import { Card, Text, Avatar, Chip } from "react-native-paper";
+import { Text, Avatar, Chip, Surface } from "react-native-paper";
 import { Router, useRouter } from "expo-router";
 import { Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
@@ -59,8 +59,11 @@ const StyledAccountText = styled(Text)({
   color: "white",
 });
 //
-const StyledTransactionCard = styled(Card.Content)({
+const StyledTransactionCard = styled(Surface)({
   gap: 20,
+  padding: 20,
+  borderRadius: 15,
+  backgroundColor: "white",
 });
 const TextBold = styled(Text)({
   fontFamily: "PoppinsBold",
@@ -153,15 +156,13 @@ const renderCardDetails = (
           </TouchableOpacity>
         </HeaderView>
 
-        <Card style={{ backgroundColor: "white" }}>
-          <StyledTransactionCard>
-            {data.transaction.length <= 0 ? (
-              <Text>No Transaction Available</Text>
-            ) : (
-              renderViewMore(data.transaction)
-            )}
-          </StyledTransactionCard>
-        </Card>
+        <StyledTransactionCard>
+          {data.transaction.length <= 0 ? (
+            <Text>No Transaction Available</Text>
+          ) : (
+            renderViewMore(data.transaction)
+          )}
+        </StyledTransactionCard>
       </CategoryView>
     </ParentView>
   );
