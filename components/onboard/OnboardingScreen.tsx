@@ -126,7 +126,7 @@ export default function OnboardingScreen() {
         >
           {screens[currentIndex].title}
         </TitleText>
-        <DescriptionText style={{ fontFamily: "PoppinsSemiBold" }}>
+        <DescriptionText style={{ fontFamily: "Poppins" }}>
           {screens[currentIndex].description}
         </DescriptionText>
       </ContentWrapper>
