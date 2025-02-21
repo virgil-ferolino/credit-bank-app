@@ -91,14 +91,14 @@ const screens = [
 export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mountLottie, setMountLottie] = useState(true);
-  const { completeOnboarding } = useOnboard();
+  const { completeOnboarding } = useOnboard((state) => state);
 
   const handleNext = () => {
     if (currentIndex < screens.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setMountLottie(false);
-      completeOnboarding();
+      completeOnboarding(false);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TextInput, Button, Text, Surface } from "react-native-paper";
@@ -16,18 +16,19 @@ import { useOnboard } from "@/store/onboard/onBoard";
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { isOnboarded = false } = useOnboard(); // Added fallback
-  const [firstLaunch, setFirstLaunch] = useState<boolean | null>(null);
+  const { isOnboarded = false, completeOnboarding } = useOnboard(
+    (state) => state
+  ); // Added fallback
 
   useEffect(() => {
     const checkFirstLaunch = async () => {
       try {
         const value = await AsyncStorage.getItem("hasLaunched");
         if (value === null) {
-          setFirstLaunch(true);
+          completeOnboarding(true);
           await AsyncStorage.setItem("hasLaunched", "true");
         } else {
-          setFirstLaunch(false);
+          completeOnboarding(false);
         }
       } catch (error) {
         console.error("Error checking first launch", error);
@@ -35,19 +36,19 @@ export default function LoginScreen() {
     };
 
     checkFirstLaunch();
-  }, []);
+  }, [completeOnboarding]);
 
   const handleSubmit = () => {
     router.push("/(tabs)");
   };
 
-  if (firstLaunch === null) {
+  if (isOnboarded === null) {
     return <View />;
   }
 
   return (
     <>
-      {firstLaunch && !isOnboarded ? (
+      {isOnboarded ? (
         <OnboardingScreen />
       ) : (
         <Container>

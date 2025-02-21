@@ -2,10 +2,10 @@ import { create } from "zustand";
 
 interface OnboardState {
   isOnboarded: boolean;
-  completeOnboarding: () => void;
+  completeOnboarding: (isOnboarded: boolean) => void;
 }
 
 export const useOnboard = create<OnboardState>((set) => ({
   isOnboarded: false,
-  completeOnboarding: () => set({ isOnboarded: true }),
+  completeOnboarding: (isOnboarded) => set({ isOnboarded: isOnboarded }),
 }));
