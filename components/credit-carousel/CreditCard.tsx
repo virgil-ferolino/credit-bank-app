@@ -104,12 +104,6 @@ const OrangeCircle = styled(View)({
 
 const CreditCard = ({ creditCard }: CardProperty) => {
   const {
-    cardNumber = "1234123412341234",
-    cardHolder = "JAMES CHARLES",
-    expiryDate = "12/12",
-    cvv = "123",
-  } = creditCard;
-  const {
     colors: { gradientStart, gradientEnd },
   } = useAppTheme();
   const [toggleHidden, setToggleHidden] = useState(true);
@@ -134,7 +128,11 @@ const CreditCard = ({ creditCard }: CardProperty) => {
           </HeaderView>
           <HeaderView>
             <CardNumber>
-              {renderNumbers(cardNumber, "cn", toggleHidden)}
+              {renderNumbers(
+                creditCard?.cardNumber ?? "1234123412341234",
+                "cn",
+                toggleHidden
+              )}
             </CardNumber>
             <ToggleHide
               hitSlop={20}
@@ -150,21 +148,23 @@ const CreditCard = ({ creditCard }: CardProperty) => {
           <CardDetailsView>
             <CardDetailSection>
               <CardDetailsLabel>Card Holder Name</CardDetailsLabel>
-              <CardDetailsValue>{cardHolder}</CardDetailsValue>
+              <CardDetailsValue>
+                {creditCard?.cardHolder ?? "JAMES CHARLES"}
+              </CardDetailsValue>
             </CardDetailSection>
 
             <CardDetailRow>
               <CardDetailSection>
                 <CardDetailsLabel>Expired Date</CardDetailsLabel>
                 <CardDetailsValue>
-                  {renderNumbers(expiryDate, "exp", toggleHidden)}
+                  {renderNumbers(creditCard?.expiryDate ?? "12/12", "exp", toggleHidden)}
                 </CardDetailsValue>
               </CardDetailSection>
 
               <CardDetailSection>
                 <CardDetailsLabel>CVV</CardDetailsLabel>
                 <CardDetailsValue>
-                  {renderNumbers(cvv, "cvv", toggleHidden)}
+                  {renderNumbers(creditCard?.cvv ?? "123", "cvv", toggleHidden)}
                 </CardDetailsValue>
               </CardDetailSection>
 
