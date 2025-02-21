@@ -60,8 +60,8 @@ const StyledAccountText = styled(Text)({
 });
 //
 const StyledTransactionCard = styled(Surface)({
-  gap: 20,
-  padding: 20,
+  gap: 15,
+  padding: 15,
   borderRadius: 15,
   backgroundColor: "white",
 });
