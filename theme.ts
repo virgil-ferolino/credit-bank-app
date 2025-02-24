@@ -100,6 +100,7 @@ const theme = {
     secondary: "#00718A",
     tertiary: "#00718A",
     error: "#E33A24",
+    background: "#FFFFFF",
     default: "#000000",
     gradientStart: "#3B5EB9",
     gradientEnd: "#48A47C",

@@ -16,8 +16,8 @@ const StyledScrollView = styled(ScrollView)({
   maxWidth: 480,
   width: "100%",
   alignSelf: "center",
-  WebkitOverflowScrolling: "touch",
   overflow: "hidden",
+  ...(Platform.OS === "web" && { WebkitOverflowScrolling: "touch" }),
 });
 
 export default function ParallaxScrollView({ children }: PropsWithChildren) {
@@ -34,13 +34,11 @@ export default function ParallaxScrollView({ children }: PropsWithChildren) {
           </StyledScrollView>
         </WebView>
       ) : (
-        <Animated.View>
-          <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-            <SafeAreaProvider>
-              <SafeAreaView>{children}</SafeAreaView>
-            </SafeAreaProvider>
-          </Animated.ScrollView>
-        </Animated.View>
+        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+          <SafeAreaProvider>
+            <SafeAreaView>{children}</SafeAreaView>
+          </SafeAreaProvider>
+        </Animated.ScrollView>
       )}
     </GestureHandlerRootView>
   );

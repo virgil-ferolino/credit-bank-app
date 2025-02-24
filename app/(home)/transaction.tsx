@@ -17,9 +17,9 @@ export default function Transaction() {
       >
         <FlatList
           data={transaction}
-          nestedScrollEnabled={true}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity key={index}>
+          keyExtractor={(_item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity>
               <Animated.View
                 style={{
                   flexDirection: "row",
@@ -60,6 +60,20 @@ export default function Transaction() {
               </Animated.View>
             </TouchableOpacity>
           )}
+          ListEmptyComponent={
+            <Animated.View
+              style={{
+                paddingVertical: 16,
+              }}
+            >
+              <Text
+                variant="bodyMedium"
+                style={{ textAlign: "center", color: "gray" }}
+              >
+                No recent transactions available
+              </Text>
+            </Animated.View>
+          }
         />
       </Animated.View>
     </Container>

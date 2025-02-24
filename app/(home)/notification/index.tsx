@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -70,21 +70,17 @@ const RenderNotificationItem = (props: NotificationItemProps) => {
 
 const Notification = () => {
   const router = useRouter();
+  const {
+    notifications,
+    markAllAsRead,
+    markAsRead,
+    setNotifications,
+    setSelectedNotification,
+  } = useNotificationStore();
 
-  const [notifications, setNotifications] =
-    useState<NotificationItem[]>(initialNotifications);
-
-  const markAsRead = (index: number) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.map((item, i) =>
-        i === index ? { ...item, read: true } : item
-      )
-    );
-  };
-
-  const setSelectedNotification = useNotificationStore(
-    (state) => state.setSelectedNotification
-  );
+  useEffect(() => {
+    setNotifications(initialNotifications);
+  }, [setNotifications]);
 
   const handleNavigate = (index: number, data: NotificationItem) => {
     setSelectedNotification(data);
@@ -100,17 +96,18 @@ const Notification = () => {
   return (
     <Container>
       <Animated.View>
-        <TouchableOpacity hitSlop={20}>
-          <ReadAll variant="labelMedium">Read All</ReadAll>
+        <TouchableOpacity hitSlop={20} onPress={markAllAsRead}>
+          <ReadAll variant="labelMedium">
+            {notifications.length !== 0 && "Read All"}
+          </ReadAll>
         </TouchableOpacity>
 
         <FlatList
-          data={notifications}
-          nestedScrollEnabled={true}
           showsVerticalScrollIndicator={false}
+          data={notifications}
+          keyExtractor={(_item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <RenderNotificationItem
-              key={index}
               title={item.title}
               description={item.description}
               timespan={item.timespan}
@@ -118,6 +115,20 @@ const Notification = () => {
               handlePress={() => handleNavigate(index, item)}
             />
           )}
+          ListEmptyComponent={
+            <Animated.View
+              style={{
+                paddingVertical: 16,
+              }}
+            >
+              <Text
+                variant="bodyMedium"
+                style={{ textAlign: "center", color: "gray" }}
+              >
+                No recent transactions available
+              </Text>
+            </Animated.View>
+          }
         />
       </Animated.View>
     </Container>
