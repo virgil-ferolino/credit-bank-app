@@ -1,6 +1,5 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
@@ -9,8 +8,6 @@ import theme from "@/theme";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import { Image } from "expo-image";
-
-SplashScreen.preventAutoHideAsync();
 
 const ContainedView = styled(View)({
   maxWidth: 480,
@@ -33,15 +30,14 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded) {
-      setIsSplashVisible(false)
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    if (!loaded) return;
+    
+    const timeout = setTimeout(() => {
+        setIsSplashVisible(false);
+    }, 1500);
 
-  if (!loaded) {
-    return null;
-  }
+    return () => clearTimeout(timeout);
+  }, [loaded]);
 
   if (isSplashVisible) {
     return (
