@@ -7,7 +7,7 @@ import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/theme";
 import styled from "styled-components/native";
-import { View, ImageBackground } from "react-native";
+import { View } from "react-native";
 import { Image } from "expo-image";
 
 SplashScreen.preventAutoHideAsync();
@@ -34,9 +34,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setTimeout(() => {
-        setIsSplashVisible(false);
-      }, 4000);
+      setIsSplashVisible(false)
       SplashScreen.hideAsync();
     }
   }, [loaded]);
@@ -47,8 +45,7 @@ export default function RootLayout() {
 
   if (isSplashVisible) {
     return (
-      <ImageBackground
-        source={require("@/assets/images/splash-background.png")}
+      <View
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -57,6 +54,7 @@ export default function RootLayout() {
           left: "50%",
           transform: [{ translateX: -240 }],
           width: 480,
+          backgroundColor: "#0061A7",
         }}
       >
         <Image
@@ -66,7 +64,7 @@ export default function RootLayout() {
             height: "50%"
           }}
         />
-      </ImageBackground>
+      </View>
     )
   }
 
