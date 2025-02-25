@@ -135,25 +135,28 @@ const CustomBottomSheet = ({
     useEffect(() => {
         if (visible) {
             translateY.setValue(height);
-            Animated.timing(translateY, {
+            Animated.spring(translateY, {
                 toValue: height - sheetHeight,
-                duration: 300,
+                damping: 40,
+                stiffness: 300,
                 useNativeDriver: false,
             }).start();
         }
         else {
-            Animated.timing (translateY, {
+            Animated.spring(translateY, {
                 toValue: height,
-                duration: 200,
+                damping: 40,
+                stiffness: 300,
                 useNativeDriver: false,
             }).start();
         }
     }, [visible, sheetHeight, translateY])
 
     const handleClose = () => {
-        Animated.timing(translateY, {
+        Animated.spring(translateY, {
             toValue: height,
-            duration: 200,
+            damping: 40,
+            stiffness: 300,
             useNativeDriver: false,
         }).start(() => {
             onClose()
@@ -179,9 +182,10 @@ const CustomBottomSheet = ({
                     handleClose();
                 }
                 else {
-                    Animated.timing(translateY, {
+                    Animated.spring(translateY, {
                         toValue: height - sheetHeight,
-                        duration: 200,
+                        damping: 40,
+                        stiffness: 300,
                         useNativeDriver: false,
                     }).start();
                 }

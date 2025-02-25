@@ -4,7 +4,7 @@
     "slug": "credit-bank-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/splash-logo.png",
+    "icon": "./assets/images/neo-splash-logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash-logo.png",
+        "foregroundImage": "./assets/images/neo-splash-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.vergilferolino.creditbankappV2"
@@ -21,7 +21,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/splash-logo.png"
+      "favicon": "./assets/images/neo-splash-logo.png"
     },
     "plugins": [
       [
@@ -36,7 +36,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-logo.png",
+          "image": "./assets/images/neo-splash-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#0061A7"
@@ -44,7 +44,8 @@
       ]
     ],
     "splash": {
-      "backgroundColor": "#0061A7"
+      "backgroundColor": "#0061A7",
+      "image": "./assets/images/neo-splash-logo.png"
     },
     "experiments": {
       "typedRoutes": true

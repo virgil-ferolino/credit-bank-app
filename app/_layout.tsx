@@ -1,15 +1,16 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/theme";
 import styled from "styled-components/native";
 import { View } from "react-native";
+import { Image } from "expo-image";
+import * as SplashScreen from "expo-splash-screen"
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 const ContainedView = styled(View)({
   maxWidth: 480,
@@ -19,6 +20,8 @@ const ContainedView = styled(View)({
 });
 
 export default function RootLayout() {
+  const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
+
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
@@ -30,13 +33,39 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
+    if (!loaded) return;
+
+    SplashScreen.hideAsync()
+      .then(() => {
+        setTimeout(() => {
+          setIsSplashVisible(false);
+        }, 1500)
+    })
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
+  if (isSplashVisible) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          position: "absolute",
+          left: "50%",
+          transform: [{ translateX: -240 }],
+          width: 480,
+          backgroundColor: "#0061A7",
+        }}
+      >
+        <Image
+          source={require("@/assets/images/alphabank.gif")}
+          style={{
+            width: 400,
+            height: "50%"
+          }}
+        />
+      </View>
+    )
   }
 
   return (
