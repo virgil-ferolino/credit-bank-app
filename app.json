@@ -44,7 +44,8 @@
       ]
     ],
     "splash": {
-      "backgroundColor": "#0061A7"
+      "backgroundColor": "#0061A7",
+      "image": "./assets/images/neo-splash-logo.png"
     },
     "experiments": {
       "typedRoutes": true
