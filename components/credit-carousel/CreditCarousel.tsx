@@ -22,7 +22,7 @@ const CarouselPagination = styled(View)({
 });
 
 export default function CreditCardList() {
-  const { activeIndex, setActiveIndex } = useCardData((state) => state);
+  const { activeIndex, setActiveIndex } = useCardData();
 
   const windowDimensions = Dimensions.get("window");
   const screenDimensions = Dimensions.get("screen");
