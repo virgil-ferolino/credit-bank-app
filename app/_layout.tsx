@@ -67,15 +67,19 @@ export default function RootLayout() {
   return (
     <PaperProvider theme={theme}>
       <ContainedView>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(home)" options={{ headerShown: false }} />
-          <Stack.Screen name="(mycard)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(settings)" options={{ headerShown: false }} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(home)" />
+          <Stack.Screen name="(mycard)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(settings)" />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style="auto" backgroundColor={"#004068"} />
+        <StatusBar style="auto" backgroundColor={theme.colors.primary} />
       </ContainedView>
     </PaperProvider>
   );
