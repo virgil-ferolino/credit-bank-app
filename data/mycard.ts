@@ -106,7 +106,7 @@ export const creditCardArray = [
     cardNumber: "4444442233311234",
     cardHolder: "YUN YUN",
     expiryDate: "10/31",
-    cvv: "*444",
+    cvv: "444",
     key: 3,
   },
 ];
