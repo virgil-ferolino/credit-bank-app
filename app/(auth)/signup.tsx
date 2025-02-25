@@ -179,7 +179,11 @@ export default function SignUpScreen() {
                       onPress={togglePasswordVisibility}
                       icon={showPassword ? "eye-off" : "eye"}
                       size={24}
-                      color={theme.colors.primary}
+                      color={
+                        values.password.trim() === ""
+                          ? "#A0A0A0"
+                          : theme.colors.primary
+                      }
                     />
                   }
                 />
@@ -217,7 +221,11 @@ export default function SignUpScreen() {
                       onPress={toggleConfirmPasswordVisibility}
                       icon={showConfirmPassword ? "eye-off" : "eye"}
                       size={24}
-                      color={theme.colors.primary}
+                      color={
+                        values.confirmPassword.trim() === ""
+                          ? "#A0A0A0"
+                          : theme.colors.primary
+                      }
                     />
                   }
                 />

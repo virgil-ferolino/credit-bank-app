@@ -48,33 +48,41 @@ const PasswordField = ({
   onChange,
   visibility,
   toggleVisibility,
-}: PasswordFieldProps) => (
-  <>
-    <StyledText>{label}</StyledText>
-    <TextInput
-      placeholder={`Enter your ${label.toLowerCase()}`}
-      mode="outlined"
-      placeholderTextColor="#9A9A9A"
-      activeOutlineColor={theme.colors.primary}
-      value={value}
-      onChangeText={onChange}
-      secureTextEntry={!visibility}
-      right={
-        <TextInput.Icon
-          icon={() => (
-            <TouchableOpacity onPress={toggleVisibility}>
-              <MaterialIcons
-                name={visibility ? "visibility-off" : "visibility"}
-                size={iconSize}
-                color={iconColor}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      }
-    />
-  </>
-);
+}: PasswordFieldProps) => {
+  const handleSpaceReject = (text: string) => {
+    const newValue = text.replace(/\s/g, "");
+    onChange(newValue);
+  };
+
+  return (
+    <>
+      <StyledText>{label}</StyledText>
+      <TextInput
+        placeholder={`Enter your ${label.toLowerCase()}`}
+        mode="outlined"
+        placeholderTextColor="#9A9A9A"
+        activeOutlineColor={theme.colors.primary}
+        value={value}
+        onChangeText={handleSpaceReject}
+        secureTextEntry={!visibility}
+        right={
+          <TextInput.Icon
+            disabled={value.trim() === "" ? true : false}
+            icon={() => (
+              <TouchableOpacity onPress={toggleVisibility}>
+                <MaterialIcons
+                  name={visibility ? "visibility-off" : "visibility"}
+                  size={iconSize}
+                  color={value.trim() === "" ? "#A0A0A0" : iconColor}
+                />
+              </TouchableOpacity>
+            )}
+          />
+        }
+      />
+    </>
+  );
+};
 
 const ChangePassword = () => {
   const [passwords, setPasswords] = useState<{
@@ -82,7 +90,7 @@ const ChangePassword = () => {
     newPassword: string;
     confirmPassword: string;
   }>({
-    password: "Static Password",
+    password: "",
     newPassword: "",
     confirmPassword: "",
   });
