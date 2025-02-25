@@ -74,6 +74,8 @@ const Overlay = styled(TouchableOpacity)({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     opacity: 0,
     width: 480,
+    pointerEvents: "auto",
+    touchAction: "none",
 })
 
 const StyledCard = styled(Card)({
@@ -190,6 +192,11 @@ const CustomBottomSheet = ({
                     }).start();
                 }
             },
+            onPanResponderGrant: (event) => {
+                if (Platform.OS === "ios") {
+                    event.preventDefault()
+                }
+            }
         })
     ).current;
 
@@ -267,6 +274,7 @@ const Promos = () => {
                         data={promos}
                         showsVerticalScrollIndicator={false}
                         scrollEnabled={!isVisible}
+                        keyboardShouldPersistTaps="handled"
                         renderItem={({item}) => (
                             <PromoCard
                                 key={item.promoId}
@@ -290,6 +298,8 @@ const Promos = () => {
                         <ScrollView
                             scrollEventThrottle={16}
                             showsVerticalScrollIndicator={false}
+                            keyboardShouldPersistTaps="handled"
+                            nestedScrollEnabled={true}
                             contentContainerStyle={{
                                 flexGrow: 1,
                                 paddingBottom: 10,

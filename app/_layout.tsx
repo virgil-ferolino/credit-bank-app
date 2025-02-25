@@ -9,6 +9,7 @@ import styled from "styled-components/native";
 import { View } from "react-native";
 import { Image } from "expo-image";
 import * as SplashScreen from "expo-splash-screen"
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -21,6 +22,7 @@ const ContainedView = styled(View)({
 
 export default function RootLayout() {
   const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
+  const fadeAnim = useSharedValue(1);
 
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -35,27 +37,39 @@ export default function RootLayout() {
   useEffect(() => {
     if (!loaded) return;
 
-    SplashScreen.hideAsync()
-      .then(() => {
-        setTimeout(() => {
-          setIsSplashVisible(false);
-        }, 1500)
-    })
-  }, [loaded]);
+    if (loaded) {
+      SplashScreen.hideAsync()
+        .then(() => {
+          setTimeout(() => {
+            fadeAnim.value = withTiming(0, { duration: 500 });
+            setTimeout(() => {
+              setIsSplashVisible(false);
+            }, 500)
+          }, 1500)
+      })
+    }
+  }, [loaded, fadeAnim]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: fadeAnim.value,
+  }))
 
   if (isSplashVisible) {
     return (
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          position: "absolute",
-          left: "50%",
-          transform: [{ translateX: -240 }],
-          width: 480,
-          backgroundColor: "#0061A7",
-        }}
+      <Animated.View
+        style={[
+          {
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            position: "absolute",
+            left: "50%",
+            transform: [{ translateX: -240 }],
+            width: 480,
+            backgroundColor: "#0061A7",
+          },
+          animatedStyle,
+        ]}
       >
         <Image
           source={require("@/assets/images/alphabank.gif")}
@@ -64,7 +78,7 @@ export default function RootLayout() {
             height: "50%"
           }}
         />
-      </View>
+      </Animated.View>
     )
   }
 
