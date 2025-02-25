@@ -26,7 +26,6 @@ export default function LoginScreen() {
         const value = await AsyncStorage.getItem("hasLaunched");
         if (value === null) {
           completeOnboarding(true);
-          await AsyncStorage.setItem("hasLaunched", "true");
         } else {
           completeOnboarding(false);
         }
@@ -112,19 +111,19 @@ export default function LoginScreen() {
                 <OrText>or sign in with</OrText>
 
                 <SocialButtons>
-                  <SocialButton onPress={() => {}}>
+                  <SocialButton>
                     <SocialIcon
                       source={require("@/assets/images/google.png")}
                       resizeMode="contain"
                     />
                   </SocialButton>
-                  <SocialButton onPress={() => {}}>
+                  <SocialButton>
                     <SocialIcon
                       source={require("@/assets/images/fb.png")}
                       resizeMode="contain"
                     />
                   </SocialButton>
-                  <SocialButton onPress={() => {}}>
+                  <SocialButton>
                     <SocialIcon
                       source={require("@/assets/images/twitter.png")}
                       resizeMode="contain"

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Animated, PanResponder, useWindowDimensions } from "react-native";
 import { Button } from "react-native-paper";
 import LottieView from "lottie-react-native";
 import styled from "styled-components/native";
@@ -6,13 +7,14 @@ import realTimeAnimation from "@/assets/images/real-time.json";
 import notifAnimation from "@/assets/images/notif.json";
 import securityAnimation from "@/assets/images/security.json";
 import { useOnboard } from "@/store/onboard/onBoard"; // Import Zustand store
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Container = styled.View`
   flex: 1;
   background-color: #006d84;
 `;
 
-const ContentWrapper = styled.View`
+const ContentWrapper = styled(Animated.View)`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -92,19 +94,69 @@ export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mountLottie, setMountLottie] = useState(true);
   const { completeOnboarding } = useOnboard((state) => state);
+  const translateX = useRef(new Animated.Value(0)).current;
 
-  const handleNext = () => {
+  const { width } = useWindowDimensions();
+  const isMobile = width < 768;
+
+  const handleNext = async () => {
     if (currentIndex < screens.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex((prev) => prev + 1);
     } else {
       setMountLottie(false);
       completeOnboarding(false);
+      await AsyncStorage.setItem("hasLaunched", "true");
     }
   };
 
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  const panResponder = isMobile
+    ? PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderMove: (_, gestureState) => {
+          translateX.setValue(gestureState.dx);
+        },
+        onPanResponderRelease: (_, gestureState) => {
+          if (gestureState.dx < -50 && currentIndex < screens.length - 1) {
+            Animated.timing(translateX, {
+              toValue: -500,
+              duration: 200,
+              useNativeDriver: true,
+            }).start(() => {
+              translateX.setValue(0);
+              handleNext();
+            });
+          } else if (gestureState.dx > 50 && currentIndex > 0) {
+            Animated.timing(translateX, {
+              toValue: 500,
+              duration: 200,
+              useNativeDriver: true,
+            }).start(() => {
+              translateX.setValue(0);
+              handlePrev();
+            });
+          } else {
+            Animated.spring(translateX, {
+              toValue: 0,
+              useNativeDriver: true,
+            }).start();
+          }
+        },
+      })
+    : null;
+
   return (
     <Container>
-      <ContentWrapper>
+      <ContentWrapper
+        {...(panResponder?.panHandlers || {})}
+        style={{ transform: [{ translateX }] }}
+      >
         {mountLottie ? (
           <AnimationContainer>
             <LottieView
@@ -119,15 +171,8 @@ export default function OnboardingScreen() {
           </AnimationContainer>
         ) : null}
 
-        <TitleText
-          variant="bodyLarge"
-          style={{ fontFamily: "PoppinsSemiBold" }}
-        >
-          {screens[currentIndex].title}
-        </TitleText>
-        <DescriptionText style={{ fontFamily: "Poppins" }}>
-          {screens[currentIndex].description}
-        </DescriptionText>
+        <TitleText>{screens[currentIndex].title}</TitleText>
+        <DescriptionText>{screens[currentIndex].description}</DescriptionText>
       </ContentWrapper>
 
       <BottomSection>
@@ -140,15 +185,8 @@ export default function OnboardingScreen() {
           mode="contained"
           onPress={handleNext}
           contentStyle={{ height: 50 }}
-          style={{
-            width: 320,
-            backgroundColor: "white",
-            borderRadius: 10,
-          }}
-          labelStyle={{
-            fontFamily: "PoppinsSemiBold",
-            color: "#006d84",
-          }}
+          style={{ width: 320, backgroundColor: "white", borderRadius: 10 }}
+          labelStyle={{ fontFamily: "PoppinsSemiBold", color: "#006d84" }}
         >
           {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
         </Button>
