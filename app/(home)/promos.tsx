@@ -1,4 +1,3 @@
-import Container from "@/components/Container";
 import { promos } from "@/data/home";
 import theme from "@/theme";
 import { 
@@ -224,12 +223,11 @@ const CustomBottomSheet = ({
                 <ScrollView
                     scrollEventThrottle={16}
                     showsVerticalScrollIndicator={false}
-                    keyboardShouldPersistTaps="handled"
-                    nestedScrollEnabled={true}
                     contentContainerStyle={{
-                        flex: 1,
+                        flexGrow: 1,
                         paddingBottom: 10,
                     }}
+                    onStartShouldSetResponder={() => true}
                 >
                     {children}
                 </ScrollView>
@@ -274,75 +272,73 @@ const Promos = () => {
 
     return (
         <Fragment>
-            <Container>
-                <Animated.View
-                    style={{ alignItems:"center" }}
-                    pointerEvents={ isVisible ? "none" : "auto" }
-                >
-                    <FlatList
-                        data={promos}
-                        showsVerticalScrollIndicator={false}
-                        scrollEnabled={!isVisible}
-                        keyboardShouldPersistTaps="handled"
-                        renderItem={({item}) => (
-                            <PromoCard
-                                key={item.promoId}
-                                promo={item}
-                                onOpen={() => {
-                                    setSelectedPromo(item)
-                                    showIsVisible(true)
-                                }} 
-                            />  
-                            )}
-                    />
-                </Animated.View>
-                {isVisible && (
-                    <CustomBottomSheet
-                        visible={isVisible}
-                        onClose={() => {
-                            showIsVisible(false);
-                            setSelectedPromo(null);
-                        }}
-                    >
-                    {selectedPromo && (
-                        <View style={{ alignItems: "center", }}>
-                            <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                            <View 
-                                style={{ 
-                                    alignItems: "center", 
-                                    paddingBottom: 15, 
-                                    width: "100%",
-                                    }}
-                            >
-                                <StyledText>
-                                    {selectedPromo.promoContent.promoTitle}
-                                </StyledText>
-                                <Text
-                                    style={{
-                                        marginTop: 15,
-                                        marginLeft: 10,
-                                        marginRight: 10,
-                                        paddingHorizontal: 15,
-                                        textAlign: "left",
-                                    }}
-                                >
-                                    {selectedPromo.promoContent.promoDesc}
-                                </Text>
-                                <StyledText>
-                                    {selectedPromo.promoContent.promoDetail}
-                                </StyledText>
-                                {selectedPromo.promoContent.promoDetailImage &&
-                                    <ImageDetail
-                                        source={selectedPromo.promoContent.promoDetailImage}
-                                        resizeMode="contain" 
-                                    />
-                                }
-                            </View>
-                        </View>
+            <View
+                style={{ alignItems:"center" }}
+                pointerEvents={ isVisible ? "none" : "auto" }
+            >
+                <FlatList
+                    data={promos}
+                    showsVerticalScrollIndicator={false}
+                    scrollEnabled={!isVisible}
+                    keyboardShouldPersistTaps="handled"
+                    renderItem={({item}) => (
+                        <PromoCard
+                            key={item.promoId}
+                            promo={item}
+                            onOpen={() => {
+                                setSelectedPromo(item)
+                                showIsVisible(true)
+                            }} 
+                        />  
                     )}
-                    </CustomBottomSheet>
+                />
+            </View>
+            {isVisible && (
+                <CustomBottomSheet
+                    visible={isVisible}
+                    onClose={() => {
+                        showIsVisible(false);
+                        setSelectedPromo(null);
+                    }}
+                >
+                {selectedPromo && (
+                    <View style={{ alignItems: "center", }}>
+                        <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
+                        <View 
+                            style={{ 
+                                alignItems: "center", 
+                                paddingBottom: 15, 
+                                width: "100%",
+                                }}
+                        >
+                            <StyledText>
+                                {selectedPromo.promoContent.promoTitle}
+                            </StyledText>
+                            <Text
+                                style={{
+                                    marginTop: 15,
+                                    marginLeft: 10,
+                                    marginRight: 10,
+                                    paddingHorizontal: 15,
+                                    textAlign: "left",
+                                }}
+                            >
+                                {selectedPromo.promoContent.promoDesc}
+                            </Text>
+                            <StyledText>
+                                {selectedPromo.promoContent.promoDetail}
+                            </StyledText>
+                            {selectedPromo.promoContent.promoDetailImage &&
+                                <ImageDetail
+                                    source={selectedPromo.promoContent.promoDetailImage}
+                                    resizeMode="contain" 
+                                />
+                            }
+                        </View>
+                    </View>
                 )}
-            </Container>
+                </CustomBottomSheet>
+            )}
         </Fragment>
     );
 }
