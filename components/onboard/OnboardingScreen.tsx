@@ -4,15 +4,12 @@ import {
   PanResponder,
   useWindowDimensions,
   Image,
+  View,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { useOnboard } from "@/store/onboard/onBoard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const Typography = {
-  fontFamily: "PoppinsSemiBold",
-};
 
 const Container = styled.View`
   flex: 1;
@@ -35,25 +32,23 @@ const AnimationContainer = styled.View`
   margin-bottom: 40px;
 `;
 
-const TitleText = styled.Text`
+const TitleText = styled(Text)`
   color: white;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 16px;
-  font-family: ${Typography.fontFamily};
 `;
 
-const DescriptionText = styled.Text`
+const DescriptionText = styled(Text)`
   color: rgba(255, 255, 255, 0.8);
   font-size: 16px;
   text-align: center;
   line-height: 24px;
   max-width: 320px;
-  font-family: ${Typography.fontFamily};
 `;
 
-const BottomSection = styled.View`
+const BottomSection = styled(View)`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -171,7 +166,7 @@ export default function OnboardingScreen() {
               style={{
                 width: "100%",
                 height: "100%",
-                resizeMode: "contain", // Ensures GIF is contained within the box
+                resizeMode: "contain",
               }}
             />
           </AnimationContainer>
@@ -192,7 +187,7 @@ export default function OnboardingScreen() {
           onPress={handleNext}
           contentStyle={{ height: 50 }}
           style={{ width: 320, backgroundColor: "white", borderRadius: 10 }}
-          labelStyle={{ fontFamily: Typography.fontFamily, color: "#006d84" }}
+          labelStyle={{ color: "#006d84", fontFamily: "PoppinsBold" }}
         >
           {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
         </Button>
