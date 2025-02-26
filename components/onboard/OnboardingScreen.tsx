@@ -163,10 +163,10 @@ export default function OnboardingScreen() {
           <AnimationContainer>
             <Image
               source={screens[currentIndex].animation}
+              resizeMode="contain"
               style={{
                 width: "100%",
                 height: "100%",
-                resizeMode: "contain",
               }}
             />
           </AnimationContainer>
