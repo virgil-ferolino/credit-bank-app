@@ -170,7 +170,7 @@ const renderCardDetails = (
 
 const MyCards = () => {
   const reroute = useRouter();
-  const { activeIndex, cardData } = useCardData((state) => state);
+  const { activeIndex, cardData } = useCardData();
   const platformView = () => {
     if (Platform.OS === "web") {
       return cardData.map((data, index) =>

@@ -6,7 +6,7 @@ import Container from "@/components/Container";
 import { useCardData } from "@/store/mycard/useCardData";
 
 export default function RecentTransactions() {
-  const { cardData, activeIndex } = useCardData((state) => state);
+  const { cardData, activeIndex } = useCardData();
   const transactionList =
     Platform.OS === "web"
       ? cardData[activeIndex.web].transaction
