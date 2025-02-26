@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
-import { Animated, PanResponder, useWindowDimensions } from "react-native";
+import {
+  Animated,
+  PanResponder,
+  useWindowDimensions,
+  Image,
+} from "react-native";
 import { Button } from "react-native-paper";
-import LottieView from "lottie-react-native";
 import styled from "styled-components/native";
-import realTimeAnimation from "@/assets/images/real-time.json";
-import notifAnimation from "@/assets/images/notif.json";
-import securityAnimation from "@/assets/images/security.json";
-import { useOnboard } from "@/store/onboard/onBoard"; // Import Zustand store
+import { useOnboard } from "@/store/onboard/onBoard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Container = styled.View`
@@ -71,19 +72,19 @@ const PaginationDot = styled.View<{ isActive: boolean }>`
 
 const screens = [
   {
-    animation: realTimeAnimation,
+    animation: require("@/assets/images/real-time.gif"),
     title: "Real-time Spending Insights",
     description:
       "Help you track expenses effortlessly with automatic categorization, detailed analytics, and instant alerts—giving you full control over your finances at a glance",
   },
   {
-    animation: notifAnimation,
+    animation: require("@/assets/images/notif.gif"),
     title: "Bank-Level Security",
     description:
       "Ensures your money and data stay safe with encryption, multi-factor authentication, and real-time fraud protection",
   },
   {
-    animation: securityAnimation,
+    animation: require("@/assets/images/security.gif"),
     title: "Instant Notification",
     description:
       "Keep you updated with real-time alerts for transactions, account activity, and security updates—so you're always in control",
@@ -92,7 +93,7 @@ const screens = [
 
 export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [mountLottie, setMountLottie] = useState(true);
+  const [mountGif, setMountGif] = useState(true);
   const { completeOnboarding } = useOnboard((state) => state);
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -103,7 +104,7 @@ export default function OnboardingScreen() {
     if (currentIndex < screens.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      setMountLottie(false);
+      setMountGif(false);
       completeOnboarding(false);
       await AsyncStorage.setItem("hasLaunched", "true");
     }
@@ -157,15 +158,14 @@ export default function OnboardingScreen() {
         {...(panResponder?.panHandlers || {})}
         style={{ transform: [{ translateX }] }}
       >
-        {mountLottie ? (
+        {mountGif ? (
           <AnimationContainer>
-            <LottieView
+            <Image
               source={screens[currentIndex].animation}
-              autoPlay
-              loop
               style={{
                 width: "100%",
                 height: "100%",
+                resizeMode: "contain", // Ensures GIF is contained within the box
               }}
             />
           </AnimationContainer>
