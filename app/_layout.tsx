@@ -65,20 +65,32 @@ export default function RootLayout() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            height: "100%",
-            width: "100%",
-            backgroundColor: "#0061A7",
+            height: "100vh",
+            width: "100vw",
+            overflow: "hidden"
           },
           animatedStyle,
         ]}
       >
-        <Image
-          source={require("@/assets/images/logo.gif")}
+        <View
           style={{
-            width: 300,
-            height: "50%",
+            maxWidth: 480,
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+            backgroundColor: "#0061A7",
           }}
-        />
+        >
+          <Image
+            source={require("@/assets/images/logo.gif")}
+            style={{
+              width: 300,
+              height: "50%",
+            }}
+          />
+        </View>
       </Animated.View>
     );
   }
