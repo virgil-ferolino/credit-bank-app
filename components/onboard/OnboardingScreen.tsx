@@ -47,6 +47,11 @@ const DescriptionText = styled(Text)`
   line-height: 24px;
   max-width: 320px;
 `;
+const ButtonText = styled(Text)`
+  font-size: 16px;
+  font-weight: 600;
+  color: #006d84;
+`;
 
 const BottomSection = styled(View)`
   position: absolute;
@@ -189,7 +194,9 @@ export default function OnboardingScreen() {
           style={{ width: 320, backgroundColor: "white", borderRadius: 10 }}
           labelStyle={{ color: "#006d84", fontWeight: "600" }}
         >
-          {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
+          <ButtonText>
+            {currentIndex === screens.length - 1 ? "GET STARTEDa" : "NEXT"}
+          </ButtonText>
         </Button>
       </BottomSection>
     </Container>
