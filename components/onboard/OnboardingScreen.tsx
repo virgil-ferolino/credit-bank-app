@@ -10,6 +10,10 @@ import styled from "styled-components/native";
 import { useOnboard } from "@/store/onboard/onBoard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const Typography = {
+  fontFamily: "PoppinsSemiBold",
+};
+
 const Container = styled.View`
   flex: 1;
   background-color: #006d84;
@@ -37,6 +41,7 @@ const TitleText = styled.Text`
   font-weight: bold;
   text-align: center;
   margin-bottom: 16px;
+  font-family: ${Typography.fontFamily};
 `;
 
 const DescriptionText = styled.Text`
@@ -45,6 +50,7 @@ const DescriptionText = styled.Text`
   text-align: center;
   line-height: 24px;
   max-width: 320px;
+  font-family: ${Typography.fontFamily};
 `;
 
 const BottomSection = styled.View`
@@ -186,7 +192,7 @@ export default function OnboardingScreen() {
           onPress={handleNext}
           contentStyle={{ height: 50 }}
           style={{ width: 320, backgroundColor: "white", borderRadius: 10 }}
-          labelStyle={{ fontFamily: "PoppinsSemiBold", color: "#006d84" }}
+          labelStyle={{ fontFamily: Typography.fontFamily, color: "#006d84" }}
         >
           {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
         </Button>
