@@ -195,7 +195,7 @@ export default function OnboardingScreen() {
           labelStyle={{ color: "#006d84", fontWeight: "600" }}
         >
           <ButtonText>
-            {currentIndex === screens.length - 1 ? "GET STARTEDa" : "NEXT"}
+            {currentIndex === screens.length - 1 ? "GET STARTED" : "NEXT"}
           </ButtonText>
         </Button>
       </BottomSection>
