@@ -7,8 +7,7 @@ import {
     useState 
 } from "react";
 import { 
-    Dimensions, 
-    FlatList, 
+    Dimensions,
     Image, 
     ScrollView, 
     TouchableOpacity, 
@@ -272,27 +271,22 @@ const Promos = () => {
 
     return (
         <Fragment>
-            <View
-                style={{ alignItems:"center" }}
+            <ScrollView
+                contentContainerStyle={{ alignItems:"center" }}
+                showsVerticalScrollIndicator={false}
                 pointerEvents={ isVisible ? "none" : "auto" }
             >
-                <FlatList
-                    data={promos}
-                    showsVerticalScrollIndicator={false}
-                    scrollEnabled={!isVisible}
-                    keyboardShouldPersistTaps="handled"
-                    renderItem={({item}) => (
-                        <PromoCard
-                            key={item.promoId}
-                            promo={item}
-                            onOpen={() => {
-                                setSelectedPromo(item)
-                                showIsVisible(true)
-                            }} 
-                        />  
-                    )}
-                />
-            </View>
+                {promos.map((item) => (
+                    <PromoCard
+                        key={item.promoId}
+                        promo={item}
+                        onOpen={() => {
+                            setSelectedPromo(item)
+                            showIsVisible(true)
+                        }} 
+                    />
+                ))}
+            </ScrollView>
             {isVisible && (
                 <CustomBottomSheet
                     visible={isVisible}
