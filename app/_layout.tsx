@@ -8,10 +8,14 @@ import theme from "@/theme";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import { Image } from "expo-image";
-import * as SplashScreen from "expo-splash-screen"
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import * as SplashScreen from "expo-splash-screen";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 const ContainedView = styled(View)({
   maxWidth: 480,
@@ -38,48 +42,45 @@ export default function RootLayout() {
     if (!loaded) return;
 
     if (loaded) {
-      SplashScreen.hideAsync()
-        .then(() => {
+      SplashScreen.hideAsync().then(() => {
+        setTimeout(() => {
+          fadeAnim.value = withTiming(0, { duration: 500 });
           setTimeout(() => {
-            fadeAnim.value = withTiming(0, { duration: 500 });
-            setTimeout(() => {
-              setIsSplashVisible(false);
-            }, 500)
-          }, 1500)
-      })
+            setIsSplashVisible(false);
+          }, 500);
+        }, 1500);
+      });
     }
   }, [loaded, fadeAnim]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: fadeAnim.value,
-  }))
+  }));
 
   if (isSplashVisible) {
     return (
       <Animated.View
         style={[
           {
+            flex: 1,
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
-            position: "absolute",
-            left: "50%",
-            transform: [{ translateX: -240 }],
-            width: 480,
+            width: "100%",
             backgroundColor: "#0061A7",
           },
           animatedStyle,
         ]}
       >
         <Image
-          source={require("@/assets/images/alphabank.gif")}
+          source={require("@/assets/images/logo.gif")}
           style={{
-            width: 400,
-            height: "50%"
+            width: 300,
+            height: "50%",
           }}
         />
       </Animated.View>
-    )
+    );
   }
 
   return (

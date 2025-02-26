@@ -221,9 +221,18 @@ const CustomBottomSheet = ({
                 <View style={{ width: "100%", }} {...panResponder.panHandlers}>
                     <DragHandle />
                 </View>
-                <View style={{flex: 1}}>
+                <ScrollView
+                    scrollEventThrottle={16}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                    nestedScrollEnabled={true}
+                    contentContainerStyle={{
+                        flex: 1,
+                        paddingBottom: 10,
+                    }}
+                >
                     {children}
-                </View>
+                </ScrollView>
             </BottomSheetContainer>
         </Fragment>
     );
@@ -295,53 +304,42 @@ const Promos = () => {
                             setSelectedPromo(null);
                         }}
                     >
-                        <ScrollView
-                            scrollEventThrottle={16}
-                            showsVerticalScrollIndicator={false}
-                            keyboardShouldPersistTaps="handled"
-                            nestedScrollEnabled={true}
-                            contentContainerStyle={{
-                                flexGrow: 1,
-                                paddingBottom: 10,
-                            }}
-                        >
-                        {selectedPromo && (
-                            <View style={{ alignItems: "center", }}>
-                                <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
-                                <View 
-                                    style={{ 
-                                        alignItems: "center", 
-                                        paddingBottom: 15, 
-                                        width: "100%",
-                                        }}
+                    {selectedPromo && (
+                        <View style={{ alignItems: "center", }}>
+                            <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
+                            <View 
+                                style={{ 
+                                    alignItems: "center", 
+                                    paddingBottom: 15, 
+                                    width: "100%",
+                                    }}
+                            >
+                                <StyledText>
+                                    {selectedPromo.promoContent.promoTitle}
+                                </StyledText>
+                                <Text
+                                    style={{
+                                        marginTop: 15,
+                                        marginLeft: 10,
+                                        marginRight: 10,
+                                        paddingHorizontal: 15,
+                                        textAlign: "left",
+                                    }}
                                 >
-                                    <StyledText>
-                                        {selectedPromo.promoContent.promoTitle}
-                                    </StyledText>
-                                    <Text
-                                        style={{
-                                            marginTop: 15,
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                            paddingHorizontal: 15,
-                                            textAlign: "left",
-                                        }}
-                                    >
-                                        {selectedPromo.promoContent.promoDesc}
-                                    </Text>
-                                    <StyledText>
-                                        {selectedPromo.promoContent.promoDetail}
-                                    </StyledText>
-                                    {selectedPromo.promoContent.promoDetailImage &&
-                                        <ImageDetail
-                                            source={selectedPromo.promoContent.promoDetailImage}
-                                            resizeMode="contain" 
-                                        />
-                                    }
-                                </View>
+                                    {selectedPromo.promoContent.promoDesc}
+                                </Text>
+                                <StyledText>
+                                    {selectedPromo.promoContent.promoDetail}
+                                </StyledText>
+                                {selectedPromo.promoContent.promoDetailImage &&
+                                    <ImageDetail
+                                        source={selectedPromo.promoContent.promoDetailImage}
+                                        resizeMode="contain" 
+                                    />
+                                }
                             </View>
-                        )}
-                        </ScrollView>
+                        </View>
+                    )}
                     </CustomBottomSheet>
                 )}
             </Container>
