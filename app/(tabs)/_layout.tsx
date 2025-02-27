@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import { SFSymbol } from "expo-symbols";
 import theme from "@/theme";
+import * as Haptics from "expo-haptics";
+import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
+import { PlatformPressable } from "@react-navigation/elements";
 
 const tabBarStyle: StyleProp<ViewStyle> = {
   maxWidth: 480,
@@ -33,6 +36,20 @@ const TabBarIcon = ({
   return <IconSymbol size={28} name={name} color={color} />;
 };
 
+const HapticsTab = (props: BottomTabBarButtonProps) => {
+  return (
+    <PlatformPressable
+      {...props}
+      onPressIn={(event) => {
+        if (process.env.EXPO_OS === "ios") {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
+        props.onPressIn?.(event);
+      }}
+    />
+  );
+};
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -43,6 +60,7 @@ export default function TabLayout() {
         tabBarAllowFontScaling: true,
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
+        tabBarButton: HapticsTab,
       }}
     >
       <Tabs.Screen
