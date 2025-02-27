@@ -18,7 +18,7 @@ export default function LoginScreen() {
   const router = useRouter();
   const { isOnboarded = false, completeOnboarding } = useOnboard(
     (state) => state
-  ); // Added fallback
+  );
 
   useEffect(() => {
     const checkFirstLaunch = async () => {
@@ -40,10 +40,6 @@ export default function LoginScreen() {
   const handleSubmit = () => {
     router.push("/(tabs)");
   };
-
-  if (isOnboarded === null) {
-    return <View />;
-  }
 
   return (
     <>
@@ -149,7 +145,6 @@ export default function LoginScreen() {
   );
 }
 
-// Styled Components
 const Container = styled.View`
   flex: 1;
   width: 100%;

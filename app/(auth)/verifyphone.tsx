@@ -179,7 +179,6 @@ const PhoneInput = styled(TextInput)`
   background-color: white;
 `;
 
-// Modal Styles
 const ModalOverlay = styled.Pressable`
   flex: 1;
 `;

@@ -26,7 +26,7 @@ const HeaderView = styled(View)({
   justifyContent: "space-between",
   alignItems: "center",
 });
-//
+
 const PointView = styled(View)({
   backgroundColor: theme.colors.tertiary,
   borderRadius: 10,
@@ -58,7 +58,7 @@ const StyledAccountText = styled(Text)({
   fontFamily: "PoppinsBold",
   color: "white",
 });
-//
+
 const StyledTransactionCard = styled(Surface)({
   gap: 15,
   padding: 15,
