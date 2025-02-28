@@ -234,11 +234,6 @@ export default function ActivateCard() {
           <CustomOverlay closeBottomSheet={() => sheetRef.current?.close()} />
         )}
         disableBodyPanning={isLockVisible === true}
-        style={{
-          width: "100%",
-          alignSelf: "center",
-          maxWidth: 480,
-        }}
       >
         <View
           style={{
