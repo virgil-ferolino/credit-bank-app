@@ -29,13 +29,6 @@ const StyledCardInfo = styled(Animated.View)({
   flexBasis: "calc(50% - 15px)",
 });
 
-const StyledButton = styled(Button)({
-  borderRadius: 10,
-  marginTop: 30,
-  padding: 5,
-  boxShadow: "none",
-});
-
 type CardInfoArrayProps = {
   title: string;
   placeHolder: string;
@@ -147,7 +140,7 @@ const AddNewCard = () => {
             )
           )}
         </StyledCardInfoContainer>
-        <StyledButton
+        <Button
           mode="contained"
           labelStyle={{ fontSize: 17 }}
           buttonColor={theme.colors.primary}
@@ -157,7 +150,7 @@ const AddNewCard = () => {
           }}
         >
           Add Card
-        </StyledButton>
+        </Button>
       </StyledView>
     </ParallaxScrollView>
   );
