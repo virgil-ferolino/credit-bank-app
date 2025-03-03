@@ -12,7 +12,7 @@ interface FormValues {
 export default function VerifyPhoneScreen() {
   const router = useRouter();
   const initialValues: FormValues = {
-    otp: Array(5).fill(""),
+    otp: Array(6).fill(""),
   };
 
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
@@ -24,7 +24,7 @@ export default function VerifyPhoneScreen() {
       newOtp[index] = text;
       setFormValue({ ...formValue, otp: newOtp });
 
-      if (text.length === 1 && index < 4) {
+      if (text.length === 1 && index < 5) {
         (inputRefs[index + 1].current as RNTextInput)?.focus();
       }
 
@@ -34,12 +34,16 @@ export default function VerifyPhoneScreen() {
     }
   };
 
+  const handleResendOTP = () => {
+    console.log("Resending OTP...");
+  };
+
   useEffect(() => {
     const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
     setIsButtonDisabled(!allFieldsFilled);
   }, [formValue.otp]);
 
-  const inputRefs = Array(5)
+  const inputRefs = Array(6)
     .fill(0)
     .map(() => React.createRef<RNTextInput>());
 
@@ -72,6 +76,15 @@ export default function VerifyPhoneScreen() {
               />
             ))}
           </PhoneInputContainer>
+          <ResendContainer>
+            <Text>Didn't receive code? </Text>
+            <Text
+              onPress={handleResendOTP}
+              style={{ textDecorationLine: "underline", color: "#2187d1" }}
+            >
+              Resend
+            </Text>
+          </ResendContainer>
           <Button
             mode="contained"
             onPress={() => router.push("/(auth)/verified")}
@@ -80,7 +93,7 @@ export default function VerifyPhoneScreen() {
             contentStyle={{ height: 45 }}
             disabled={isButtonDisabled}
           >
-            SEND CODE
+            VERIFY
           </Button>
         </Card>
       </ScrollView>
@@ -107,10 +120,8 @@ const Card = styled(Surface)`
   max-width: 480px;
   align-self: center;
   background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+
   padding: 50px 50px;
-  elevation: 4;
 `;
 
 const Title = styled(Text)`
@@ -120,16 +131,21 @@ const Title = styled(Text)`
   color: #333;
 `;
 
+const ResendContainer = styled(Text)`
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  padding-bottom: 300px;
+`;
+
 const Subtitle = styled(Text)`
   font-size: 14px;
-
   color: #666;
   margin-bottom: 25px;
   line-height: 20px;
 `;
 
 const PhoneInputContainer = styled.View`
-  padding-bottom: 300px;
   flex-direction: row;
   gap: 8px;
   align-self: center;
