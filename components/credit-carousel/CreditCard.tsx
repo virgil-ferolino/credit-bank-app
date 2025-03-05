@@ -124,7 +124,7 @@ const CreditCard = ({ creditCard }: CardProperty) => {
           <HeaderView>
             <HeaderName>VAFBank</HeaderName>
             <HeaderType>Credit Card</HeaderType>
-            <BankLogo source={require("@/assets/images/Bank-icon-large.png")} />
+            <BankLogo source={require("@/assets/icons/Bank-icon-large.png")} />
           </HeaderView>
           <HeaderView>
             <CardNumber>
@@ -157,7 +157,11 @@ const CreditCard = ({ creditCard }: CardProperty) => {
               <CardDetailSection>
                 <CardDetailsLabel>Expired Date</CardDetailsLabel>
                 <CardDetailsValue>
-                  {renderNumbers(creditCard?.expiryDate ?? "12/12", "exp", toggleHidden)}
+                  {renderNumbers(
+                    creditCard?.expiryDate ?? "12/12",
+                    "exp",
+                    toggleHidden
+                  )}
                 </CardDetailsValue>
               </CardDetailSection>
 

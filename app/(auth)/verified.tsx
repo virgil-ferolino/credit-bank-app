@@ -13,7 +13,7 @@ export default function VerificationScreen() {
         resizeMode="cover"
       >
         <Content>
-          <IconContainer source={require("@/assets/images/verifiedlogo.png")} />
+          <IconContainer source={require("@/assets/icons/verifiedlogo.png")} />
           <Title>Verified!</Title>
           <Subtitle>Your account has been created successfully.</Subtitle>
           <StyledButton

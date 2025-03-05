@@ -109,19 +109,19 @@ export default function LoginScreen() {
                 <SocialButtons>
                   <SocialButton>
                     <SocialIcon
-                      source={require("@/assets/images/google.png")}
+                      source={require("@/assets/icons/google.png")}
                       resizeMode="contain"
                     />
                   </SocialButton>
                   <SocialButton>
                     <SocialIcon
-                      source={require("@/assets/images/fb.png")}
+                      source={require("@/assets/icons/fb.png")}
                       resizeMode="contain"
                     />
                   </SocialButton>
                   <SocialButton>
                     <SocialIcon
-                      source={require("@/assets/images/twitter.png")}
+                      source={require("@/assets/icons/twitter.png")}
                       resizeMode="contain"
                     />
                   </SocialButton>
