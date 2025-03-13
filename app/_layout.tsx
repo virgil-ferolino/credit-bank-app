@@ -29,13 +29,10 @@ export default function RootLayout() {
   const fadeAnim = useSharedValue(1);
 
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
     PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
     PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
-    PoppinsExtraBoldItalic: require("../assets/fonts/Poppins-ExtraBoldItalic.ttf"),
     PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
-    PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
   });
 
   useEffect(() => {
@@ -67,7 +64,7 @@ export default function RootLayout() {
             alignItems: "center",
             height: "100vh",
             width: "100vw",
-            overflow: "hidden"
+            overflow: "hidden",
           },
           animatedStyle,
         ]}
