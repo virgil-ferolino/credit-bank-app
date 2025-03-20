@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { RelativePathString, useRouter } from "expo-router";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -18,6 +19,7 @@ import { initialNotifications, menuList, transaction } from "@/data/home";
 import { useAppTheme } from "@/hooks/useTheme";
 import { creditCardArray } from "@/data/mycard";
 import theme from "@/theme";
+import { useLoad } from "@/components/LoadContext";
 
 interface TransactionItem {
   title: string;
@@ -83,6 +85,25 @@ export default function HomeScreen() {
 
   const theme = useAppTheme();
 
+  const { loadedPages, fetchData, markImageLoaded } = useLoad();
+  const [transactions, setTransactions] = useState<TransactionItem[]>([]);
+  const [transLoad, setTransLoad] = useState<boolean>(true)
+  const [avatarLoaded, setAvatarLoaded] = useState<boolean>(false);
+
+  const pageLoad = !loadedPages.has("HomeScreen")
+
+  useEffect(() => {
+    if (!loadedPages.has("HomeScreen")){
+      fetchData("HomeScreen").then(() => {
+        setTransLoad(true)
+        setTimeout(() => {
+          setTransactions(transaction.slice(0, 4));
+          setTransLoad(false)
+        }, 1000)
+      })
+    }
+  }, [loadedPages, fetchData]);
+
   const unreadCount = initialNotifications.filter(
     (notification) => !notification.read
   ).length;
@@ -119,6 +140,13 @@ export default function HomeScreen() {
             size={40}
             source={{
               uri: "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
+            }}
+            style={{
+              opacity: avatarLoaded ? 1 : 0.3
+            }}
+            onLoad={() => {
+              markImageLoaded("user-avatar")
+              setAvatarLoaded(true);
             }}
           />
           <View>
@@ -158,7 +186,9 @@ export default function HomeScreen() {
             justifyContent: "center",
           }}
         >
-          <Image source={item.image} style={{ width: 70, height: 70 }} />
+          <Image
+            source={item.image}
+            style={{ width: 70, height: 70 }} />
           <Text
             variant="labelMedium"
             style={{
@@ -175,75 +205,95 @@ export default function HomeScreen() {
   };
 
   return (
-    <ParallaxScrollView>
-      <BlueBackground />
-
-      <View style={{ padding: 15, rowGap: 15 }}>
-        {renderHeader()}
-
-        <CreditCard creditCard={creditCardArray[0]} />
-
+    <Fragment>
+      {pageLoad ? (
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignContent: "center",
-          }}
-        >
-          {renderMenu()}
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
+            flex:1
           }}
         >
-          <TextBold variant="labelLarge">Recent Transaction</TextBold>
-          <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
-            <Text
-              variant="bodySmall"
+          <ActivityIndicator size="large" color={theme.colors.primary}/>
+        </View>
+      )
+      : (
+        <ParallaxScrollView>
+          <BlueBackground />
+
+          <View style={{ padding: 15, rowGap: 15 }}>
+            {renderHeader()}
+
+            <CreditCard creditCard={creditCardArray[0]} />
+
+            <View
               style={{
-                fontFamily: "PoppinsSemiBold",
-                color: theme.colors.primary,
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignContent: "center",
               }}
             >
-              View more
-            </Text>
-          </TouchableOpacity>
-        </View>
+              {renderMenu()}
+            </View>
 
-        <Surface
-          style={{
-            backgroundColor: theme.colors.background,
-            borderRadius: 16,
-            paddingHorizontal: 16,
-            paddingVertical: 16,
-          }}
-        >
-          <FlatList
-            scrollEnabled={false}
-            data={transaction.slice(0, 4)}
-            keyExtractor={(_item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <RenderTransactionItem
-                title={item.title}
-                price={item.price}
-                category={item.category}
-              />
-            )}
-            ListEmptyComponent={
-              <Text
-                variant="bodyMedium"
-                style={{ textAlign: "center", color: "gray" }}
-              >
-                No recent transactions available
-              </Text>
-            }
-          />
-        </Surface>
-      </View>
-    </ParallaxScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <TextBold variant="labelLarge">Recent Transaction</TextBold>
+              <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
+                <Text
+                  variant="bodySmall"
+                  style={{
+                    fontFamily: "PoppinsSemiBold",
+                    color: theme.colors.primary,
+                  }}
+                >
+                  View more
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Surface
+              style={{
+                backgroundColor: theme.colors.background,
+                borderRadius: 16,
+                paddingHorizontal: 16,
+                paddingVertical: 16,
+              }}
+            >
+              {transLoad ? (
+                <ActivityIndicator size="small" color={theme.colors.primary}/>
+              )
+              : (
+                <FlatList
+                  scrollEnabled={false}
+                  data={transactions}
+                  keyExtractor={(_item, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <RenderTransactionItem
+                      title={item.title}
+                      price={item.price}
+                      category={item.category}
+                    />
+                  )}
+                  ListEmptyComponent={
+                    <Text
+                      variant="bodyMedium"
+                      style={{ textAlign: "center", color: "gray" }}
+                    >
+                      No recent transactions available
+                    </Text>
+                  }
+                />
+              )}
+            </Surface>
+          </View>
+        </ParallaxScrollView>
+      )}
+    </Fragment>
   );
 }

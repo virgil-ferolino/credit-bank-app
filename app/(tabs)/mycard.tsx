@@ -1,6 +1,6 @@
 import { Text, Avatar, Chip, Surface } from "react-native-paper";
 import { Router, useRouter } from "expo-router";
-import { Platform, View, TouchableOpacity } from "react-native";
+import { Platform, View, TouchableOpacity, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
 import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
@@ -11,6 +11,8 @@ import {
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { useLoad } from "@/components/LoadContext";
+import { Fragment, useEffect } from "react";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -112,18 +114,37 @@ const renderViewMore = (item: TransactionProsps[]) => {
 const renderCardDetails = (
   data: CardDataProps,
   reroute: Router,
-  key: number
+  key: number,
+  pointBalanceLoad: boolean,
+  accountDeetsLoad: boolean,
+  recentTransLoad: boolean,
 ) => {
+
   return (
     <ParentView key={key}>
       <PointView>
         <StyledPointTitle variant="titleMedium">Point Balance</StyledPointTitle>
-        <StyledPointContent variant="headlineLarge">
-          {data.pointBalance}
-        </StyledPointContent>
+          {pointBalanceLoad
+          ? (
+            <StyledPointContent variant="headlineLarge">
+              <ActivityIndicator size="small" color={theme.colors.primary} />
+            </StyledPointContent>
+          )
+          : (
+            <StyledPointContent variant="headlineLarge">
+              {data.pointBalance}
+            </StyledPointContent>
+          )}
       </PointView>
       <CategoryView>
         <TextBold variant="labelLarge">Account Details</TextBold>
+        {accountDeetsLoad
+        ? (
+          <StyledAccountView>
+            <ActivityIndicator size="small" color="white" />
+          </StyledAccountView>
+        )
+        : (
         <StyledAccountView>
           {data.account.map(({ label, value }, index) => (
             <HeaderView key={index}>
@@ -136,6 +157,8 @@ const renderCardDetails = (
             </HeaderView>
           ))}
         </StyledAccountView>
+        )
+        }
       </CategoryView>
       <CategoryView>
         <HeaderView>
@@ -157,7 +180,11 @@ const renderCardDetails = (
         </HeaderView>
 
         <StyledTransactionCard>
-          {data.transaction.length <= 0 ? (
+          {recentTransLoad
+          ? (
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          )
+          :data.transaction.length <= 0 ? (
             <Text>No Transaction Available</Text>
           ) : (
             renderViewMore(data.transaction)
@@ -171,46 +198,82 @@ const renderCardDetails = (
 const MyCards = () => {
   const reroute = useRouter();
   const { activeIndex, cardData } = useCardData();
+  const { loadedPages, fetchData } = useLoad();
+
+  const pageLoad = !loadedPages.has("MyCards");
+  const pointBalanceLoad = !loadedPages.has("PointBalance")
+  const accountDeetsLoad = !loadedPages.has("AccountDetails")
+  const recentTransLoad = !loadedPages.has("RecentTransactions")
+
+  useEffect(() => {
+    if (pageLoad) {
+      fetchData("MyCards").then(() => {
+        if (pointBalanceLoad && accountDeetsLoad && recentTransLoad) {
+          setTimeout(() => {
+            fetchData("PointBalance");
+            fetchData("AccountDetails");
+            fetchData("RecentTransactions");
+          }, 1000)
+        }
+      })
+    }
+  }, [pageLoad, pointBalanceLoad, accountDeetsLoad, recentTransLoad, fetchData])
+
   const platformView = () => {
     if (Platform.OS === "web") {
       return cardData.map((data, index) =>
         activeIndex.web === index
-          ? renderCardDetails(data, reroute, index)
+          ? renderCardDetails(data, reroute, index, pointBalanceLoad, accountDeetsLoad, recentTransLoad)
           : null
       );
     } else {
       return cardData.map((data, index) =>
         activeIndex.mobile === index
-          ? renderCardDetails(data, reroute, index)
+          ? renderCardDetails(data, reroute, index, pointBalanceLoad, accountDeetsLoad, recentTransLoad)
           : null
       );
     }
   };
 
   return (
-    <ParallaxScrollView>
-      <ParentView>
-        <HeaderView>
-          <Text variant="titleMedium" style={{ fontFamily: "PoppinsSemiBold" }}>
-            My Cards
-          </Text>
+    <Fragment>
+      {pageLoad ? (
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flex:1
+          }}
+        >
+          <ActivityIndicator size="large" color={theme.colors.primary}/>
+        </View>
+      )
+    : (
+      <ParallaxScrollView>
+        <ParentView>
+          <HeaderView>
+            <Text variant="titleMedium" style={{ fontFamily: "PoppinsSemiBold" }}>
+              My Cards
+            </Text>
 
-          <Chip
-            compact
-            textStyle={{ color: "white", fontFamily: "PoppinsSemiBold" }}
-            style={{ backgroundColor: theme.colors.primary }}
-            icon={() => (
-              <Ionicons name="add-outline" color={"white"} size={24} />
-            )}
-            onPress={() => reroute.navigate("/addNewCard")}
-          >
-            New Card
-          </Chip>
-        </HeaderView>
-      </ParentView>
-      <CreditCarousel />
-      {platformView()}
-    </ParallaxScrollView>
+            <Chip
+              compact
+              textStyle={{ color: "white", fontFamily: "PoppinsSemiBold" }}
+              style={{ backgroundColor: theme.colors.primary }}
+              icon={() => (
+                <Ionicons name="add-outline" color={"white"} size={24} />
+              )}
+              onPress={() => reroute.navigate("/addNewCard")}
+            >
+              New Card
+            </Chip>
+          </HeaderView>
+        </ParentView>
+        <CreditCarousel />
+        {platformView()}
+      </ParallaxScrollView>
+    )}
+    </Fragment>
   );
 };
 

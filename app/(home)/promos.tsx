@@ -1,3 +1,4 @@
+import { LazyImage } from "@/components/LazyImage";
 import { promos } from "@/data/home";
 import theme from "@/theme";
 import { 
@@ -8,7 +9,6 @@ import {
 } from "react";
 import { 
     Dimensions,
-    Image, 
     ScrollView, 
     TouchableOpacity, 
     View, 
@@ -85,13 +85,6 @@ const StyledCard = styled(Card)({
     marginBottom: 10,
 })
 
-const StyledImage = styled(Image)({
-    width: "100%",
-    height: 200,
-    borderBottomLeftRadius:0,
-    borderBottomRightRadius: 0
-})
-
 const StyledButton = styled(TouchableOpacity)({
     marginTop:10,
     backgroundColor: theme.colors.primary,
@@ -107,16 +100,6 @@ const StyledText = styled(Text)({
     fontSize: 15,
     marginTop: 20,
     marginBottom: 10
-})
-
-const ImageHeader = styled(Image)({
-    width: Math.min(500, width),
-    height: Math.min(203, (203/500) * width),
-})
-
-const ImageDetail = styled(Image)({
-    width: Math.min(700, width),
-    height: Math.min(700, (1000 /667) * (width * 0.95)),
 })
 
 const CustomBottomSheet = ({
@@ -242,7 +225,7 @@ const PromoCard = ({
 
     return(
         <StyledCard>
-            <StyledImage source={promo.promoImage} />
+            <LazyImage source={promo.promoImage} style={{ height: 200 }} />
             <Card.Content
                 style={{
                     alignItems: "center"
@@ -297,7 +280,13 @@ const Promos = () => {
                 >
                 {selectedPromo && (
                     <View style={{ alignItems: "center", }}>
-                        <ImageHeader source={selectedPromo.promoContent.promoImageFull} />
+                        <LazyImage
+                            source={selectedPromo.promoContent.promoImageFull}
+                            style={{
+                                width: Math.min(500, width),
+                                height: Math.min(203, (203/500) * width),
+                            }}
+                        />
                         <View 
                             style={{ 
                                 alignItems: "center", 
@@ -323,9 +312,13 @@ const Promos = () => {
                                 {selectedPromo.promoContent.promoDetail}
                             </StyledText>
                             {selectedPromo.promoContent.promoDetailImage &&
-                                <ImageDetail
+                                <LazyImage
                                     source={selectedPromo.promoContent.promoDetailImage}
-                                    resizeMode="contain" 
+                                    style={{
+                                        width: Math.min(700, width),
+                                        height: Math.min(700, (1000 /667) * (width * 0.95)),
+                                    }}
+                                    resizeMode="contain"
                                 />
                             }
                         </View>

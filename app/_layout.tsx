@@ -1,12 +1,12 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import "react-native-reanimated";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/theme";
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { Image } from "expo-image";
 import * as SplashScreen from "expo-splash-screen";
 import Animated, {
@@ -14,6 +14,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { LoadProvider } from "@/components/LoadContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -92,23 +93,43 @@ export default function RootLayout() {
     );
   }
 
+  const LoadingIndicator = () => (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
+      <ActivityIndicator
+        size="large"
+        color={theme.colors.primary}
+      />
+    </View>
+  )
+
   return (
     <PaperProvider theme={theme}>
-      <ContainedView>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(home)" />
-          <Stack.Screen name="(mycard)" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(settings)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" backgroundColor={theme.colors.primary} />
-      </ContainedView>
+      <LoadProvider>
+        <Suspense fallback={<LoadingIndicator />}>
+          <ContainedView>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                freezeOnBlur: true,
+              }}
+            >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(home)" />
+              <Stack.Screen name="(mycard)" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(settings)" />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          <StatusBar style="auto" backgroundColor={theme.colors.primary} />
+          </ContainedView>
+        </Suspense>
+      </LoadProvider>
     </PaperProvider>
   );
 }
