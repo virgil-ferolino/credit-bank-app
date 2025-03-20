@@ -1,4 +1,3 @@
-import { LazyImage } from "@/components/LazyImage";
 import { promos } from "@/data/home";
 import theme from "@/theme";
 import { 
@@ -21,6 +20,7 @@ import {
     Text
 } from "react-native-paper";
 import styled from "styled-components/native";
+import { Image } from "expo-image";
 
 const { width, height } = Dimensions.get("window");
 
@@ -100,6 +100,23 @@ const StyledText = styled(Text)({
     fontSize: 15,
     marginTop: 20,
     marginBottom: 10
+})
+
+const StyledImage = styled(Image)({
+    width: "100%",
+    height: 200,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius: 0
+})
+
+const ImageHeader = styled(Image)({
+    width: Math.min(500, width),
+    height: Math.min(203, (203/500) * width),
+})
+
+const ImageDetail = styled(Image)({
+    width: Math.min(700, width),
+    height: Math.min(700, (1000 /667) * (width * 0.95)),
 })
 
 const CustomBottomSheet = ({
@@ -225,7 +242,7 @@ const PromoCard = ({
 
     return(
         <StyledCard>
-            <LazyImage source={promo.promoImage} style={{ height: 200 }} />
+            <StyledImage source={promo.promoImage} />
             <Card.Content
                 style={{
                     alignItems: "center"
@@ -280,12 +297,8 @@ const Promos = () => {
                 >
                 {selectedPromo && (
                     <View style={{ alignItems: "center", }}>
-                        <LazyImage
+                        <ImageHeader
                             source={selectedPromo.promoContent.promoImageFull}
-                            style={{
-                                width: Math.min(500, width),
-                                height: Math.min(203, (203/500) * width),
-                            }}
                         />
                         <View 
                             style={{ 
@@ -312,12 +325,8 @@ const Promos = () => {
                                 {selectedPromo.promoContent.promoDetail}
                             </StyledText>
                             {selectedPromo.promoContent.promoDetailImage &&
-                                <LazyImage
+                                <ImageDetail
                                     source={selectedPromo.promoContent.promoDetailImage}
-                                    style={{
-                                        width: Math.min(700, width),
-                                        height: Math.min(700, (1000 /667) * (width * 0.95)),
-                                    }}
                                     resizeMode="contain"
                                 />
                             }
